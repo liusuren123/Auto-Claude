@@ -647,10 +647,18 @@ export class TerminalSessionStore {
 
     const todaySessions = this.getTodaysSessions();
     if (todaySessions[projectPath]) {
+      const beforeCount = todaySessions[projectPath].length;
       todaySessions[projectPath] = todaySessions[projectPath].filter(
         s => s.id !== sessionId
       );
-      this.save();
+      // Only persist when something was actually removed. Repeatedly deleting
+      // an already-removed session ID leaves the array unchanged, and each
+      // unconditional save() costs a full atomic write (serialize + temp file
+      // + backup rotate). Skipping no-op writes keeps rapid/duplicate deletes
+      // from turning into redundant disk I/O.
+      if (todaySessions[projectPath].length !== beforeCount) {
+        this.save();
+      }
     }
 
     // Cancel any existing cleanup timer for this session (prevents timer accumulation
