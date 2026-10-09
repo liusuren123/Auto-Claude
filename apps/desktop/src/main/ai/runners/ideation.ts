@@ -10,7 +10,7 @@
  * performance, and code quality.
  */
 
-import { streamText, stepCountIs } from 'ai';
+import { streamText, isStepCount } from 'ai';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -188,10 +188,10 @@ export async function runIdeation(
   try {
     const result = streamText({
       model: client.model,
-      system: isCodex ? undefined : prompt,
+      instructions: isCodex ? undefined : prompt,
       prompt: userPrompt,
       tools: client.tools,
-      stopWhen: stepCountIs(client.maxSteps),
+      stopWhen: isStepCount(client.maxSteps),
       abortSignal,
       ...(isCodex ? {
         providerOptions: {
@@ -203,7 +203,7 @@ export async function runIdeation(
       } : {}),
     });
 
-    for await (const part of result.fullStream) {
+    for await (const part of result.stream) {
       switch (part.type) {
         case 'text-delta': {
           responseText += part.text;

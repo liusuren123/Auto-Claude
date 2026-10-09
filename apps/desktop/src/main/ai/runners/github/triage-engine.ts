@@ -232,7 +232,7 @@ export async function triageSingleIssue(
   try {
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt: fullPrompt,
       output: Output.object({ schema: TriageResultOutputSchema }),
     });

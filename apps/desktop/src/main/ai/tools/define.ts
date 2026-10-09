@@ -2,7 +2,7 @@
  * Tool.define() Wrapper
  * =====================
  *
- * Wraps the Vercel AI SDK v6 `tool()` function with:
+ * Wraps the Vercel AI SDK v7 `tool()` function with:
  * - Zod v3 input schema validation
  * - Security hook integration (pre-execution)
  * - Tool context injection
@@ -39,7 +39,7 @@ import { truncateToolOutput, SAFETY_NET_MAX_BYTES } from './truncation';
 
 /**
  * A defined tool that can be bound to a ToolContext to produce
- * an AI SDK v6 compatible tool object.
+ * an AI SDK v7 compatible tool object.
  */
 export interface DefinedTool<
   TInput extends z.ZodType = z.ZodType,

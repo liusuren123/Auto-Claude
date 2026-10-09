@@ -13,7 +13,7 @@
  * - Step budget is capped at SUBAGENT_MAX_STEPS (default 100).
  */
 
-import { generateText, Output, stepCountIs } from 'ai';
+import { generateText, Output, isStepCount } from 'ai';
 import type { LanguageModel, Tool as AITool } from 'ai';
 import type { ZodSchema } from 'zod';
 
@@ -156,10 +156,10 @@ export class SubagentExecutorImpl implements SubagentExecutor {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- generateText overloads don't resolve with conditional output spread
       const generateOptions: any = {
         model: this.config.model,
-        system: systemPrompt,
+        instructions: systemPrompt,
         messages: [{ role: 'user' as const, content: userMessage }],
         tools,
-        stopWhen: stepCountIs(SUBAGENT_MAX_STEPS),
+        stopWhen: isStepCount(SUBAGENT_MAX_STEPS),
         abortSignal: this.config.abortSignal,
         ...(outputSchema
           ? { output: Output.object({ schema: outputSchema }) }

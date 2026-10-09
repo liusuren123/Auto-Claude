@@ -716,7 +716,7 @@ export async function runValidationFixer(
 
       await generateText({
         model: client.model,
-        system: client.systemPrompt,
+        instructions: client.systemPrompt,
         prompt,
       });
     } catch {

@@ -267,7 +267,7 @@ export async function generateCommitMessage(
 
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt,
     });
 

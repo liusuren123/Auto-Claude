@@ -8,7 +8,7 @@ const mockStreamText = vi.fn();
 
 vi.mock('ai', () => ({
   streamText: (...args: unknown[]) => mockStreamText(...args),
-  stepCountIs: (n: number) => ({ type: 'stepCount', count: n }),
+  isStepCount: (n: number) => ({ type: 'stepCount', count: n }),
 }));
 
 const mockCreateSimpleClient = vi.fn();
@@ -79,7 +79,7 @@ function makeMockClient() {
 
 function makeStream(parts: Array<Record<string, unknown>>) {
   return {
-    fullStream: (async function* () {
+    stream: (async function* () {
       for (const part of parts) {
         yield part;
       }
@@ -341,7 +341,7 @@ describe('runRoadmapGeneration', () => {
     mockStreamText.mockImplementation(() => {
       callCount++;
       return {
-        fullStream: (async function* () {
+        stream: (async function* () {
           yield { type: 'text-delta', text: 'Analyzing project...' };
         })(),
       };
@@ -406,7 +406,7 @@ describe('runRoadmapGeneration', () => {
     mockStreamText.mockImplementation(() => {
       return {
         // biome-ignore lint/correctness/useYield: intentionally throwing before yield to test error path
-        fullStream: (async function* () {
+        stream: (async function* () {
           throw new Error('network failure');
         })(),
       };

@@ -621,7 +621,7 @@ export class ParallelFollowupReviewer {
     if (type === 'resolution-verifier') {
       const result = await generateText({
         model: client.model,
-        system: client.systemPrompt,
+        instructions: client.systemPrompt,
         prompt,
         output: Output.object({ schema: ResolutionVerificationOutputSchema }),
         abortSignal,
@@ -636,7 +636,7 @@ export class ParallelFollowupReviewer {
     // new-code-reviewer and comment-analyzer both return { findings: [...] }
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt,
       output: Output.object({ schema: ReviewFindingsOutputSchema }),
       abortSignal,

@@ -2,7 +2,7 @@
  * Vercel AI SDK Mock Utilities
  * ============================
  *
- * Mock helpers for Vercel AI SDK v6 functions (generateText, streamText).
+ * Mock helpers for Vercel AI SDK v7 functions (generateText, streamText).
  * Supports single-pass review and multi-turn agent session mocking.
  */
 
@@ -130,7 +130,7 @@ export function mockStreamText(steps: MockStreamStep[] = []): {
     toolName: string;
     args: Record<string, unknown>;
   }>;
-  fullStream: AsyncIterable<unknown>;
+  stream: AsyncIterable<unknown>;
 } {
   const allText = steps.map(s => s.text || '').join('');
 
@@ -148,7 +148,7 @@ export function mockStreamText(steps: MockStreamStep[] = []): {
     }))
   );
 
-  // Create async generator for fullStream
+  // Create async generator for stream
   async function* generateSteps() {
     for (const step of steps) {
       yield {
@@ -215,7 +215,7 @@ export function mockStreamText(steps: MockStreamStep[] = []): {
     },
     finishReason: steps[steps.length - 1]?.finishReason || 'stop',
     toolCalls: allToolCalls,
-    fullStream: generateSteps()
+    stream: generateSteps()
   };
 }
 

@@ -90,7 +90,7 @@ describe('generateChangelog', () => {
     expect(mockGenerateText).toHaveBeenCalledOnce();
     const callArgs = mockGenerateText.mock.calls[0][0];
     expect(callArgs.model).toBe(fakeModel);
-    expect(callArgs.system).toBe('You are a technical writer.');
+    expect(callArgs.instructions).toBe('You are a technical writer.');
     expect(callArgs.prompt).toContain('TestProject');
     expect(callArgs.prompt).toContain('1.0.0');
   });

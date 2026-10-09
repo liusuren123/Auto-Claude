@@ -8,7 +8,7 @@ const mockStreamText = vi.fn();
 
 vi.mock('ai', () => ({
   streamText: (...args: unknown[]) => mockStreamText(...args),
-  stepCountIs: (n: number) => ({ type: 'stepCount', count: n }),
+  isStepCount: (n: number) => ({ type: 'stepCount', count: n }),
 }));
 
 const mockCreateSimpleClient = vi.fn();
@@ -60,7 +60,7 @@ function makeMockClient() {
  */
 function makeStream(parts: Array<Record<string, unknown>>) {
   return {
-    fullStream: (async function* () {
+    stream: (async function* () {
       for (const part of parts) {
         yield part;
       }
@@ -239,7 +239,7 @@ describe('runIdeation', () => {
   it('returns failure when streamText iteration throws', async () => {
     mockStreamText.mockReturnValue({
       // biome-ignore lint/correctness/useYield: intentionally throwing before yield to test error path
-      fullStream: (async function* () {
+      stream: (async function* () {
         throw new Error('API error');
       })(),
     });
@@ -253,7 +253,7 @@ describe('runIdeation', () => {
   it('emits error event to callback when streamText throws', async () => {
     mockStreamText.mockReturnValue({
       // biome-ignore lint/correctness/useYield: intentionally throwing before yield to test error path
-      fullStream: (async function* () {
+      stream: (async function* () {
         throw new Error('network failure');
       })(),
     });
@@ -290,7 +290,7 @@ describe('runIdeation', () => {
 
     // The system prompt passed to streamText should contain the project dir
     const streamArgs = mockStreamText.mock.calls[0][0];
-    const systemPrompt = streamArgs.system as string;
+    const systemPrompt = streamArgs.instructions as string;
     expect(systemPrompt).toContain('/my/project');
   });
 
@@ -300,7 +300,7 @@ describe('runIdeation', () => {
     await runIdeation(baseConfig({ maxIdeasPerType: 10 }));
 
     const streamArgs = mockStreamText.mock.calls[0][0];
-    const systemPrompt = streamArgs.system as string;
+    const systemPrompt = streamArgs.instructions as string;
     expect(systemPrompt).toContain('10');
   });
 });

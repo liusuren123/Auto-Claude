@@ -38,7 +38,7 @@ export interface SessionConfig {
   initialMessages: SessionMessage[];
   /** Tool context (cwd, projectDir, specDir, securityProfile) */
   toolContext: ToolContext;
-  /** Maximum number of agentic steps (maps to AI SDK `stopWhen: stepCountIs(N)`) */
+  /** Maximum number of agentic steps (maps to AI SDK `stopWhen: isStepCount(N)`) */
   maxSteps: number;
   /** Thinking level override (defaults to agent config) */
   thinkingLevel?: ThinkingLevel;

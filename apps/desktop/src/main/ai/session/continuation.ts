@@ -241,7 +241,7 @@ async function compactSessionMessages(
 
     const result = await generateText({
       model: summarizerModel,
-      system: SUMMARIZER_SYSTEM_PROMPT,
+      instructions: SUMMARIZER_SYSTEM_PROMPT,
       prompt,
       abortSignal,
     });

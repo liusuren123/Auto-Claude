@@ -520,7 +520,7 @@ ${diff}
   if (reviewPass === ReviewPass.QUICK_SCAN) {
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt: fullPrompt,
       output: Output.object({ schema: ScanResultOutputSchema }),
     });
@@ -532,7 +532,7 @@ ${diff}
 
   const result = await generateText({
     model: client.model,
-    system: client.systemPrompt,
+    instructions: client.systemPrompt,
     prompt: fullPrompt,
     output: Output.object({ schema: ReviewFindingsOutputSchema }),
   });
@@ -562,7 +562,7 @@ async function runStructuralPass(
   try {
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt: fullPrompt,
       output: Output.object({ schema: StructuralIssuesOutputSchema }),
     });
@@ -598,7 +598,7 @@ async function runAITriagePass(
   try {
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt: fullPrompt,
       output: Output.object({ schema: AICommentTriagesOutputSchema }),
     });

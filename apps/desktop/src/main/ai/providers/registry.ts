@@ -1,7 +1,7 @@
 /**
  * Provider Registry
  *
- * Creates a centralized provider registry using AI SDK v6's createProviderRegistry.
+ * Creates a centralized provider registry using AI SDK v7's createProviderRegistry.
  * Enables unified model access via 'provider:model' string format.
  *
  * See apps/desktop/src/main/ai/providers/registry.ts for the TypeScript implementation.

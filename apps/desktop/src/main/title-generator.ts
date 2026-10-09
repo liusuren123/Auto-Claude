@@ -75,7 +75,7 @@ export class TitleGenerator extends EventEmitter {
 
       const result = streamText({
         model: client.model,
-        system: isCodex ? undefined : client.systemPrompt,
+        instructions: isCodex ? undefined : client.systemPrompt,
         prompt,
         providerOptions: isCodex ? {
           openai: {

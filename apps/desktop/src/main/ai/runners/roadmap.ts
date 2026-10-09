@@ -9,7 +9,7 @@
  * Uses `createSimpleClient()` with read-only tools and streaming.
  */
 
-import { streamText, stepCountIs } from 'ai';
+import { streamText, isStepCount } from 'ai';
 import { existsSync, readFileSync, writeFileSync, mkdirSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -147,10 +147,10 @@ Do NOT ask questions. Make educated inferences and create the file.`;
     try {
       const result = streamText({
         model: client.model,
-        system: isCodexDiscovery ? undefined : prompt,
+        instructions: isCodexDiscovery ? undefined : prompt,
         prompt: discoveryUserPrompt,
         tools: client.tools,
-        stopWhen: stepCountIs(client.maxSteps),
+        stopWhen: isStepCount(client.maxSteps),
         abortSignal,
         ...(isCodexDiscovery ? {
           providerOptions: {
@@ -162,7 +162,7 @@ Do NOT ask questions. Make educated inferences and create the file.`;
         } : {}),
       });
 
-      for await (const part of result.fullStream) {
+      for await (const part of result.stream) {
         switch (part.type) {
           case 'text-delta':
             onStream?.({ type: 'text-delta', text: part.text });
@@ -279,10 +279,10 @@ The JSON must contain: vision, target_audience (object with "primary" key), phas
     try {
       const result = streamText({
         model: client.model,
-        system: isCodexFeatures ? undefined : prompt,
+        instructions: isCodexFeatures ? undefined : prompt,
         prompt: featuresUserPrompt,
         tools: client.tools,
-        stopWhen: stepCountIs(client.maxSteps),
+        stopWhen: isStepCount(client.maxSteps),
         abortSignal,
         ...(isCodexFeatures ? {
           providerOptions: {
@@ -294,7 +294,7 @@ The JSON must contain: vision, target_audience (object with "primary" key), phas
         } : {}),
       });
 
-      for await (const part of result.fullStream) {
+      for await (const part of result.stream) {
         switch (part.type) {
           case 'text-delta':
             onStream?.({ type: 'text-delta', text: part.text });

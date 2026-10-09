@@ -24,7 +24,7 @@ const mockStreamText = vi.fn();
 
 vi.mock('ai', () => ({
   streamText: (...args: unknown[]) => mockStreamText(...args),
-  stepCountIs: vi.fn((count: number) => ({ type: 'step-count', maxSteps: count })),
+  isStepCount: vi.fn((count: number) => ({ type: 'step-count', maxSteps: count })),
   Output: {
     object: vi.fn((schema: unknown) => schema),
   },
@@ -108,7 +108,7 @@ function createMockStreamResult(
   output: unknown;
   usage: { promptTokens: number; completionTokens: number; totalTokens: number };
   finishReason: 'stop' | 'length' | 'error';
-  fullStream: AsyncIterable<unknown>;
+  stream: AsyncIterable<unknown>;
 } {
   async function* generateFullStream() {
     yield { type: 'text-delta', textDelta: text };
@@ -120,7 +120,7 @@ function createMockStreamResult(
     output: object,
     usage: { promptTokens: 1000, completionTokens: 500, totalTokens: 1500 },
     finishReason,
-    fullStream: generateFullStream(),
+    stream: generateFullStream(),
   };
 }
 

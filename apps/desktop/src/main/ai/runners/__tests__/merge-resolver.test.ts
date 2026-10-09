@@ -73,7 +73,7 @@ describe('resolveMergeConflict', () => {
     expect(mockGenerateText).toHaveBeenCalledOnce();
     const callArgs = mockGenerateText.mock.calls[0][0];
     expect(callArgs.model).toBe(fakeModel);
-    expect(callArgs.system).toBe('Resolve merge conflicts.');
+    expect(callArgs.instructions).toBe('Resolve merge conflicts.');
   });
 
   it('passes userPrompt as the prompt parameter to generateText', async () => {

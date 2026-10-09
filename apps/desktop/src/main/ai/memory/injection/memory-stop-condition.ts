@@ -5,7 +5,7 @@
  * Prevents premature stopping for tasks that historically require more steps.
  */
 
-import { stepCountIs } from 'ai';
+import { isStepCount } from 'ai';
 import type { MemoryService } from '../types';
 
 // ============================================================
@@ -30,7 +30,7 @@ export function buildMemoryAwareStopCondition(
 ) {
   const factor = Math.min(calibrationFactor ?? 1.0, 2.0); // Cap at 2x
   const adjusted = Math.min(Math.ceil(baseMaxSteps * factor), MAX_ABSOLUTE_STEPS);
-  return stepCountIs(adjusted);
+  return isStepCount(adjusted);
 }
 
 /**

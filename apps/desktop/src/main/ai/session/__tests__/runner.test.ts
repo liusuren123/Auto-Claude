@@ -10,7 +10,7 @@ import type { SessionConfig, SessionResult, StreamEvent } from '../types';
 const mockStreamText = vi.fn();
 vi.mock('ai', () => ({
   streamText: (...args: unknown[]) => mockStreamText(...args),
-  stepCountIs: (n: number) => ({ type: 'stepCount', count: n }),
+  isStepCount: (n: number) => ({ type: 'stepCount', count: n }),
 }));
 
 // Import after mocking
@@ -43,7 +43,7 @@ function createMockStreamResult(
   options?: { text?: string; totalUsage?: { inputTokens: number; outputTokens: number } },
 ) {
   return {
-    fullStream: (async function* () {
+    stream: (async function* () {
       for (const part of parts) {
         yield part;
       }
@@ -264,7 +264,7 @@ describe('runAgentSession', () => {
     const controller = new AbortController();
 
     mockStreamText.mockReturnValue({
-      fullStream: (async function* () {
+      stream: (async function* () {
         yield { type: 'text-delta', id: 'text-1', delta: 'start' };
         controller.abort();
         throw new DOMException('aborted', 'AbortError');
@@ -294,7 +294,7 @@ describe('runAgentSession', () => {
 
     expect(mockStreamText).toHaveBeenCalledTimes(1);
     const callArgs = mockStreamText.mock.calls[0][0];
-    expect(callArgs.system).toBe('Be helpful');
+    expect(callArgs.instructions).toBe('Be helpful');
     expect(callArgs.tools).toBe(tools);
   });
 

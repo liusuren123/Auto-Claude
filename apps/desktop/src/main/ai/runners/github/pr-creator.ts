@@ -198,7 +198,7 @@ Write a professional PR description. Output ONLY the Markdown body — no preamb
 
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt,
     });
 

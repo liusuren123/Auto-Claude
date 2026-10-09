@@ -14,7 +14,7 @@ vi.mock('ai', () => ({
   Output: {
     object: vi.fn((opts: unknown) => opts),
   },
-  stepCountIs: vi.fn((n: number) => ({ type: 'stepCount', count: n })),
+  isStepCount: vi.fn((n: number) => ({ type: 'stepCount', count: n })),
 }));
 
 // Mock agent configs

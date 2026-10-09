@@ -74,7 +74,7 @@ export async function resolveMergeConflict(
 
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt: userPrompt,
     });
 

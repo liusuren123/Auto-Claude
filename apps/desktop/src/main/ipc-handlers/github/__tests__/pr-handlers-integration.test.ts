@@ -27,7 +27,7 @@ import type { PRReviewResult, PRReviewProgress } from '../pr-handlers';
 const mockStreamText = vi.fn();
 vi.mock('ai', () => ({
   streamText: (...args: unknown[]) => mockStreamText(...args),
-  stepCountIs: vi.fn((n: number) => ({ __stepCount: n })),
+  isStepCount: vi.fn((n: number) => ({ __stepCount: n })),
   generateObject: vi.fn(),
   generateText: vi.fn(),
 }));

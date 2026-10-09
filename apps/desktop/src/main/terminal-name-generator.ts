@@ -60,7 +60,7 @@ export class TerminalNameGenerator extends EventEmitter {
 
       const result = await generateText({
         model: client.model,
-        system: client.systemPrompt,
+        instructions: client.systemPrompt,
         prompt,
       });
 

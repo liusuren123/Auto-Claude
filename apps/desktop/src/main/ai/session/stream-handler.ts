@@ -2,10 +2,10 @@
  * Stream Handler
  * ==============
  *
- * Processes AI SDK v6 fullStream events and emits structured StreamEvent objects.
+ * Processes AI SDK v7 stream events and emits structured StreamEvent objects.
  * Bridges the raw AI SDK stream into the session event system.
  *
- * AI SDK v6 fullStream parts handled:
+ * AI SDK v7 stream parts handled:
  * - text-delta: Incremental text output (field: `text`)
  * - reasoning-delta: Extended thinking / reasoning output (field: `delta`)
  * - tool-call: Model has assembled a complete tool call (fields: `toolCallId`, `toolName`, `input`)
@@ -27,10 +27,10 @@ import { classifyError, classifyToolError } from './error-classifier';
 // =============================================================================
 
 /**
- * AI SDK v6 fullStream part types we handle.
- * These match the actual shape emitted by `streamText().fullStream` in AI SDK v6.
+ * AI SDK v7 stream part types we handle.
+ * These match the actual shape emitted by `streamText().stream` in AI SDK v7.
  *
- * Verified against AI SDK v6 docs:
+ * Verified against AI SDK v7 docs:
  * - text-delta uses `text` field
  * - reasoning-delta uses `delta` field
  * - tool-call has `toolCallId`, `toolName`, `input`
@@ -128,13 +128,13 @@ function createInitialState(): StreamHandlerState {
 // =============================================================================
 
 /**
- * Creates a stream handler that processes AI SDK v6 fullStream parts
+ * Creates a stream handler that processes AI SDK v7 stream parts
  * and emits structured StreamEvents via the callback.
  *
  * Usage:
  * ```ts
  * const handler = createStreamHandler(onEvent);
- * for await (const part of result.fullStream) {
+ * for await (const part of result.stream) {
  *   handler.processPart(part);
  * }
  * const summary = handler.getSummary();
@@ -237,7 +237,7 @@ export function createStreamHandler(onEvent: SessionEventCallback) {
   function handleFinishStep(part: FinishStepPart): void {
     state.stepNumber++;
 
-    // AI SDK v6 finish-step usage: promptTokens/completionTokens
+    // AI SDK v7 finish-step usage: promptTokens/completionTokens
     const promptTokens = part.usage?.promptTokens ?? 0;
     const completionTokens = part.usage?.completionTokens ?? 0;
     const totalTokens = promptTokens + completionTokens;

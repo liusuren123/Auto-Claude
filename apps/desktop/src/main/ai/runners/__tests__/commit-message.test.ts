@@ -97,7 +97,7 @@ describe('generateCommitMessage', () => {
     expect(mockGenerateText).toHaveBeenCalledOnce();
     const callArgs = mockGenerateText.mock.calls[0][0];
     expect(callArgs.model).toBe(fakeModel);
-    expect(callArgs.system).toBe('You are a Git expert.');
+    expect(callArgs.instructions).toBe('You are a Git expert.');
   });
 
   it('includes diffSummary in the prompt sent to generateText', async () => {

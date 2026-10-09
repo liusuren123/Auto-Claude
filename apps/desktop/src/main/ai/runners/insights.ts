@@ -11,7 +11,7 @@
  * Uses `createSimpleClient()` with read-only tools (Read, Glob, Grep) and streaming.
  */
 
-import { streamText, stepCountIs } from 'ai';
+import { streamText, isStepCount } from 'ai';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -274,10 +274,10 @@ export async function runInsightsQuery(
   try {
     const result = streamText({
       model: client.model,
-      system: isCodexInsights ? undefined : client.systemPrompt,
+      instructions: isCodexInsights ? undefined : client.systemPrompt,
       prompt: fullPrompt,
       tools: client.tools,
-      stopWhen: stepCountIs(client.maxSteps),
+      stopWhen: isStepCount(client.maxSteps),
       abortSignal,
       ...(isCodexInsights ? {
         providerOptions: {
@@ -289,7 +289,7 @@ export async function runInsightsQuery(
       } : {}),
     });
 
-    for await (const part of result.fullStream) {
+    for await (const part of result.stream) {
       switch (part.type) {
         case 'text-delta': {
           responseText += part.text;

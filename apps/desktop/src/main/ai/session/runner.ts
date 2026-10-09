@@ -4,11 +4,11 @@
  *
  * Core agent session runtime. Replaces Python's `run_agent_session()`.
  *
- * Uses Vercel AI SDK v6:
- * - `streamText()` with `stopWhen: stepCountIs(N)` for agentic looping
+ * Uses Vercel AI SDK v7:
+ * - `streamText()` with `stopWhen: isStepCount(N)` for agentic looping
  * - `prepareStep` callback for between-step memory injection (optional)
- * - `onStepFinish` callbacks for progress tracking
- * - `fullStream` for text-delta, tool-call, tool-result, reasoning events
+ * - `onStepEnd` callbacks for progress tracking
+ * - `stream` for text-delta, tool-call, tool-result, reasoning events
  *
  * Handles:
  * - Token refresh mid-session (catch 401 → reactive refresh → retry)
@@ -17,7 +17,7 @@
  * - Memory-aware step limits via calibration factor
  */
 
-import { streamText, stepCountIs, Output } from 'ai';
+import { streamText, isStepCount, Output } from 'ai';
 import type { Tool as AITool } from 'ai';
 import type { WorkerObserverProxy } from '../memory/ipc/worker-observer-proxy';
 import { StepMemoryState } from '../memory/injection/step-memory-state';
@@ -132,7 +132,7 @@ export interface RunnerOptions {
 // =============================================================================
 
 /**
- * Run an agent session using AI SDK v6 `streamText()`.
+ * Run an agent session using AI SDK v7 `streamText()`.
  *
  * This is the main entry point for executing an agent. It:
  * 1. Configures `streamText()` with tools, system prompt, and stop conditions
@@ -271,7 +271,7 @@ async function executeStream(
   // Apply calibration-adjusted step limit if memory context is available
   const stopCondition = memoryContext
     ? buildMemoryAwareStopCondition(baseMaxSteps, memoryContext.calibrationFactor)
-    : stepCountIs(baseMaxSteps);
+    : isStepCount(baseMaxSteps);
 
   const maxSteps = baseMaxSteps; // Keep for outcome detection
   const progressTracker = new ProgressTracker();
@@ -363,7 +363,7 @@ async function executeStream(
 
   const result = streamText({
     model: config.model,
-    system: isCodex ? undefined : config.systemPrompt,
+    instructions: isCodex ? undefined : config.systemPrompt,
     messages: aiMessages,
     tools: tools ?? {},
     ...(useOutputSchema ? { output: Output.object({ schema: config.outputSchema! }) } : {}),
@@ -438,7 +438,7 @@ async function executeStream(
       if (memoryContext && stepMemoryState) {
         if (stepNumber < MEMORY_INJECTION_WARMUP_STEPS) {
           memoryContext.proxy.onStepComplete(stepNumber);
-          return systemMessage ? { system: systemMessage } : {};
+          return systemMessage ? { instructions: systemMessage } : {};
         }
 
         const recentContext = stepMemoryState.getRecentContext(5);
@@ -450,7 +450,7 @@ async function executeStream(
         memoryContext.proxy.onStepComplete(stepNumber);
 
         if (!injection) {
-          return systemMessage ? { system: systemMessage } : {};
+          return systemMessage ? { instructions: systemMessage } : {};
         }
 
         stepMemoryState.markInjected(injection.memoryIds);
@@ -459,15 +459,15 @@ async function executeStream(
           ? `${systemMessage}\n\n${injection.content}`
           : injection.content;
 
-        return { system: combinedSystem };
+        return { instructions: combinedSystem };
       }
 
       // No memory context — just return system message if applicable
-      return systemMessage ? { system: systemMessage } : {};
+      return systemMessage ? { instructions: systemMessage } : {};
     },
-    onStepFinish: (_stepResult) => {
-      // onStepFinish is called after each agentic step.
-      // Step results (tool calls, usage) are handled via the fullStream handler.
+    onStepEnd: (_stepResult) => {
+      // onStepEnd is called after each agentic step.
+      // Step results (tool calls, usage) are handled via the stream handler.
     },
   });
 
@@ -484,7 +484,7 @@ async function executeStream(
 
   resetStreamInactivityTimer(); // Arm for initial response
   try {
-    for await (const part of result.fullStream) {
+    for await (const part of result.stream) {
       resetStreamInactivityTimer(); // Reset on each part
       streamHandler.processPart(part as FullStreamPart);
     }
@@ -610,7 +610,7 @@ async function executeStream(
   }
 
   // Get total usage from AI SDK result
-  // AI SDK v6 uses inputTokens/outputTokens naming
+  // AI SDK v7 uses inputTokens/outputTokens naming
   let totalUsage: { inputTokens?: number; outputTokens?: number } | undefined;
   try {
     totalUsage = await withTimeout(result.totalUsage, POST_STREAM_TIMEOUT_MS, 'result.totalUsage');

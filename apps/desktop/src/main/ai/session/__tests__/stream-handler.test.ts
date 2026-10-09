@@ -13,7 +13,7 @@ describe('createStreamHandler', () => {
   });
 
   // ===========================================================================
-  // Text Delta (AI SDK v6: type='text-delta', field='text')
+  // Text Delta (AI SDK v7: type='text-delta', field='text')
   // ===========================================================================
 
   describe('text-delta', () => {
@@ -36,7 +36,7 @@ describe('createStreamHandler', () => {
   });
 
   // ===========================================================================
-  // Reasoning (AI SDK v6: type='reasoning-delta', field='delta')
+  // Reasoning (AI SDK v7: type='reasoning-delta', field='delta')
   // ===========================================================================
 
   describe('reasoning-delta', () => {
@@ -50,7 +50,7 @@ describe('createStreamHandler', () => {
   });
 
   // ===========================================================================
-  // Tool Call (AI SDK v6: type='tool-call', fields: toolCallId, toolName, input)
+  // Tool Call (AI SDK v7: type='tool-call', fields: toolCallId, toolName, input)
   // ===========================================================================
 
   describe('tool-call', () => {
@@ -84,7 +84,7 @@ describe('createStreamHandler', () => {
   });
 
   // ===========================================================================
-  // Tool Result (AI SDK v6: type='tool-result', fields: toolCallId, toolName, output)
+  // Tool Result (AI SDK v7: type='tool-result', fields: toolCallId, toolName, output)
   // ===========================================================================
 
   describe('tool-result', () => {
@@ -132,7 +132,7 @@ describe('createStreamHandler', () => {
   });
 
   // ===========================================================================
-  // Tool Error (AI SDK v6: type='tool-error', fields: toolCallId, toolName, error)
+  // Tool Error (AI SDK v7: type='tool-error', fields: toolCallId, toolName, error)
   // ===========================================================================
 
   describe('tool-error', () => {
@@ -157,7 +157,7 @@ describe('createStreamHandler', () => {
   });
 
   // ===========================================================================
-  // Step Finish (AI SDK v6: type='finish-step', usage.promptTokens/completionTokens)
+  // Step Finish (AI SDK v7: type='finish-step', usage.promptTokens/completionTokens)
   // ===========================================================================
 
   describe('finish-step', () => {
@@ -214,7 +214,7 @@ describe('createStreamHandler', () => {
   });
 
   // ===========================================================================
-  // Error (AI SDK v6: type='error', field='error')
+  // Error (AI SDK v7: type='error', field='error')
   // ===========================================================================
 
   describe('error', () => {

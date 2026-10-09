@@ -258,7 +258,7 @@ export async function extractSessionInsights(
 
     const result = await generateText({
       model: client.model,
-      system: client.systemPrompt,
+      instructions: client.systemPrompt,
       prompt,
       output: Output.object({ schema: ExtractedInsightsOutputSchema }),
     });
