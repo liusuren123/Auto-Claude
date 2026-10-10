@@ -13,6 +13,7 @@ import enGitlab from './locales/en/gitlab.json';
 import enTaskReview from './locales/en/taskReview.json';
 import enTerminal from './locales/en/terminal.json';
 import enErrors from './locales/en/errors.json';
+import enComponents from './locales/en/components.json';
 
 // Import French translation resources
 import frCommon from './locales/fr/common.json';
@@ -26,6 +27,21 @@ import frGitlab from './locales/fr/gitlab.json';
 import frTaskReview from './locales/fr/taskReview.json';
 import frTerminal from './locales/fr/terminal.json';
 import frErrors from './locales/fr/errors.json';
+import frComponents from './locales/fr/components.json';
+
+// Import Chinese (Simplified) translation resources
+import zhCommon from './locales/zh/common.json';
+import zhNavigation from './locales/zh/navigation.json';
+import zhSettings from './locales/zh/settings.json';
+import zhTasks from './locales/zh/tasks.json';
+import zhWelcome from './locales/zh/welcome.json';
+import zhOnboarding from './locales/zh/onboarding.json';
+import zhDialogs from './locales/zh/dialogs.json';
+import zhGitlab from './locales/zh/gitlab.json';
+import zhTaskReview from './locales/zh/taskReview.json';
+import zhTerminal from './locales/zh/terminal.json';
+import zhErrors from './locales/zh/errors.json';
+import zhComponents from './locales/zh/components.json';
 
 export const defaultNS = 'common';
 
@@ -41,7 +57,8 @@ export const resources = {
     gitlab: enGitlab,
     taskReview: enTaskReview,
     terminal: enTerminal,
-    errors: enErrors
+    errors: enErrors,
+    components: enComponents
   },
   fr: {
     common: frCommon,
@@ -54,7 +71,22 @@ export const resources = {
     gitlab: frGitlab,
     taskReview: frTaskReview,
     terminal: frTerminal,
-    errors: frErrors
+    errors: frErrors,
+    components: frComponents
+  },
+  zh: {
+    common: zhCommon,
+    navigation: zhNavigation,
+    settings: zhSettings,
+    tasks: zhTasks,
+    welcome: zhWelcome,
+    onboarding: zhOnboarding,
+    dialogs: zhDialogs,
+    gitlab: zhGitlab,
+    taskReview: zhTaskReview,
+    terminal: zhTerminal,
+    errors: zhErrors,
+    components: zhComponents
   }
 } as const;
 
@@ -62,10 +94,12 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en', // Default language (will be overridden by settings)
+    lng: 'en', // Initial language only; the active language is applied from
+    // settings at runtime (defaults to 'zh' via DEFAULT_APP_SETTINGS.language).
+    // Keeping 'en' here means unit tests render the English baseline.
     fallbackLng: 'en',
     defaultNS,
-    ns: ['common', 'navigation', 'settings', 'tasks', 'welcome', 'onboarding', 'dialogs', 'gitlab', 'taskReview', 'terminal', 'errors'],
+    ns: ['common', 'navigation', 'settings', 'tasks', 'welcome', 'onboarding', 'dialogs', 'gitlab', 'taskReview', 'terminal', 'errors', 'components'],
     interpolation: {
       escapeValue: false // React already escapes values
     },
