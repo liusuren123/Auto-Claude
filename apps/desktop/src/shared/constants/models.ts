@@ -71,6 +71,12 @@ export const ALL_AVAILABLE_MODELS: ModelOption[] = [
   { value: 'glm-4.7', label: 'GLM-4.7', provider: 'zai', description: 'Previous flagship', capabilities: { thinking: false, tools: true, vision: false, contextWindow: 128000 } },
   { value: 'glm-4.6v', label: 'GLM-4.6V', provider: 'zai', description: 'Multimodal', capabilities: { thinking: false, tools: true, vision: true, contextWindow: 128000 } },
   { value: 'glm-4.5-flash', label: 'GLM-4.5 Flash', provider: 'zai', description: 'Fast', capabilities: { thinking: false, tools: true, vision: false, contextWindow: 128000 } },
+  // DeepSeek
+  { value: 'deepseek-v4-pro', label: 'DeepSeek V4 Pro', provider: 'deepseek', description: 'Flagship reasoning', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 128000 } },
+  { value: 'deepseek-v4-flash', label: 'DeepSeek V4 Flash', provider: 'deepseek', description: 'Fast', capabilities: { thinking: false, tools: true, vision: false, contextWindow: 128000 } },
+  // MiniMax
+  { value: 'MiniMax-M2.7', label: 'MiniMax M2.7', provider: 'minimax', description: 'Flagship', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 1000000 } },
+  { value: 'MiniMax-M2.7-highspeed', label: 'MiniMax M2.7 Highspeed', provider: 'minimax', description: 'Faster output', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 1000000 } },
 ];
 
 // Maps model shorthand to actual Claude model IDs
@@ -316,6 +322,18 @@ export const PROVIDER_PRESET_DEFINITIONS: Partial<Record<BuiltinProvider, Record
     balanced: { primaryModel: 'glm-4.7',        primaryThinking: 'low', phaseModels: { spec: 'glm-4.7', planning: 'glm-4.7', coding: 'glm-4.7', qa: 'glm-4.7' },                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
     quick:    { primaryModel: 'glm-4.5-flash',  primaryThinking: 'low', phaseModels: { spec: 'glm-4.5-flash', planning: 'glm-4.5-flash', coding: 'glm-4.5-flash', qa: 'glm-4.5-flash' }, phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
   },
+  deepseek: {
+    auto:     { primaryModel: 'deepseek-v4-pro',   primaryThinking: 'low', phaseModels: { spec: 'deepseek-v4-pro', planning: 'deepseek-v4-pro', coding: 'deepseek-v4-pro', qa: 'deepseek-v4-pro' },             phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    complex:  { primaryModel: 'deepseek-v4-pro',   primaryThinking: 'low', phaseModels: { spec: 'deepseek-v4-pro', planning: 'deepseek-v4-pro', coding: 'deepseek-v4-pro', qa: 'deepseek-v4-pro' },             phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    balanced: { primaryModel: 'deepseek-v4-pro',   primaryThinking: 'low', phaseModels: { spec: 'deepseek-v4-pro', planning: 'deepseek-v4-pro', coding: 'deepseek-v4-pro', qa: 'deepseek-v4-pro' },             phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    quick:    { primaryModel: 'deepseek-v4-flash', primaryThinking: 'low', phaseModels: { spec: 'deepseek-v4-flash', planning: 'deepseek-v4-flash', coding: 'deepseek-v4-flash', qa: 'deepseek-v4-flash' },     phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+  },
+  minimax: {
+    auto:     { primaryModel: 'MiniMax-M2.7',            primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7', planning: 'MiniMax-M2.7', coding: 'MiniMax-M2.7', qa: 'MiniMax-M2.7' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    complex:  { primaryModel: 'MiniMax-M2.7',            primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7', planning: 'MiniMax-M2.7', coding: 'MiniMax-M2.7', qa: 'MiniMax-M2.7' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    balanced: { primaryModel: 'MiniMax-M2.7',            primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7', planning: 'MiniMax-M2.7', coding: 'MiniMax-M2.7', qa: 'MiniMax-M2.7' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    quick:    { primaryModel: 'MiniMax-M2.7-highspeed',  primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7-highspeed', planning: 'MiniMax-M2.7-highspeed', coding: 'MiniMax-M2.7-highspeed', qa: 'MiniMax-M2.7-highspeed' }, phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+  },
   ollama: {
     auto:     { primaryModel: '', primaryThinking: 'low', phaseModels: { spec: '', planning: '', coding: '', qa: '' }, phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
     complex:  { primaryModel: '', primaryThinking: 'low', phaseModels: { spec: '', planning: '', coding: '', qa: '' }, phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
@@ -414,6 +432,8 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
     mistral: { modelId: 'mistral-large-latest', reasoning: { type: 'none' } },
     groq: { modelId: 'meta-llama/llama-4-maverick', reasoning: { type: 'none' } },
     zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
+    deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
+    minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
   },
   'glm-5': {
     zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
@@ -424,6 +444,20 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
     zai: { modelId: 'glm-4.7', reasoning: { type: 'none' } },
     anthropic: { modelId: 'claude-sonnet-4-6', reasoning: { type: 'thinking_tokens', level: 'medium' } },
     openai: { modelId: 'gpt-5.2', reasoning: { type: 'reasoning_effort', level: 'medium' } },
+    deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
+    minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
+  },
+  'deepseek-v4-pro': {
+    deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
+    anthropic: { modelId: 'claude-opus-4-6', reasoning: { type: 'adaptive_effort', level: 'high' } },
+    openai: { modelId: 'gpt-5.3-codex', reasoning: { type: 'reasoning_effort', level: 'high' } },
+    zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
+  },
+  'MiniMax-M2.7': {
+    minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
+    anthropic: { modelId: 'claude-opus-4-6', reasoning: { type: 'adaptive_effort', level: 'high' } },
+    openai: { modelId: 'gpt-5.3-codex', reasoning: { type: 'reasoning_effort', level: 'high' } },
+    zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
   },
   'opus-1m': {
     anthropic: { modelId: 'claude-opus-4-6', reasoning: { type: 'adaptive_effort', level: 'high' } },
@@ -443,6 +477,8 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
     groq: { modelId: 'llama-3.3-70b-versatile', reasoning: { type: 'none' } },
     xai: { modelId: 'grok-3-mini', reasoning: { type: 'reasoning_effort', level: 'medium' } },
     zai: { modelId: 'glm-4.7', reasoning: { type: 'none' } },
+    deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
+    minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
   },
   'haiku': {
     anthropic: { modelId: 'claude-haiku-4-5-20251001', reasoning: { type: 'none' } },
@@ -451,6 +487,8 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
     mistral: { modelId: 'mistral-small-latest', reasoning: { type: 'none' } },
     groq: { modelId: 'llama-3.3-70b-versatile', reasoning: { type: 'none' } },
     zai: { modelId: 'glm-4.5-flash', reasoning: { type: 'none' } },
+    deepseek: { modelId: 'deepseek-v4-flash', reasoning: { type: 'none' } },
+    minimax: { modelId: 'MiniMax-M2.7-highspeed', reasoning: { type: 'none' } },
   },
   // ── OpenAI models ─────────────────────────────────────────────────────────
   'gpt-5.3-codex': {

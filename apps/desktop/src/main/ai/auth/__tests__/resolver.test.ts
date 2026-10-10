@@ -39,6 +39,7 @@ vi.mock('../../providers/factory', () => ({
 import { ensureValidToken, reactiveTokenRefresh } from '../../../claude-profile/token-refresh';
 import { scoreProviderAccount } from '../../../claude-profile/profile-scorer';
 import { resolveModelEquivalent } from '../../../../shared/constants/models';
+import type { ProviderAccount } from '../../../../shared/types/provider-account';
 import { detectProviderFromModel } from '../../providers/factory';
 import {
   resolveAuth,
@@ -503,5 +504,79 @@ describe('buildDefaultQueueConfig', () => {
 
     expect(result?.queue[0].id).toBe('x');
     expect(result?.queue[1].id).toBe('y');
+  });
+});
+
+// =============================================================================
+// OpenAI-compatible providers (DeepSeek / MiniMax / custom endpoint)
+//
+// Regression guard: these providers used to be missing from
+// BUILTIN_TO_SUPPORTED, so their accounts were silently skipped during queue
+// resolution.
+// =============================================================================
+
+describe('resolveAuthFromQueue — OpenAI-compatible providers', () => {
+  const makeAccount = (overrides: Partial<ProviderAccount> = {}): ProviderAccount => ({
+    id: 'acc-custom',
+    provider: 'openai-compatible',
+    authType: 'api-key',
+    apiKey: 'sk-custom-key',
+    name: 'Custom Endpoint',
+    billingModel: 'pay-per-use',
+    createdAt: 0,
+    updatedAt: 0,
+    ...overrides,
+  });
+
+  beforeEach(() => {
+    mockScoreProviderAccount.mockReturnValue({ available: true, score: 100 });
+    mockResolveModelEquivalent.mockReturnValue({
+      modelId: 'any-model',
+      reasoning: { type: 'none' },
+    });
+    vi.mocked(detectProviderFromModel).mockReturnValue(undefined);
+  });
+
+  it.each(['openai-compatible', 'deepseek', 'minimax'] as const)(
+    'resolves a %s account instead of silently skipping it',
+    async (provider) => {
+      const result = await resolveAuthFromQueue('sonnet', [makeAccount({ provider })]);
+
+      expect(result).not.toBeNull();
+      expect(result?.resolvedProvider).toBe(provider);
+    },
+  );
+
+  it('passes the account base URL through for a custom endpoint', async () => {
+    const result = await resolveAuthFromQueue('sonnet', [
+      makeAccount({ baseUrl: 'https://api.deepseek.com/v1' }),
+    ]);
+
+    expect(result?.baseURL).toBe('https://api.deepseek.com/v1');
+  });
+
+  it('normalizes an empty base URL to undefined so provider defaults apply', async () => {
+    const result = await resolveAuthFromQueue('sonnet', [makeAccount({ baseUrl: '' })]);
+
+    expect(result?.baseURL).toBeUndefined();
+  });
+
+  it('accepts an unrecognized model ID on a custom endpoint', async () => {
+    mockResolveModelEquivalent.mockReturnValue(null);
+    vi.mocked(detectProviderFromModel).mockReturnValue(undefined);
+
+    const result = await resolveAuthFromQueue('vendor-arbitrary-model', [makeAccount()]);
+
+    expect(result).not.toBeNull();
+    expect(result?.resolvedModelId).toBe('vendor-arbitrary-model');
+  });
+
+  it('still rejects a model that belongs to a different provider', async () => {
+    mockResolveModelEquivalent.mockReturnValue(null);
+    vi.mocked(detectProviderFromModel).mockReturnValue('anthropic');
+
+    const result = await resolveAuthFromQueue('claude-opus-4-6', [makeAccount()]);
+
+    expect(result).toBeNull();
   });
 });

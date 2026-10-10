@@ -32,6 +32,18 @@ export const PROVIDER_REGISTRY: ProviderInfo[] = [
     configFields: ['baseUrl'], website: 'https://z.ai/model-api',
   },
   {
+    id: 'deepseek', name: 'DeepSeek', description: 'DeepSeek V4 chat and reasoning models',
+    category: 'popular',
+    authMethods: ['api-key'], envVars: ['DEEPSEEK_API_KEY'],
+    configFields: ['baseUrl'], website: 'https://platform.deepseek.com/api_keys',
+  },
+  {
+    id: 'minimax', name: 'MiniMax', description: 'MiniMax M2 series models',
+    category: 'popular',
+    authMethods: ['api-key'], envVars: ['MINIMAX_API_KEY'],
+    configFields: ['baseUrl'], website: 'https://platform.minimaxi.com/user-center/basic-information/interface-key',
+  },
+  {
     id: 'xai', name: 'xAI', description: 'Grok models',
     category: 'popular',
     authMethods: ['api-key'], envVars: ['XAI_API_KEY'],

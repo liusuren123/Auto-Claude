@@ -549,6 +549,8 @@
     "provider": "提供方",
     "providerAnthropic": "Anthropic",
     "providerZai": "Z.AI",
+    "providerDeepSeek": "DeepSeek",
+    "providerMiniMax": "MiniMax",
     "providerZhipu": "智谱 AI",
     "crossProvider": "跨提供方",
     "crossProviderConfig": "跨提供方",

@@ -88,7 +88,9 @@ describe('createProvider', () => {
 
   it.each(allProviders)('creates a model instance for provider: %s', (provider) => {
     const result = createProvider({
-      config: { provider, apiKey: 'test-key' },
+      // `openai-compatible` has no default endpoint, so a base URL is required.
+      // Supplying one is harmless for every other provider.
+      config: { provider, apiKey: 'test-key', baseURL: 'https://example.test/v1' },
       modelId: 'test-model',
     });
     expect(result).toBeDefined();

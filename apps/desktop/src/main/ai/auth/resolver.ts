@@ -331,8 +331,26 @@ const BUILTIN_TO_SUPPORTED: Record<string, SupportedProvider> = {
   xai: 'xai',
   openrouter: 'openrouter',
   zai: 'zai',
+  deepseek: 'deepseek',
+  minimax: 'minimax',
+  'openai-compatible': 'openai-compatible',
   ollama: 'ollama',
 };
+
+/**
+ * Providers whose model IDs can't be matched by a known prefix, because the
+ * models are either user-installed (Ollama) or user-declared (custom
+ * OpenAI-compatible endpoints, and vendor IDs such as `MiniMax-M2.7`).
+ *
+ * For these providers an unrecognized model ID must not be treated as a
+ * provider mismatch — the user explicitly configured what that endpoint serves.
+ */
+const FLEXIBLE_MODEL_PROVIDERS = new Set<SupportedProvider>([
+  'ollama',
+  'openai-compatible',
+  'deepseek',
+  'minimax',
+]);
 
 /**
  * Resolve auth from the global priority queue.
@@ -393,15 +411,18 @@ export async function resolveAuthFromQueue(
     if (!modelSpec) {
       // No cross-provider equivalent found. Only proceed if the model is
       // native to this provider's API (detected via model ID prefix).
-      // Ollama is a special case: it runs arbitrary user-installed models with
-      // no predictable prefix (e.g., 'llama3.1:8b', 'mistral:7b', 'phi3:mini').
-      // When the account IS Ollama, allow any unrecognized model through since
-      // the user explicitly configured it. When the account is NOT Ollama, skip
-      // if the model can't be identified as native.
+      // Providers in FLEXIBLE_MODEL_PROVIDERS run models with no predictable
+      // prefix (e.g., Ollama's 'llama3.1:8b', a custom endpoint's arbitrary
+      // model list, or vendor IDs like 'MiniMax-M2.7'). When the account is one
+      // of those, allow any unrecognized model through since the user
+      // explicitly configured it. Otherwise skip if the model can't be
+      // identified as native.
       const nativeProvider = detectProviderFromModel(requestedModel);
-      if (nativeProvider !== supportedProvider && supportedProvider !== 'ollama') continue;
-      // If nativeProvider is defined but doesn't match Ollama, skip (e.g., 'claude-*' on Ollama)
-      if (supportedProvider === 'ollama' && nativeProvider && nativeProvider !== 'ollama') continue;
+      const isFlexibleProvider = FLEXIBLE_MODEL_PROVIDERS.has(supportedProvider);
+      if (nativeProvider !== supportedProvider && !isFlexibleProvider) continue;
+      // If nativeProvider is defined but belongs to a different provider, skip
+      // (e.g., 'claude-*' sent to Ollama or a custom endpoint)
+      if (isFlexibleProvider && nativeProvider && nativeProvider !== supportedProvider) continue;
     }
 
     const resolvedModelId = modelSpec?.modelId ?? requestedModel;
@@ -536,9 +557,11 @@ async function resolveCredentialsForAccount(
   // API key accounts
   if (account.authType === 'api-key' && account.apiKey) {
     // Z.AI: route to correct endpoint based on billing model
+    // Other providers: use the account base URL when set, otherwise let the
+    // provider factory apply its own default (empty string must fall through).
     const baseURL = account.provider === 'zai'
       ? resolveZaiBaseUrl(account)
-      : account.baseUrl;
+      : account.baseUrl || undefined;
 
     return {
       apiKey: account.apiKey,

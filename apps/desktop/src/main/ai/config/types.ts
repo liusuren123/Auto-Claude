@@ -147,6 +147,9 @@ export const MODEL_PROVIDER_MAP: Record<string, SupportedProvider> = {
   'llama-': 'groq',
   'grok-': 'xai',
   'glm-': 'zai',
+  'deepseek-': 'deepseek',
+  'MiniMax-': 'minimax',
+  'minimax-': 'minimax',
 } as const;
 
 // ============================================
@@ -238,6 +241,13 @@ export function buildThinkingProviderOptions(
       // @ai-sdk/openai-compatible merges providerOptions.openaiCompatible into the request body.
       // Z.AI thinking config uses type: 'enabled'/'disabled' (no budget parameter).
       return { openaiCompatible: { thinking: { type: 'enabled', clear_thinking: false } } };
+    }
+
+    case 'deepseek': {
+      // @ai-sdk/openai-compatible merges providerOptions.openaiCompatible into the request body.
+      // DeepSeek enables reasoning with {"thinking": {"type": "enabled"}} — the same
+      // request-body shape Z.AI uses. Its models expose a thinking and a non-thinking mode.
+      return { openaiCompatible: { thinking: { type: 'enabled' } } };
     }
 
     default:

@@ -91,6 +91,8 @@ export function AddAccountDialog({
           provider === 'ollama' ? 'http://localhost:11434'
           : provider === 'zai' && billingModelOverride === 'subscription' ? 'https://api.z.ai/api/anthropic'
           : provider === 'zai' ? 'https://api.z.ai/api/paas/v4'
+          : provider === 'deepseek' ? 'https://api.deepseek.com/v1'
+          : provider === 'minimax' ? 'https://api.minimaxi.com/v1'
           : ''
         );
         setRegion('us-east-1');
@@ -163,7 +165,7 @@ export function AddAccountDialog({
   }, [open, oauthStatus, isCodexOAuth]);
 
   const needsApiKey = provider !== 'ollama' && authType === 'api-key';
-  const needsBaseUrl = provider === 'ollama' || provider === 'azure' || provider === 'openai-compatible' || provider === 'zai' || (provider === 'anthropic' && authType === 'api-key');
+  const needsBaseUrl = provider === 'ollama' || provider === 'azure' || provider === 'openai-compatible' || provider === 'zai' || provider === 'deepseek' || provider === 'minimax' || (provider === 'anthropic' && authType === 'api-key');
   const needsRegion = provider === 'amazon-bedrock';
   const isBaseUrlRequired = provider === 'ollama' || provider === 'azure' || provider === 'openai-compatible';
 
@@ -628,7 +630,11 @@ export function AddAccountDialog({
                           ? 'https://api.z.ai/api/anthropic'
                           : provider === 'zai'
                             ? 'https://api.z.ai/api/paas/v4'
-                            : t('providers.dialog.placeholders.baseUrl')
+                            : provider === 'deepseek'
+                              ? 'https://api.deepseek.com/v1'
+                              : provider === 'minimax'
+                                ? 'https://api.minimaxi.com/v1'
+                                : t('providers.dialog.placeholders.baseUrl')
                   }
                 />
               </div>

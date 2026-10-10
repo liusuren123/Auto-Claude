@@ -54,6 +54,8 @@ const PROVIDER_BADGE_COLORS: Record<string, string> = {
   'ollama': 'bg-purple-500/10 text-purple-500 border-purple-500/20',
   'openai-compatible': 'bg-gray-500/10 text-gray-500 border-gray-500/20',
   'zai': 'bg-indigo-500/10 text-indigo-500 border-indigo-500/20',
+  'deepseek': 'bg-cyan-500/10 text-cyan-500 border-cyan-500/20',
+  'minimax': 'bg-rose-500/10 text-rose-500 border-rose-500/20',
   'openrouter': 'bg-violet-500/10 text-violet-500 border-violet-500/20',
 };
 
@@ -70,6 +72,8 @@ const PROVIDER_I18N_KEYS: Record<string, string> = {
   'openrouter': 'common:usage.providerOpenRouter',
   'openai-compatible': 'common:usage.providerCustomEndpoint',
   'zai': 'common:usage.providerZai',
+  'deepseek': 'common:usage.providerDeepSeek',
+  'minimax': 'common:usage.providerMiniMax',
 };
 
 /**

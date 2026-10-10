@@ -86,6 +86,37 @@ function createProviderSDKInstance(
         headers,
       });
 
+    case SupportedProvider.DeepSeek:
+      return createOpenAICompatible({
+        name: 'deepseek',
+        apiKey,
+        baseURL: baseURL || 'https://api.deepseek.com/v1',
+        headers,
+      });
+
+    case SupportedProvider.MiniMax:
+      return createOpenAICompatible({
+        name: 'minimax',
+        apiKey,
+        baseURL: baseURL || 'https://api.minimaxi.com/v1',
+        headers,
+      });
+
+    case SupportedProvider.OpenAICompatible: {
+      if (!baseURL) {
+        throw new Error(
+          'The openai-compatible provider requires an explicit base URL. ' +
+            'Set it on the provider account in Settings → Accounts.',
+        );
+      }
+      return createOpenAICompatible({
+        name: 'openai-compatible',
+        apiKey,
+        baseURL,
+        headers,
+      });
+    }
+
     case SupportedProvider.Ollama: {
       // Account settings store the base Ollama URL (e.g., 'http://localhost:11434')
       // but the OpenAI-compatible SDK needs the /v1 path appended.

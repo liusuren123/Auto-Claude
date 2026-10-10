@@ -79,6 +79,9 @@ export const PROVIDER_ENV_VARS: Record<SupportedProvider, string | undefined> = 
   xai: 'XAI_API_KEY',
   openrouter: 'OPENROUTER_API_KEY',
   zai: 'ZHIPU_API_KEY',
+  deepseek: 'DEEPSEEK_API_KEY',
+  minimax: 'MINIMAX_API_KEY',
+  'openai-compatible': undefined,  // User-defined endpoint, key comes from the account
   ollama: undefined,   // No auth required for local Ollama
 } as const;
 
@@ -105,6 +108,8 @@ export const PROVIDER_BASE_URL_ENV: Partial<Record<SupportedProvider, string>> =
   anthropic: 'ANTHROPIC_BASE_URL',
   openai: 'OPENAI_BASE_URL',
   azure: 'AZURE_OPENAI_ENDPOINT',
+  deepseek: 'DEEPSEEK_BASE_URL',
+  minimax: 'MINIMAX_BASE_URL',
 } as const;
 
 // ============================================
