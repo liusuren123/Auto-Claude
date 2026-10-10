@@ -3,6 +3,7 @@
  */
 
 import { Search, Filter } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../../ui/input';
 import {
   Select,
@@ -27,6 +28,7 @@ export function SearchAndFilterBar({
   onSearchChange,
   onFilterChange
 }: SearchAndFilterBarProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="flex gap-3 items-center shrink-0">
       <div className="flex-1 relative">
@@ -45,7 +47,7 @@ export function SearchAndFilterBar({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All states</SelectItem>
+          <SelectItem value="all">{t('searchAndFilterBar.allStates')}</SelectItem>
           {uniqueStateTypes.map(type => (
             <SelectItem key={type} value={type}>
               {type.charAt(0).toUpperCase() + type.slice(1)}

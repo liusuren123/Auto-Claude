@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Archive, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
@@ -17,6 +18,7 @@ export function ArchiveTasksCard({
   selectedTaskIds,
   selectedTasks
 }: ArchiveTasksCardProps) {
+  const { t } = useTranslation('components');
   const [isArchiving, setIsArchiving] = useState(false);
   const [archiveSuccess, setArchiveSuccess] = useState(false);
   const [archiveError, setArchiveError] = useState<string | null>(null);
@@ -43,7 +45,7 @@ export function ArchiveTasksCard({
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
           <Archive className="h-5 w-5" />
-          <CardTitle className="text-base">Archive Completed Tasks</CardTitle>
+          <CardTitle className="text-base">{t('archiveTasksCard.archiveCompleted')}</CardTitle>
         </div>
       </CardHeader>
       <CardContent>

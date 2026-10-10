@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Layers,
   CheckCircle2,
@@ -58,6 +59,7 @@ export function BatchReviewWizard({
   isAnalyzing,
   isApproving,
 }: BatchReviewWizardProps) {
+  const { t } = useTranslation('components');
   // Track which batches are selected for approval
   const [selectedBatchIds, setSelectedBatchIds] = useState<Set<number>>(new Set());
   // Track which single issues are selected for approval
@@ -355,7 +357,7 @@ export function BatchReviewWizard({
         <CheckCircle2 className="h-12 w-12 text-green-500" />
       </div>
       <div className="text-center space-y-2">
-        <h3 className="text-lg font-semibold">Batches Created</h3>
+        <h3 className="text-lg font-semibold">{t('batchReviewWizard.batchesCreated')}</h3>
         <p className="text-sm text-muted-foreground">
           Your selected issue batches are ready for processing.
         </p>

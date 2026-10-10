@@ -1,4 +1,5 @@
 import { Label } from '../ui/label';
+import { useTranslation } from 'react-i18next';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { AVAILABLE_MODELS } from '../../../shared/constants';
 import type { ProjectSettings } from '../../../shared/types';
@@ -9,11 +10,12 @@ interface AgentConfigSectionProps {
 }
 
 export function AgentConfigSection({ settings, onUpdateSettings }: AgentConfigSectionProps) {
+  const { t } = useTranslation('components');
   return (
     <section className="space-y-4">
-      <h3 className="text-sm font-semibold text-foreground">Agent Configuration</h3>
+      <h3 className="text-sm font-semibold text-foreground">{t('agentConfigSection.title')}</h3>
       <div className="space-y-2">
-        <Label htmlFor="model" className="text-sm font-medium text-foreground">Model</Label>
+        <Label htmlFor="model" className="text-sm font-medium text-foreground">{t('agentConfigSection.model')}</Label>
         <Select
           value={settings.model}
           onValueChange={(value) => onUpdateSettings({ model: value })}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Sparkles, Loader2, CheckCircle2, MessageCircle } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { Progress } from '../../ui/progress';
@@ -32,6 +33,7 @@ export function InvestigationDialog({
   onClose,
   projectId
 }: InvestigationDialogProps) {
+  const { t } = useTranslation('components');
   const [comments, setComments] = useState<GitHubComment[]>([]);
   const [selectedCommentIds, setSelectedCommentIds] = useState<number[]>([]);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -125,7 +127,7 @@ export function InvestigationDialog({
               </div>
             ) : fetchCommentsError ? (
               <div className="rounded-lg bg-destructive/10 border border-destructive/30 p-4">
-                <p className="text-sm text-destructive font-medium">Failed to load comments</p>
+                <p className="text-sm text-destructive font-medium">{t('investigationDialog.failedToLoadComments')}</p>
                 <p className="text-xs text-destructive/80 mt-1">{fetchCommentsError}</p>
               </div>
             ) : comments.length > 0 ? (

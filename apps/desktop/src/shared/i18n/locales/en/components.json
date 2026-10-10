@@ -452,5 +452,75 @@
   },
   "taskActions": {
     "taskCompletedSuccessfully": "Task completed successfully"
+  },
+  "agentConfigSection": {
+    "title": "Agent Configuration",
+    "model": "Model"
+  },
+  "projectSelector": {
+    "noProjectsYet": "No projects yet"
+  },
+  "roadmapEmptyState": {
+    "noRoadmapYet": "No Roadmap Yet"
+  },
+  "featureCard": {
+    "competitorInsightTooltip": "This feature addresses competitor pain points"
+  },
+  "teamProjectSelector": {
+    "allProjects": "All projects"
+  },
+  "searchAndFilterBar": {
+    "allStates": "All states"
+  },
+  "issueList": {
+    "selectATeam": "Select a team to view issues"
+  },
+  "codeImprovementDetails": {
+    "patternsToFollow": "Patterns to Follow"
+  },
+  "mrDetail": {
+    "reviewFailed": "Review failed"
+  },
+  "investigationDialog": {
+    "failedToLoadComments": "Failed to load comments"
+  },
+  "batchReviewWizard": {
+    "batchesCreated": "Batches Created"
+  },
+  "autoFixButton": {
+    "specCreatedFromIssue": "Spec created from issue"
+  },
+  "gitHubReleaseCard": {
+    "createRelease": "Create GitHub Release"
+  },
+  "changelogRoot": {
+    "noProjectSelected": "No Project Selected"
+  },
+  "archiveTasksCard": {
+    "archiveCompleted": "Archive Completed Tasks"
+  },
+  "terminalGrid": {
+    "agentTerminals": "Agent Terminals"
+  },
+  "taskFileExplorerDrawer": {
+    "projectFiles": "Project Files"
+  },
+  "roadmapKanbanView": {
+    "dropHere": "Drop here"
+  },
+  "insightsModelSelector": {
+    "agentProfile": "Agent Profile"
+  },
+  "fileTree": {
+    "noFilesFound": "No files found"
+  },
+  "fileExplorerPanel": {
+    "projectFiles": "Project Files"
+  },
+  "agentTools": {
+    "mcpServerOverview": "MCP Server Overview"
+  },
+  "agentProfiles": {
+    "title": "Agent Profiles"
   }
 }

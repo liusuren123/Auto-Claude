@@ -1,4 +1,5 @@
 import { Brain, Scale, Zap, Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../lib/utils';
 import { DEFAULT_AGENT_PROFILES, AVAILABLE_MODELS, THINKING_LEVELS } from '../../shared/constants';
 import { useSettingsStore, saveSettings } from '../stores/settings-store';
@@ -18,6 +19,7 @@ const iconMap: Record<string, React.ElementType> = {
  * Displays preset agent profiles for quick model/thinking level configuration
  */
 export function AgentProfiles() {
+  const { t } = useTranslation('components');
   const settings = useSettingsStore((state) => state.settings);
   const selectedProfileId = settings.selectedAgentProfile || 'auto';
 
@@ -110,7 +112,7 @@ export function AgentProfiles() {
       <div className="shrink-0 border-b border-border bg-background px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Agent Profiles</h1>
+            <h1 className="text-2xl font-bold text-foreground">{t('agentProfiles.title')}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Select a preset configuration for model and thinking level
             </p>

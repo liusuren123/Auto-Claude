@@ -42,7 +42,7 @@ interface TerminalGridProps {
 }
 
 export function TerminalGrid({ projectPath, onNewTaskClick, isActive = false }: TerminalGridProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'components']);
   const allTerminals = useTerminalStore((state) => state.terminals);
 
   // Track terminals that are in the grace period before being filtered out
@@ -446,7 +446,7 @@ export function TerminalGrid({ projectPath, onNewTaskClick, isActive = false }: 
             <Grid2X2 className="h-8 w-8 text-muted-foreground" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Agent Terminals</h2>
+            <h2 className="text-lg font-semibold text-foreground">{t('components:terminalGrid.agentTerminals')}</h2>
             <p className="mt-1 text-sm text-muted-foreground max-w-md">
               Spawn multiple terminals to run Claude agents in parallel.
               Use <kbd className="px-1.5 py-0.5 text-xs bg-card border border-border rounded">Ctrl+T</kbd> to create a new terminal.

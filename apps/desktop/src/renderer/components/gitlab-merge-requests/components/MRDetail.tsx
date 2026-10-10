@@ -97,7 +97,7 @@ export function MRDetail({
   onMergeMR,
   onApproveMR,
 }: MRDetailProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'components']);
   // Selection state for findings
   const [selectedFindingIds, setSelectedFindingIds] = useState<Set<string>>(new Set());
   const [postedFindingIds, setPostedFindingIds] = useState<Set<string>>(new Set());
@@ -632,7 +632,7 @@ export function MRDetail({
             <CardContent className="pt-4">
               <div className="flex items-center gap-2 text-destructive">
                 <XCircle className="h-4 w-4" />
-                <span className="text-sm">Review failed</span>
+                <span className="text-sm">{t('components:mrDetail.reviewFailed')}</span>
               </div>
             </CardContent>
           </Card>

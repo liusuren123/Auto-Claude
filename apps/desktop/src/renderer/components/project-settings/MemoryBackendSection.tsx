@@ -1,4 +1,5 @@
 import { Database } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { CollapsibleSection } from './CollapsibleSection';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
@@ -27,6 +28,7 @@ export function MemoryBackendSection({
   onUpdateConfig,
   onUpdateSettings,
 }: MemoryBackendSectionProps) {
+  const { t } = useTranslation('components');
   const pc = envConfig.memoryProviderConfig;
 
   // Map ProjectEnvConfig → MemoryPanelConfig
@@ -125,7 +127,7 @@ export function MemoryBackendSection({
           <Separator />
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">Database Name</Label>
+            <Label className="text-sm font-medium text-foreground">{t('securitySettings.databaseName')}</Label>
             <p className="text-xs text-muted-foreground">
               Name for the memory database (stored in ~/.auto-claude/memories/)
             </p>

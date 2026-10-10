@@ -1,4 +1,5 @@
 import { RefreshCw, Download, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import type { AutoBuildVersionInfo } from '../../../shared/types';
 
@@ -19,6 +20,7 @@ export function AutoBuildIntegration({
   onInitialize,
   onUpdate: _onUpdate,
 }: AutoBuildIntegrationProps) {
+  const { t } = useTranslation('components');
   return (
     <section className="space-y-4">
       <h3 className="text-sm font-semibold text-foreground">Auto-Build Integration</h3>
@@ -27,7 +29,7 @@ export function AutoBuildIntegration({
           <div className="flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-warning mt-0.5 shrink-0" />
             <div className="flex-1">
-              <p className="text-sm font-medium text-foreground">Not Initialized</p>
+              <p className="text-sm font-medium text-foreground">{t('generalSettings.notInitialized')}</p>
               <p className="text-xs text-muted-foreground mt-1">
                 Initialize Auto-Build to enable task creation and agent workflows.
               </p>

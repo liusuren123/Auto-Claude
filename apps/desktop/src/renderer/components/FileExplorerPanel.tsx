@@ -35,7 +35,7 @@ const contentVariants = {
 };
 
 export function FileExplorerPanel({ projectPath }: FileExplorerPanelProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'components']);
   const { isOpen, close, clearCache, loadDirectory } = useFileExplorerStore();
 
   const handleRefresh = () => {
@@ -74,7 +74,7 @@ export function FileExplorerPanel({ projectPath }: FileExplorerPanelProps) {
             <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-card/80 shrink-0">
               <div className="flex items-center gap-2">
                 <FolderTree className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium whitespace-nowrap">Project Files</span>
+                <span className="text-sm font-medium whitespace-nowrap">{t('components:fileExplorerPanel.projectFiles')}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Button

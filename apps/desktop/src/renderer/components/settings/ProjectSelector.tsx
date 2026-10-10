@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FolderOpen, Plus, Trash2 } from 'lucide-react';
 import {
   Select,
@@ -23,6 +24,7 @@ export function ProjectSelector({
   onProjectChange,
   onProjectAdded
 }: ProjectSelectorProps) {
+  const { t } = useTranslation('components');
   const projects = useProjectStore((state) => state.projects);
   const [showAddModal, setShowAddModal] = useState(false);
   const [open, setOpen] = useState(false);
@@ -63,7 +65,7 @@ export function ProjectSelector({
         <SelectContent className="min-w-(--radix-select-trigger-width) max-w-(--radix-select-trigger-width)">
           {projects.length === 0 ? (
             <div className="px-2 py-4 text-center text-sm text-muted-foreground">
-              <p>No projects yet</p>
+              <p>{t('projectSelector.noProjectsYet')}</p>
             </div>
           ) : (
             projects.map((project) => (

@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { X, FolderTree, RefreshCw } from 'lucide-react';
 import { Button } from './ui/button';
 import { FileTree } from './FileTree';
@@ -35,6 +36,7 @@ const contentVariants = {
 };
 
 export function TaskFileExplorerDrawer({ isOpen, onClose, projectPath }: TaskFileExplorerDrawerProps) {
+  const { t } = useTranslation('components');
   const { clearCache, loadDirectory } = useFileExplorerStore();
 
   const handleRefresh = () => {
@@ -73,7 +75,7 @@ export function TaskFileExplorerDrawer({ isOpen, onClose, projectPath }: TaskFil
             <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-card/80 shrink-0">
               <div className="flex items-center gap-2">
                 <FolderTree className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium whitespace-nowrap">Project Files</span>
+                <span className="text-sm font-medium whitespace-nowrap">{t('taskFileExplorerDrawer.projectFiles')}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Button

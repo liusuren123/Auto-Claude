@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Wand2, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { Progress } from '../../ui/progress';
@@ -13,6 +14,7 @@ interface AutoFixButtonProps {
 }
 
 export function AutoFixButton({ issue, projectId, config, queueItem }: AutoFixButtonProps) {
+  const { t } = useTranslation('components');
   const [isStarting, setIsStarting] = useState(false);
   const [progress, setProgress] = useState<AutoFixProgress | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -84,7 +86,7 @@ export function AutoFixButton({ issue, projectId, config, queueItem }: AutoFixBu
     return (
       <div className="flex items-center gap-2 text-success text-sm">
         <CheckCircle2 className="h-4 w-4" />
-        <span>Spec created from issue</span>
+        <span>{t('autoFixButton.specCreatedFromIssue')}</span>
       </div>
     );
   }

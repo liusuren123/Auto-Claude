@@ -452,5 +452,75 @@
   },
   "taskActions": {
     "taskCompletedSuccessfully": "任务已成功完成"
+  },
+  "agentConfigSection": {
+    "title": "智能体配置",
+    "model": "模型"
+  },
+  "projectSelector": {
+    "noProjectsYet": "暂无项目"
+  },
+  "roadmapEmptyState": {
+    "noRoadmapYet": "暂无路线图"
+  },
+  "featureCard": {
+    "competitorInsightTooltip": "此功能旨在解决竞品发现的痛点"
+  },
+  "teamProjectSelector": {
+    "allProjects": "全部项目"
+  },
+  "searchAndFilterBar": {
+    "allStates": "全部状态"
+  },
+  "issueList": {
+    "selectATeam": "请选择一个团队以查看问题"
+  },
+  "codeImprovementDetails": {
+    "patternsToFollow": "建议遵循的模式"
+  },
+  "mrDetail": {
+    "reviewFailed": "评审失败"
+  },
+  "investigationDialog": {
+    "failedToLoadComments": "加载评论失败"
+  },
+  "batchReviewWizard": {
+    "batchesCreated": "已创建批次"
+  },
+  "autoFixButton": {
+    "specCreatedFromIssue": "已基于 Issue 创建 Spec"
+  },
+  "gitHubReleaseCard": {
+    "createRelease": "创建 GitHub Release"
+  },
+  "changelogRoot": {
+    "noProjectSelected": "未选择项目"
+  },
+  "archiveTasksCard": {
+    "archiveCompleted": "归档已完成的任务"
+  },
+  "terminalGrid": {
+    "agentTerminals": "Agent 终端"
+  },
+  "taskFileExplorerDrawer": {
+    "projectFiles": "项目文件"
+  },
+  "roadmapKanbanView": {
+    "dropHere": "拖至此处"
+  },
+  "insightsModelSelector": {
+    "agentProfile": "智能体配置"
+  },
+  "fileTree": {
+    "noFilesFound": "未找到文件"
+  },
+  "fileExplorerPanel": {
+    "projectFiles": "项目文件"
+  },
+  "agentTools": {
+    "mcpServerOverview": "MCP 服务器概览"
+  },
+  "agentProfiles": {
+    "title": "智能体配置"
   }
 }

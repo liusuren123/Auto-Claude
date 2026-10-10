@@ -21,7 +21,7 @@ export function FeatureCard({
   onArchive,
   hasCompetitorInsight = false,
 }: FeatureCardProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'components']);
 
   return (
     <Card className="p-4 hover:bg-muted/50 cursor-pointer transition-colors" onClick={onClick}>
@@ -51,7 +51,7 @@ export function FeatureCard({
                     Competitor Insight
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>This feature addresses competitor pain points</TooltipContent>
+                <TooltipContent>{t('components:featureCard.competitorInsightTooltip')}</TooltipContent>
               </Tooltip>
             )}
           </div>

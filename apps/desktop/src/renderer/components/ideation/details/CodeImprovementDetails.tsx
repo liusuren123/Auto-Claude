@@ -4,6 +4,7 @@ import {
   FileCode,
   Circle
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../../ui/badge';
 import { Card } from '../../ui/card';
 import {
@@ -16,6 +17,7 @@ interface CodeImprovementDetailsProps {
 }
 
 export function CodeImprovementDetails({ idea }: CodeImprovementDetailsProps) {
+  const { t } = useTranslation('components');
   return (
     <>
       {/* Metrics */}
@@ -80,7 +82,7 @@ export function CodeImprovementDetails({ idea }: CodeImprovementDetailsProps) {
       {/* Existing Patterns */}
       {idea.existingPatterns && idea.existingPatterns.length > 0 && (
         <div>
-          <h3 className="text-sm font-medium mb-2">Patterns to Follow</h3>
+          <h3 className="text-sm font-medium mb-2">{t('codeImprovementDetails.patternsToFollow')}</h3>
           <ul className="space-y-1">
             {idea.existingPatterns.map((pattern, i) => (
               <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">

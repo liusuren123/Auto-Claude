@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Github, RefreshCw, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
@@ -14,6 +15,7 @@ export function GitHubReleaseCard({
   version,
   generatedChangelog
 }: GitHubReleaseCardProps) {
+  const { t } = useTranslation('components');
   const [isCreatingRelease, setIsCreatingRelease] = useState(false);
   const [releaseUrl, setReleaseUrl] = useState<string | null>(null);
   const [releaseError, setReleaseError] = useState<string | null>(null);
@@ -46,7 +48,7 @@ export function GitHubReleaseCard({
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
           <Github className="h-5 w-5" />
-          <CardTitle className="text-base">Create GitHub Release</CardTitle>
+          <CardTitle className="text-base">{t('gitHubReleaseCard.createRelease')}</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
