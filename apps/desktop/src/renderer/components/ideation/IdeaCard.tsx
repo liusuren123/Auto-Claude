@@ -95,12 +95,12 @@ export function IdeaCard({ idea, isSelected, onClick, onConvert, onGoToTask, onD
             )}
             {isUIUXIdea(idea) && typeof (idea as UIUXImprovementIdea).category === 'string' && (
               <Badge variant="outline">
-                {UIUX_CATEGORY_LABELS[(idea as UIUXImprovementIdea).category]}
+                {t(UIUX_CATEGORY_LABELS[(idea as UIUXImprovementIdea).category])}
               </Badge>
             )}
             {isDocumentationGapIdea(idea) && typeof (idea as DocumentationGapIdea).category === 'string' && (
               <Badge variant="outline">
-                {DOCUMENTATION_CATEGORY_LABELS[(idea as DocumentationGapIdea).category]}
+                {t(DOCUMENTATION_CATEGORY_LABELS[(idea as DocumentationGapIdea).category])}
               </Badge>
             )}
             {isSecurityHardeningIdea(idea) && typeof (idea as SecurityHardeningIdea).severity === 'string' && (

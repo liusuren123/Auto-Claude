@@ -72,10 +72,10 @@ export function FeatureModelSettings({ provider }: FeatureModelSettingsProps) {
           <div key={feature} className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-sm font-medium text-foreground">
-                {FEATURE_LABELS[feature].label}
+                {t(FEATURE_LABELS[feature].label)}
               </Label>
               <span className="text-xs text-muted-foreground">
-                {FEATURE_LABELS[feature].description}
+                {t(FEATURE_LABELS[feature].description)}
               </span>
             </div>
             <div className="grid grid-cols-2 gap-3 max-w-md">

@@ -569,5 +569,84 @@
       "open": "Open",
       "closed": "Closed"
     }
+  },
+  "ideation": {
+    "uiuxCategory": {
+      "usability": "Usability",
+      "accessibility": "Accessibility",
+      "performance": "Performance",
+      "visual": "Visual Design",
+      "interaction": "Interaction"
+    },
+    "docCategory": {
+      "readme": "README",
+      "apiDocs": "API Documentation",
+      "inlineComments": "Inline Comments",
+      "examples": "Examples & Tutorials",
+      "architecture": "Architecture Docs",
+      "troubleshooting": "Troubleshooting Guide"
+    },
+    "securityCategory": {
+      "authentication": "Authentication",
+      "authorization": "Authorization",
+      "inputValidation": "Input Validation",
+      "dataProtection": "Data Protection",
+      "dependencies": "Dependencies",
+      "configuration": "Configuration",
+      "secretsManagement": "Secrets Management"
+    },
+    "perfCategory": {
+      "bundleSize": "Bundle Size",
+      "runtime": "Runtime Performance",
+      "memory": "Memory Usage",
+      "database": "Database Queries",
+      "network": "Network Requests",
+      "rendering": "Rendering",
+      "caching": "Caching"
+    },
+    "codeQualityCategory": {
+      "largeFiles": "Large Files",
+      "codeSmells": "Code Smells",
+      "complexity": "High Complexity",
+      "duplication": "Code Duplication",
+      "naming": "Naming Conventions",
+      "structure": "File Structure",
+      "linting": "Linting Issues",
+      "testing": "Test Coverage",
+      "types": "Type Safety",
+      "dependencies": "Dependency Issues",
+      "deadCode": "Dead Code",
+      "gitHygiene": "Git Hygiene"
+    }
+  },
+  "featureLabels": {
+    "insights": {
+      "label": "Insights Chat",
+      "description": "Ask questions about your codebase"
+    },
+    "ideation": {
+      "label": "Ideation",
+      "description": "Generate feature ideas and improvements"
+    },
+    "roadmap": {
+      "label": "Roadmap",
+      "description": "Create strategic feature roadmaps"
+    },
+    "githubIssues": {
+      "label": "GitHub Issues",
+      "description": "Automated issue triage and labeling"
+    },
+    "githubPrs": {
+      "label": "GitHub PR Review",
+      "description": "AI-powered pull request reviews"
+    },
+    "utility": {
+      "label": "Utility",
+      "description": "Commit messages and merge conflict resolution"
+    },
+    "naming": {
+      "label": "AI Naming",
+      "description": "Task titles and terminal tab names"
+    }
   }
 }

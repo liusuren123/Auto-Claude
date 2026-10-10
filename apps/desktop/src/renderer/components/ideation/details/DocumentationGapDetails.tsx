@@ -4,6 +4,7 @@ import {
   CheckCircle2,
   FileCode
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../../ui/badge';
 import { Card } from '../../ui/card';
 import {
@@ -18,13 +19,14 @@ interface DocumentationGapDetailsProps {
 }
 
 export function DocumentationGapDetails({ idea }: DocumentationGapDetailsProps) {
+  const { t } = useTranslation('components');
   return (
     <>
       {/* Metrics */}
       <div className="grid grid-cols-2 gap-2">
         <Card className="p-3 text-center">
           <div className="text-lg font-semibold">
-            {DOCUMENTATION_CATEGORY_LABELS[idea.category]}
+            {t(DOCUMENTATION_CATEGORY_LABELS[idea.category])}
           </div>
           <div className="text-xs text-muted-foreground">Category</div>
         </Card>

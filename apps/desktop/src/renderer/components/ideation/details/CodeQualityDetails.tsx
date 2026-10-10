@@ -48,7 +48,7 @@ export function CodeQualityDetails({ idea }: CodeQualityDetailsProps) {
           Category
         </h3>
         <Badge variant="outline">
-          {CODE_QUALITY_CATEGORY_LABELS[idea.category]}
+          {t(CODE_QUALITY_CATEGORY_LABELS[idea.category])}
         </Badge>
       </div>
 

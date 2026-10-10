@@ -98,59 +98,59 @@ export const SECURITY_SEVERITY_COLORS: Record<string, string> = {
 
 // UI/UX category labels
 export const UIUX_CATEGORY_LABELS: Record<string, string> = {
-  usability: 'Usability',
-  accessibility: 'Accessibility',
-  performance: 'Performance',
-  visual: 'Visual Design',
-  interaction: 'Interaction'
+  usability: 'ideation.uiuxCategory.usability',
+  accessibility: 'ideation.uiuxCategory.accessibility',
+  performance: 'ideation.uiuxCategory.performance',
+  visual: 'ideation.uiuxCategory.visual',
+  interaction: 'ideation.uiuxCategory.interaction'
 };
 
 // Documentation category labels
 export const DOCUMENTATION_CATEGORY_LABELS: Record<string, string> = {
-  readme: 'README',
-  api_docs: 'API Documentation',
-  inline_comments: 'Inline Comments',
-  examples: 'Examples & Tutorials',
-  architecture: 'Architecture Docs',
-  troubleshooting: 'Troubleshooting Guide'
+  readme: 'ideation.docCategory.readme',
+  api_docs: 'ideation.docCategory.apiDocs',
+  inline_comments: 'ideation.docCategory.inlineComments',
+  examples: 'ideation.docCategory.examples',
+  architecture: 'ideation.docCategory.architecture',
+  troubleshooting: 'ideation.docCategory.troubleshooting'
 };
 
 // Security category labels
 export const SECURITY_CATEGORY_LABELS: Record<string, string> = {
-  authentication: 'Authentication',
-  authorization: 'Authorization',
-  input_validation: 'Input Validation',
-  data_protection: 'Data Protection',
-  dependencies: 'Dependencies',
-  configuration: 'Configuration',
-  secrets_management: 'Secrets Management'
+  authentication: 'ideation.securityCategory.authentication',
+  authorization: 'ideation.securityCategory.authorization',
+  input_validation: 'ideation.securityCategory.inputValidation',
+  data_protection: 'ideation.securityCategory.dataProtection',
+  dependencies: 'ideation.securityCategory.dependencies',
+  configuration: 'ideation.securityCategory.configuration',
+  secrets_management: 'ideation.securityCategory.secretsManagement'
 };
 
 // Performance category labels
 export const PERFORMANCE_CATEGORY_LABELS: Record<string, string> = {
-  bundle_size: 'Bundle Size',
-  runtime: 'Runtime Performance',
-  memory: 'Memory Usage',
-  database: 'Database Queries',
-  network: 'Network Requests',
-  rendering: 'Rendering',
-  caching: 'Caching'
+  bundle_size: 'ideation.perfCategory.bundleSize',
+  runtime: 'ideation.perfCategory.runtime',
+  memory: 'ideation.perfCategory.memory',
+  database: 'ideation.perfCategory.database',
+  network: 'ideation.perfCategory.network',
+  rendering: 'ideation.perfCategory.rendering',
+  caching: 'ideation.perfCategory.caching'
 };
 
 // Code quality category labels
 export const CODE_QUALITY_CATEGORY_LABELS: Record<string, string> = {
-  large_files: 'Large Files',
-  code_smells: 'Code Smells',
-  complexity: 'High Complexity',
-  duplication: 'Code Duplication',
-  naming: 'Naming Conventions',
-  structure: 'File Structure',
-  linting: 'Linting Issues',
-  testing: 'Test Coverage',
-  types: 'Type Safety',
-  dependencies: 'Dependency Issues',
-  dead_code: 'Dead Code',
-  git_hygiene: 'Git Hygiene'
+  large_files: 'ideation.codeQualityCategory.largeFiles',
+  code_smells: 'ideation.codeQualityCategory.codeSmells',
+  complexity: 'ideation.codeQualityCategory.complexity',
+  duplication: 'ideation.codeQualityCategory.duplication',
+  naming: 'ideation.codeQualityCategory.naming',
+  structure: 'ideation.codeQualityCategory.structure',
+  linting: 'ideation.codeQualityCategory.linting',
+  testing: 'ideation.codeQualityCategory.testing',
+  types: 'ideation.codeQualityCategory.types',
+  dependencies: 'ideation.codeQualityCategory.dependencies',
+  dead_code: 'ideation.codeQualityCategory.deadCode',
+  git_hygiene: 'ideation.codeQualityCategory.gitHygiene'
 };
 
 // Code quality severity colors

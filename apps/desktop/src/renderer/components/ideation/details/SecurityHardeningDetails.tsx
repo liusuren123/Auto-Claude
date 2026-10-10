@@ -6,6 +6,7 @@ import {
   FileCode,
   ExternalLink
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../../ui/badge';
 import { Card } from '../../ui/card';
 import {
@@ -19,6 +20,7 @@ interface SecurityHardeningDetailsProps {
 }
 
 export function SecurityHardeningDetails({ idea }: SecurityHardeningDetailsProps) {
+  const { t } = useTranslation('components');
   return (
     <>
       {/* Metrics */}
@@ -44,7 +46,7 @@ export function SecurityHardeningDetails({ idea }: SecurityHardeningDetailsProps
           Category
         </h3>
         <Badge variant="outline">
-          {SECURITY_CATEGORY_LABELS[idea.category]}
+          {t(SECURITY_CATEGORY_LABELS[idea.category])}
         </Badge>
       </div>
 

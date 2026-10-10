@@ -464,7 +464,7 @@ export const TaskCard = memo(function TaskCard({
                     return <Icon className="h-2.5 w-2.5 mr-0.5" />;
                   })()
                 )}
-                {TASK_CATEGORY_LABELS[task.metadata.category]}
+                {t(TASK_CATEGORY_LABELS[task.metadata.category])}
               </Badge>
             )}
             {/* Impact badge - high visibility for important tasks */}
@@ -473,7 +473,7 @@ export const TaskCard = memo(function TaskCard({
                 variant="outline"
                 className={cn('text-[10px] px-1.5 py-0', TASK_IMPACT_COLORS[task.metadata.impact])}
               >
-                {TASK_IMPACT_LABELS[task.metadata.impact]}
+                {t(TASK_IMPACT_LABELS[task.metadata.impact])}
               </Badge>
             )}
             {/* Complexity badge */}
@@ -482,7 +482,7 @@ export const TaskCard = memo(function TaskCard({
                 variant="outline"
                 className={cn('text-[10px] px-1.5 py-0', TASK_COMPLEXITY_COLORS[task.metadata.complexity])}
               >
-                {TASK_COMPLEXITY_LABELS[task.metadata.complexity]}
+                {t(TASK_COMPLEXITY_LABELS[task.metadata.complexity])}
               </Badge>
             )}
             {/* Priority badge - only show urgent/high */}

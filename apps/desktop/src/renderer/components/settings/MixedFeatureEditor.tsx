@@ -68,7 +68,7 @@ function ProviderBadge({ provider }: { provider: BuiltinProvider }) {
  * adapted to that provider, and displays a provider badge.
  */
 export function MixedFeatureEditor() {
-  const { t } = useTranslation('settings');
+  const { t } = useTranslation(['settings', 'components']);
   const settings = useSettingsStore((s) => s.settings);
 
   const config: MixedFeatureConfig =

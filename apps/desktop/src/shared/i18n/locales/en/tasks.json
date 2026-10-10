@@ -371,6 +371,30 @@
       "medium": "Medium",
       "high": "High",
       "urgent": "Urgent"
+    },
+    "category": {
+      "feature": "Feature",
+      "bugFix": "Bug Fix",
+      "refactoring": "Refactoring",
+      "documentation": "Docs",
+      "security": "Security",
+      "performance": "Performance",
+      "uiUx": "UI/UX",
+      "infrastructure": "Infrastructure",
+      "testing": "Testing"
+    },
+    "complexity": {
+      "trivial": "Trivial",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "complex": "Complex"
+    },
+    "impact": {
+      "low": "Low Impact",
+      "medium": "Medium Impact",
+      "high": "High Impact",
+      "critical": "Critical Impact"
     }
   }
 }

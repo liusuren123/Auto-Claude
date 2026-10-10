@@ -371,6 +371,30 @@
       "medium": "中",
       "high": "高",
       "urgent": "紧急"
+    },
+    "category": {
+      "feature": "新功能",
+      "bugFix": "修复",
+      "refactoring": "重构",
+      "documentation": "文档",
+      "security": "安全",
+      "performance": "性能",
+      "uiUx": "UI/UX",
+      "infrastructure": "基础设施",
+      "testing": "测试"
+    },
+    "complexity": {
+      "trivial": "极简",
+      "small": "简单",
+      "medium": "中等",
+      "large": "复杂",
+      "complex": "非常复杂"
+    },
+    "impact": {
+      "low": "影响小",
+      "medium": "影响中等",
+      "high": "影响大",
+      "critical": "关键影响"
     }
   }
 }

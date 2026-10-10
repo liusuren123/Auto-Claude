@@ -569,5 +569,84 @@
       "open": "打开",
       "closed": "已关闭"
     }
+  },
+  "ideation": {
+    "uiuxCategory": {
+      "usability": "易用性",
+      "accessibility": "可访问性",
+      "performance": "性能",
+      "visual": "视觉设计",
+      "interaction": "交互"
+    },
+    "docCategory": {
+      "readme": "README",
+      "apiDocs": "API 文档",
+      "inlineComments": "内联注释",
+      "examples": "示例与教程",
+      "architecture": "架构文档",
+      "troubleshooting": "故障排查指南"
+    },
+    "securityCategory": {
+      "authentication": "身份认证",
+      "authorization": "授权",
+      "inputValidation": "输入校验",
+      "dataProtection": "数据保护",
+      "dependencies": "依赖管理",
+      "configuration": "配置",
+      "secretsManagement": "密钥管理"
+    },
+    "perfCategory": {
+      "bundleSize": "打包体积",
+      "runtime": "运行性能",
+      "memory": "内存占用",
+      "database": "数据库查询",
+      "network": "网络请求",
+      "rendering": "渲染",
+      "caching": "缓存"
+    },
+    "codeQualityCategory": {
+      "largeFiles": "过大文件",
+      "codeSmells": "代码异味",
+      "complexity": "高复杂度",
+      "duplication": "代码重复",
+      "naming": "命名规范",
+      "structure": "文件结构",
+      "linting": "Lint 问题",
+      "testing": "测试覆盖",
+      "types": "类型安全",
+      "dependencies": "依赖问题",
+      "deadCode": "死代码",
+      "gitHygiene": "Git 卫生"
+    }
+  },
+  "featureLabels": {
+    "insights": {
+      "label": "Insights 聊天",
+      "description": "向 AI 询问关于代码库的问题"
+    },
+    "ideation": {
+      "label": "创意",
+      "description": "生成功能创意和改进建议"
+    },
+    "roadmap": {
+      "label": "路线图",
+      "description": "制定战略性功能路线图"
+    },
+    "githubIssues": {
+      "label": "GitHub Issues",
+      "description": "自动化的 Issue 分类与打标"
+    },
+    "githubPrs": {
+      "label": "GitHub PR 评审",
+      "description": "AI 驱动的 PR 评审"
+    },
+    "utility": {
+      "label": "实用工具",
+      "description": "生成提交信息和解决合并冲突"
+    },
+    "naming": {
+      "label": "AI 命名",
+      "description": "任务标题和终端标签命名"
+    }
   }
 }

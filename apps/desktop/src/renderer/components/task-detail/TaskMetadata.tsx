@@ -114,7 +114,7 @@ export function TaskMetadata({ task }: TaskMetadataProps) {
                   const Icon = CategoryIcon[task.metadata.category!];
                   return <Icon className="h-3 w-3 mr-1" />;
                 })()}
-                {TASK_CATEGORY_LABELS[task.metadata.category]}
+                {t(TASK_CATEGORY_LABELS[task.metadata.category])}
               </Badge>
             )}
             {/* Priority */}
@@ -132,7 +132,7 @@ export function TaskMetadata({ task }: TaskMetadataProps) {
                 variant="outline"
                 className={cn('text-xs', TASK_COMPLEXITY_COLORS[task.metadata.complexity])}
               >
-                {TASK_COMPLEXITY_LABELS[task.metadata.complexity]}
+                {t(TASK_COMPLEXITY_LABELS[task.metadata.complexity])}
               </Badge>
             )}
             {/* Impact */}
@@ -141,7 +141,7 @@ export function TaskMetadata({ task }: TaskMetadataProps) {
                 variant="outline"
                 className={cn('text-xs', TASK_IMPACT_COLORS[task.metadata.impact])}
               >
-                {TASK_IMPACT_LABELS[task.metadata.impact]}
+                {t(TASK_IMPACT_LABELS[task.metadata.impact])}
               </Badge>
             )}
             {/* Security Severity */}

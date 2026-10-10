@@ -765,7 +765,7 @@ function MessageBubble({
                               TASK_CATEGORY_COLORS[task.metadata.category]
                             )}
                           >
-                            {TASK_CATEGORY_LABELS[task.metadata.category] ||
+                            {t(TASK_CATEGORY_LABELS[task.metadata.category]) ||
                               task.metadata.category}
                           </Badge>
                         )}
@@ -777,7 +777,7 @@ function MessageBubble({
                               TASK_COMPLEXITY_COLORS[task.metadata.complexity]
                             )}
                           >
-                            {TASK_COMPLEXITY_LABELS[task.metadata.complexity] ||
+                            {t(TASK_COMPLEXITY_LABELS[task.metadata.complexity]) ||
                               task.metadata.complexity}
                           </Badge>
                         )}

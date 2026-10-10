@@ -135,15 +135,15 @@ export const EXECUTION_PHASE_WEIGHTS: Record<string, { start: number; end: numbe
 // ============================================
 
 export const TASK_CATEGORY_LABELS: Record<string, string> = {
-  feature: 'Feature',
-  bug_fix: 'Bug Fix',
-  refactoring: 'Refactoring',
-  documentation: 'Docs',
-  security: 'Security',
-  performance: 'Performance',
-  ui_ux: 'UI/UX',
-  infrastructure: 'Infrastructure',
-  testing: 'Testing'
+  feature: 'taskDetail.category.feature',
+  bug_fix: 'taskDetail.category.bugFix',
+  refactoring: 'taskDetail.category.refactoring',
+  documentation: 'taskDetail.category.documentation',
+  security: 'taskDetail.category.security',
+  performance: 'taskDetail.category.performance',
+  ui_ux: 'taskDetail.category.uiUx',
+  infrastructure: 'taskDetail.category.infrastructure',
+  testing: 'taskDetail.category.testing'
 };
 
 export const TASK_CATEGORY_COLORS: Record<string, string> = {
@@ -163,11 +163,11 @@ export const TASK_CATEGORY_COLORS: Record<string, string> = {
 // ============================================
 
 export const TASK_COMPLEXITY_LABELS: Record<string, string> = {
-  trivial: 'Trivial',
-  small: 'Small',
-  medium: 'Medium',
-  large: 'Large',
-  complex: 'Complex'
+  trivial: 'taskDetail.complexity.trivial',
+  small: 'taskDetail.complexity.small',
+  medium: 'taskDetail.complexity.medium',
+  large: 'taskDetail.complexity.large',
+  complex: 'taskDetail.complexity.complex'
 };
 
 export const TASK_COMPLEXITY_COLORS: Record<string, string> = {
@@ -183,10 +183,10 @@ export const TASK_COMPLEXITY_COLORS: Record<string, string> = {
 // ============================================
 
 export const TASK_IMPACT_LABELS: Record<string, string> = {
-  low: 'Low Impact',
-  medium: 'Medium Impact',
-  high: 'High Impact',
-  critical: 'Critical Impact'
+  low: 'taskDetail.impact.low',
+  medium: 'taskDetail.impact.medium',
+  high: 'taskDetail.impact.high',
+  critical: 'taskDetail.impact.critical'
 };
 
 export const TASK_IMPACT_COLORS: Record<string, string> = {

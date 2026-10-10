@@ -202,13 +202,13 @@ export const DEFAULT_FEATURE_THINKING: FeatureThinkingConfig = {
 
 // Feature labels for UI display
 export const FEATURE_LABELS: Record<keyof FeatureModelConfig, { label: string; description: string }> = {
-  insights: { label: 'Insights Chat', description: 'Ask questions about your codebase' },
-  ideation: { label: 'Ideation', description: 'Generate feature ideas and improvements' },
-  roadmap: { label: 'Roadmap', description: 'Create strategic feature roadmaps' },
-  githubIssues: { label: 'GitHub Issues', description: 'Automated issue triage and labeling' },
-  githubPrs: { label: 'GitHub PR Review', description: 'AI-powered pull request reviews' },
-  utility: { label: 'Utility', description: 'Commit messages and merge conflict resolution' },
-  naming: { label: 'AI Naming', description: 'Task titles and terminal tab names' },
+  insights: { label: 'featureLabels.insights.label', description: 'featureLabels.insights.description' },
+  ideation: { label: 'featureLabels.ideation.label', description: 'featureLabels.ideation.description' },
+  roadmap: { label: 'featureLabels.roadmap.label', description: 'featureLabels.roadmap.description' },
+  githubIssues: { label: 'featureLabels.githubIssues.label', description: 'featureLabels.githubIssues.description' },
+  githubPrs: { label: 'featureLabels.githubPrs.label', description: 'featureLabels.githubPrs.description' },
+  utility: { label: 'featureLabels.utility.label', description: 'featureLabels.utility.description' },
+  naming: { label: 'featureLabels.naming.label', description: 'featureLabels.naming.description' },
 };
 
 // Default agent profiles for preset model/thinking configurations
