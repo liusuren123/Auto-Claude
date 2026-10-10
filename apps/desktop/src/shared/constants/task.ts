@@ -80,15 +80,15 @@ export const SUBTASK_STATUS_COLORS: Record<string, string> = {
 
 // Execution phase labels
 export const EXECUTION_PHASE_LABELS: Record<string, string> = {
-  idle: 'Idle',
-  planning: 'Planning',
-  coding: 'Coding',
-  rate_limit_paused: 'Rate Limited',
-  auth_failure_paused: 'Auth Required',
-  qa_review: 'AI Review',
-  qa_fixing: 'Fixing Issues',
-  complete: 'Complete',
-  failed: 'Failed'
+  idle: 'taskDetail.executionPhase.idle',
+  planning: 'taskDetail.executionPhase.planning',
+  coding: 'taskDetail.executionPhase.coding',
+  rate_limit_paused: 'taskDetail.executionPhase.rateLimited',
+  auth_failure_paused: 'taskDetail.executionPhase.authRequired',
+  qa_review: 'taskDetail.executionPhase.aiReview',
+  qa_fixing: 'taskDetail.executionPhase.fixingIssues',
+  complete: 'taskDetail.executionPhase.complete',
+  failed: 'taskDetail.executionPhase.failed'
 };
 
 // Execution phase colors (for progress bars and indicators)
@@ -201,10 +201,10 @@ export const TASK_IMPACT_COLORS: Record<string, string> = {
 // ============================================
 
 export const TASK_PRIORITY_LABELS: Record<string, string> = {
-  low: 'Low',
-  medium: 'Medium',
-  high: 'High',
-  urgent: 'Urgent'
+  low: 'taskDetail.priority.low',
+  medium: 'taskDetail.priority.medium',
+  high: 'taskDetail.priority.high',
+  urgent: 'taskDetail.priority.urgent'
 };
 
 export const TASK_PRIORITY_COLORS: Record<string, string> = {

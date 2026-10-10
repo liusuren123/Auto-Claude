@@ -107,7 +107,7 @@ export function ChangelogFilters({
                 <div className="flex items-center gap-2">
                   <FileText className="h-4 w-4" />
                   <span className="font-medium text-sm">
-                    {CHANGELOG_SOURCE_MODE_LABELS['tasks']}
+                    {t(CHANGELOG_SOURCE_MODE_LABELS['tasks'])}
                   </span>
                   <Badge variant="secondary" className="ml-auto text-xs">
                     {doneTasksCount}
@@ -132,7 +132,7 @@ export function ChangelogFilters({
                 <div className="flex items-center gap-2">
                   <History className="h-4 w-4" />
                   <span className="font-medium text-sm">
-                    {CHANGELOG_SOURCE_MODE_LABELS['git-history']}
+                    {t(CHANGELOG_SOURCE_MODE_LABELS['git-history'])}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -154,7 +154,7 @@ export function ChangelogFilters({
                 <div className="flex items-center gap-2">
                   <GitBranch className="h-4 w-4" />
                   <span className="font-medium text-sm">
-                    {CHANGELOG_SOURCE_MODE_LABELS['branch-diff']}
+                    {t(CHANGELOG_SOURCE_MODE_LABELS['branch-diff'])}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">

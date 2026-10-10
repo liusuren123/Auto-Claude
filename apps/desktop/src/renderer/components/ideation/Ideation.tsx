@@ -1,4 +1,5 @@
 import { TabsContent } from '../ui/tabs';
+import { useTranslation } from 'react-i18next';
 import { IDEATION_TYPE_DESCRIPTIONS } from '../../../shared/constants';
 import { IdeationEmptyState } from './IdeationEmptyState';
 import { IdeationHeader } from './IdeationHeader';
@@ -17,6 +18,7 @@ interface IdeationProps {
 }
 
 export function Ideation({ projectId, onGoToTask }: IdeationProps) {
+  const { t } = useTranslation('components');
   // Get showArchived from shared context for cross-page sync
   const { showArchived } = useViewState();
 
@@ -174,7 +176,7 @@ export function Ideation({ projectId, onGoToTask }: IdeationProps) {
               <TabsContent key={type} value={type} className="flex-1 overflow-auto p-4">
                 <div className="mb-4 p-3 bg-muted/50 rounded-lg">
                   <p className="text-sm text-muted-foreground">
-                    {IDEATION_TYPE_DESCRIPTIONS[type]}
+                    {t(IDEATION_TYPE_DESCRIPTIONS[type])}
                   </p>
                 </div>
                 <div className="grid gap-3">

@@ -71,9 +71,9 @@ export function IdeationDialogs({
                       <TypeIcon type={type} />
                     </div>
                     <div>
-                      <div className="font-medium text-sm">{IDEATION_TYPE_LABELS[type]}</div>
+                      <div className="font-medium text-sm">{t(IDEATION_TYPE_LABELS[type])}</div>
                       <div className="text-xs text-muted-foreground">
-                        {IDEATION_TYPE_DESCRIPTIONS[type]}
+                        {t(IDEATION_TYPE_DESCRIPTIONS[type])}
                       </div>
                     </div>
                   </div>
@@ -143,9 +143,9 @@ export function IdeationDialogs({
                       <TypeIcon type={type} />
                     </div>
                     <div>
-                      <div className="font-medium text-sm">{IDEATION_TYPE_LABELS[type]}</div>
+                      <div className="font-medium text-sm">{t(IDEATION_TYPE_LABELS[type])}</div>
                       <div className="text-xs text-muted-foreground">
-                        {IDEATION_TYPE_DESCRIPTIONS[type]}
+                        {t(IDEATION_TYPE_DESCRIPTIONS[type])}
                       </div>
                     </div>
                   </div>

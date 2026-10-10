@@ -974,5 +974,67 @@
       "blockedTooltip": "Cette PR ne peut pas être fusionnée en raison de conditions bloquantes",
       "conflictTooltip": "Cette PR a des conflits de fusion qui doivent être résolus"
     }
+  },
+  "changelog": {
+    "format": {
+      "keepAChangelog": "Keep a Changelog",
+      "simpleList": "Simple List",
+      "githubRelease": "GitHub Release"
+    },
+    "formatDescription": {
+      "keepAChangelog": "Structured format with Added/Changed/Fixed/Removed sections",
+      "simpleList": "Clean bulleted list with categories",
+      "githubRelease": "GitHub-style release notes"
+    },
+    "audience": {
+      "technical": "Technical",
+      "userFacing": "User-Facing",
+      "marketing": "Marketing"
+    },
+    "audienceDescription": {
+      "technical": "Detailed technical changes for developers",
+      "userFacing": "Clear, non-technical descriptions for end users",
+      "marketing": "Value-focused copy emphasizing benefits"
+    },
+    "emojiLevel": {
+      "none": "None",
+      "headingsOnly": "Headings Only",
+      "headingsAndHighlights": "Headings + Highlights",
+      "everything": "Everything"
+    },
+    "emojiLevelDescription": {
+      "none": "No emojis",
+      "headingsOnly": "Emojis on section headings only",
+      "headingsAndHighlights": "Emojis on headings and key items",
+      "everything": "Emojis on headings and every line"
+    },
+    "sourceMode": {
+      "completedTasks": "Completed Tasks",
+      "gitHistory": "Git History",
+      "branchComparison": "Branch Comparison"
+    },
+    "sourceModeDescription": {
+      "completedTasks": "Generate from completed spec tasks",
+      "gitHistory": "Generate from recent commits or tag range",
+      "branchComparison": "Generate from commits between two branches"
+    },
+    "gitHistoryType": {
+      "recent": "Recent Commits",
+      "sinceDate": "Since Date",
+      "betweenTags": "Between Tags"
+    },
+    "gitHistoryTypeDescription": {
+      "recent": "Last N commits from HEAD",
+      "sinceDate": "All commits since a specific date",
+      "betweenTags": "Commits between two tags"
+    },
+    "stage": {
+      "loadingSpecs": "Loading spec files...",
+      "loadingCommits": "Loading commits...",
+      "generating": "Generating changelog...",
+      "formatting": "Formatting output...",
+      "complete": "Complete",
+      "error": "Error"
+    }
   }
 }

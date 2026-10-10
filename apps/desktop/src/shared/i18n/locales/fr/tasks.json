@@ -353,5 +353,24 @@
   "referenceImages": {
     "title": "Images de référence (facultatif)",
     "description": "Ajoutez des références visuelles comme des captures d'écran ou des conceptions pour aider l'IA à comprendre vos exigences."
+  },
+  "taskDetail": {
+    "executionPhase": {
+      "idle": "Idle",
+      "planning": "Planning",
+      "coding": "Coding",
+      "rateLimited": "Rate Limited",
+      "authRequired": "Auth Required",
+      "aiReview": "AI Review",
+      "fixingIssues": "Fixing Issues",
+      "complete": "Complete",
+      "failed": "Failed"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    }
   }
 }

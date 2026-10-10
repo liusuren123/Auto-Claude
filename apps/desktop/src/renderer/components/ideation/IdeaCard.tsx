@@ -46,7 +46,7 @@ interface IdeaCardProps {
 }
 
 export function IdeaCard({ idea, isSelected, onClick, onConvert, onGoToTask, onDismiss, onToggleSelect }: IdeaCardProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'components']);
   const isDismissed = idea.status === 'dismissed';
   const isArchived = idea.status === 'archived';
   const isConverted = idea.status === 'converted';
@@ -81,7 +81,7 @@ export function IdeaCard({ idea, isSelected, onClick, onConvert, onGoToTask, onD
           <div className="flex items-center gap-2 mb-1">
             <Badge variant="outline" className={IDEATION_TYPE_COLORS[idea.type]}>
               <TypeIcon type={idea.type} />
-              <span className="ml-1">{IDEATION_TYPE_LABELS[idea.type]}</span>
+              <span className="ml-1">{t(IDEATION_TYPE_LABELS[idea.type])}</span>
             </Badge>
             {idea.status !== 'draft' && (
               <Badge variant="outline" className={IDEATION_STATUS_COLORS[idea.status]}>

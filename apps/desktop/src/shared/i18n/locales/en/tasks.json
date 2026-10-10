@@ -353,5 +353,24 @@
   "referenceImages": {
     "title": "Reference Images (optional)",
     "description": "Add visual references like screenshots or designs to help the AI understand your requirements."
+  },
+  "taskDetail": {
+    "executionPhase": {
+      "idle": "Idle",
+      "planning": "Planning",
+      "coding": "Coding",
+      "rateLimited": "Rate Limited",
+      "authRequired": "Auth Required",
+      "aiReview": "AI Review",
+      "fixingIssues": "Fixing Issues",
+      "complete": "Complete",
+      "failed": "Failed"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    }
   }
 }

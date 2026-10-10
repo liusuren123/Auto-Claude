@@ -29,7 +29,7 @@ export function FeatureCard({
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <Badge variant="outline" className={ROADMAP_PRIORITY_COLORS[feature.priority]}>
-              {ROADMAP_PRIORITY_LABELS[feature.priority]}
+              {t(ROADMAP_PRIORITY_LABELS[feature.priority])}
             </Badge>
             <Badge
               variant="outline"

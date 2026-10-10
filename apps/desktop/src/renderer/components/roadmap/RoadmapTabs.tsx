@@ -95,7 +95,7 @@ export function RoadmapTabs({
               <Card key={priority} className="p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Badge variant="outline" className={ROADMAP_PRIORITY_COLORS[priority]}>
-                    {ROADMAP_PRIORITY_LABELS[priority]}
+                    {t(ROADMAP_PRIORITY_LABELS[priority])}
                   </Badge>
                   <span className="text-sm text-muted-foreground">{features.length} features</span>
                 </div>

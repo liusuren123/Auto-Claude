@@ -162,12 +162,12 @@ export function ConfigurationPanel({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(CHANGELOG_FORMAT_LABELS).map(([value, label]) => (
+                  {Object.entries(CHANGELOG_FORMAT_LABELS).map(([value, labelKey]) => (
                     <SelectItem key={value} value={value}>
                       <div>
-                        <div>{label}</div>
+                        <div>{t(labelKey)}</div>
                         <div className="text-xs text-muted-foreground">
-                          {CHANGELOG_FORMAT_DESCRIPTIONS[value]}
+                          {t(CHANGELOG_FORMAT_DESCRIPTIONS[value])}
                         </div>
                       </div>
                     </SelectItem>
@@ -186,12 +186,12 @@ export function ConfigurationPanel({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(CHANGELOG_AUDIENCE_LABELS).map(([value, label]) => (
+                  {Object.entries(CHANGELOG_AUDIENCE_LABELS).map(([value, labelKey]) => (
                     <SelectItem key={value} value={value}>
                       <div>
-                        <div>{label}</div>
+                        <div>{t(labelKey)}</div>
                         <div className="text-xs text-muted-foreground">
-                          {CHANGELOG_AUDIENCE_DESCRIPTIONS[value]}
+                          {t(CHANGELOG_AUDIENCE_DESCRIPTIONS[value])}
                         </div>
                       </div>
                     </SelectItem>
@@ -210,12 +210,12 @@ export function ConfigurationPanel({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(CHANGELOG_EMOJI_LEVEL_LABELS).map(([value, label]) => (
+                  {Object.entries(CHANGELOG_EMOJI_LEVEL_LABELS).map(([value, labelKey]) => (
                     <SelectItem key={value} value={value}>
                       <div>
-                        <div>{label}</div>
+                        <div>{t(labelKey)}</div>
                         <div className="text-xs text-muted-foreground">
-                          {CHANGELOG_EMOJI_LEVEL_DESCRIPTIONS[value]}
+                          {t(CHANGELOG_EMOJI_LEVEL_DESCRIPTIONS[value])}
                         </div>
                       </div>
                     </SelectItem>
@@ -283,7 +283,7 @@ export function ConfigurationPanel({
         {generationProgress && isGenerating && (
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span>{CHANGELOG_STAGE_LABELS[generationProgress.stage]}</span>
+              <span>{t(CHANGELOG_STAGE_LABELS[generationProgress.stage])}</span>
               <span>{generationProgress.progress}%</span>
             </div>
             <Progress value={generationProgress.progress} />

@@ -50,7 +50,7 @@ export function GenerationProgressScreen({
   onDismiss,
   onStop
 }: GenerationProgressScreenProps) {
-  const { t } = useTranslation('components');
+  const { t } = useTranslation(['components', 'ideation']);
   const logsEndRef = useRef<HTMLDivElement>(null);
   const [showLogs, setShowLogs] = useState(false);
   const [isStopping, setIsStopping] = useState(false);
@@ -148,7 +148,7 @@ export function GenerationProgressScreen({
             >
               <TypeStateIcon state={typeStates[type]} />
               <TypeIcon type={type} />
-              <span>{IDEATION_TYPE_LABELS[type]}</span>
+              <span>{t(IDEATION_TYPE_LABELS[type])}</span>
               {typeStates[type] === 'completed' && session && (
                 <span className="ml-1 font-medium">
                   ({getStreamingIdeasByType(type).length})
@@ -197,7 +197,7 @@ export function GenerationProgressScreen({
                   <div className={`p-1.5 rounded-md ${IDEATION_TYPE_COLORS[type]}`}>
                     <TypeIcon type={type} />
                   </div>
-                  <h3 className="font-medium">{IDEATION_TYPE_LABELS[type]}</h3>
+                  <h3 className="font-medium">{t(IDEATION_TYPE_LABELS[type])}</h3>
                   <TypeStateIcon state={state} />
                   {ideas.length > 0 && (
                     <Badge variant="outline" className="ml-auto">

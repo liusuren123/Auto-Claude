@@ -8,15 +8,15 @@
 // ============================================
 
 export const CHANGELOG_FORMAT_LABELS: Record<string, string> = {
-  'keep-a-changelog': 'Keep a Changelog',
-  'simple-list': 'Simple List',
-  'github-release': 'GitHub Release'
+  'keep-a-changelog': 'changelog.format.keepAChangelog',
+  'simple-list': 'changelog.format.simpleList',
+  'github-release': 'changelog.format.githubRelease'
 };
 
 export const CHANGELOG_FORMAT_DESCRIPTIONS: Record<string, string> = {
-  'keep-a-changelog': 'Structured format with Added/Changed/Fixed/Removed sections',
-  'simple-list': 'Clean bulleted list with categories',
-  'github-release': 'GitHub-style release notes'
+  'keep-a-changelog': 'changelog.formatDescription.keepAChangelog',
+  'simple-list': 'changelog.formatDescription.simpleList',
+  'github-release': 'changelog.formatDescription.githubRelease'
 };
 
 // ============================================
@@ -24,15 +24,15 @@ export const CHANGELOG_FORMAT_DESCRIPTIONS: Record<string, string> = {
 // ============================================
 
 export const CHANGELOG_AUDIENCE_LABELS: Record<string, string> = {
-  'technical': 'Technical',
-  'user-facing': 'User-Facing',
-  'marketing': 'Marketing'
+  'technical': 'changelog.audience.technical',
+  'user-facing': 'changelog.audience.userFacing',
+  'marketing': 'changelog.audience.marketing'
 };
 
 export const CHANGELOG_AUDIENCE_DESCRIPTIONS: Record<string, string> = {
-  'technical': 'Detailed technical changes for developers',
-  'user-facing': 'Clear, non-technical descriptions for end users',
-  'marketing': 'Value-focused copy emphasizing benefits'
+  'technical': 'changelog.audienceDescription.technical',
+  'user-facing': 'changelog.audienceDescription.userFacing',
+  'marketing': 'changelog.audienceDescription.marketing'
 };
 
 // ============================================
@@ -40,17 +40,17 @@ export const CHANGELOG_AUDIENCE_DESCRIPTIONS: Record<string, string> = {
 // ============================================
 
 export const CHANGELOG_EMOJI_LEVEL_LABELS: Record<string, string> = {
-  'none': 'None',
-  'little': 'Headings Only',
-  'medium': 'Headings + Highlights',
-  'high': 'Everything'
+  'none': 'changelog.emojiLevel.none',
+  'little': 'changelog.emojiLevel.headingsOnly',
+  'medium': 'changelog.emojiLevel.headingsAndHighlights',
+  'high': 'changelog.emojiLevel.everything'
 };
 
 export const CHANGELOG_EMOJI_LEVEL_DESCRIPTIONS: Record<string, string> = {
-  'none': 'No emojis',
-  'little': 'Emojis on section headings only',
-  'medium': 'Emojis on headings and key items',
-  'high': 'Emojis on headings and every line'
+  'none': 'changelog.emojiLevelDescription.none',
+  'little': 'changelog.emojiLevelDescription.headingsOnly',
+  'medium': 'changelog.emojiLevelDescription.headingsAndHighlights',
+  'high': 'changelog.emojiLevelDescription.everything'
 };
 
 // ============================================
@@ -58,15 +58,15 @@ export const CHANGELOG_EMOJI_LEVEL_DESCRIPTIONS: Record<string, string> = {
 // ============================================
 
 export const CHANGELOG_SOURCE_MODE_LABELS: Record<string, string> = {
-  'tasks': 'Completed Tasks',
-  'git-history': 'Git History',
-  'branch-diff': 'Branch Comparison'
+  'tasks': 'changelog.sourceMode.completedTasks',
+  'git-history': 'changelog.sourceMode.gitHistory',
+  'branch-diff': 'changelog.sourceMode.branchComparison'
 };
 
 export const CHANGELOG_SOURCE_MODE_DESCRIPTIONS: Record<string, string> = {
-  'tasks': 'Generate from completed spec tasks',
-  'git-history': 'Generate from recent commits or tag range',
-  'branch-diff': 'Generate from commits between two branches'
+  'tasks': 'changelog.sourceModeDescription.completedTasks',
+  'git-history': 'changelog.sourceModeDescription.gitHistory',
+  'branch-diff': 'changelog.sourceModeDescription.branchComparison'
 };
 
 // ============================================
@@ -74,15 +74,15 @@ export const CHANGELOG_SOURCE_MODE_DESCRIPTIONS: Record<string, string> = {
 // ============================================
 
 export const GIT_HISTORY_TYPE_LABELS: Record<string, string> = {
-  'recent': 'Recent Commits',
-  'since-date': 'Since Date',
-  'tag-range': 'Between Tags'
+  'recent': 'changelog.gitHistoryType.recent',
+  'since-date': 'changelog.gitHistoryType.sinceDate',
+  'tag-range': 'changelog.gitHistoryType.betweenTags'
 };
 
 export const GIT_HISTORY_TYPE_DESCRIPTIONS: Record<string, string> = {
-  'recent': 'Last N commits from HEAD',
-  'since-date': 'All commits since a specific date',
-  'tag-range': 'Commits between two tags'
+  'recent': 'changelog.gitHistoryTypeDescription.recent',
+  'since-date': 'changelog.gitHistoryTypeDescription.sinceDate',
+  'tag-range': 'changelog.gitHistoryTypeDescription.betweenTags'
 };
 
 // ============================================
@@ -90,12 +90,12 @@ export const GIT_HISTORY_TYPE_DESCRIPTIONS: Record<string, string> = {
 // ============================================
 
 export const CHANGELOG_STAGE_LABELS: Record<string, string> = {
-  'loading_specs': 'Loading spec files...',
-  'loading_commits': 'Loading commits...',
-  'generating': 'Generating changelog...',
-  'formatting': 'Formatting output...',
-  'complete': 'Complete',
-  'error': 'Error'
+  'loading_specs': 'changelog.stage.loadingSpecs',
+  'loading_commits': 'changelog.stage.loadingCommits',
+  'generating': 'changelog.stage.generating',
+  'formatting': 'changelog.stage.formatting',
+  'complete': 'changelog.stage.complete',
+  'error': 'changelog.stage.error'
 };
 
 // ============================================

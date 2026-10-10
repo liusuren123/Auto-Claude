@@ -531,5 +531,43 @@
   },
   "terminal": {
     "dropToInsertPath": "拖入以插入路径"
+  },
+  "roadmap": {
+    "priority": {
+      "must": "必须有",
+      "should": "应该有",
+      "could": "可以有",
+      "wont": "不需要"
+    },
+    "status": {
+      "underReview": "评估中",
+      "planned": "已规划",
+      "inProgress": "进行中",
+      "done": "已完成"
+    }
+  },
+  "ideation": {
+    "type": {
+      "codeImprovements": "代码改进",
+      "uiUxImprovements": "UI/UX 改进",
+      "documentation": "文档",
+      "security": "安全",
+      "performance": "性能",
+      "codeQuality": "代码质量"
+    },
+    "description": {
+      "codeImprovements": "通过分析代码模式、架构和基础设施发现的改进机会",
+      "uiUxImprovements": "通过应用分析发现的视觉和交互改进",
+      "documentation": "缺失或过时的文档",
+      "security": "安全漏洞与加固机会",
+      "performance": "性能瓶颈与优化机会",
+      "codeQuality": "重构机会、过大文件、代码异味和最佳实践违规"
+    }
+  },
+  "github": {
+    "issueState": {
+      "open": "打开",
+      "closed": "已关闭"
+    }
   }
 }

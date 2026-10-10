@@ -412,7 +412,7 @@ export const TaskCard = memo(function TaskCard({
                 )}
               >
                 <Loader2 className="h-2.5 w-2.5 animate-spin" />
-                {EXECUTION_PHASE_LABELS[executionPhase]}
+                {t(EXECUTION_PHASE_LABELS[executionPhase])}
               </Badge>
             )}
              {/* Status badge - hide when execution phase badge is showing */}
@@ -491,7 +491,7 @@ export const TaskCard = memo(function TaskCard({
                 variant="outline"
                 className={cn('text-[10px] px-1.5 py-0', TASK_PRIORITY_COLORS[task.metadata.priority])}
               >
-                {TASK_PRIORITY_LABELS[task.metadata.priority]}
+                {t(TASK_PRIORITY_LABELS[task.metadata.priority])}
               </Badge>
             )}
             {/* Security severity - always show */}

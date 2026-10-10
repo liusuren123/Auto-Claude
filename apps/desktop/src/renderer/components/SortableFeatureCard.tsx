@@ -88,7 +88,7 @@ export function SortableFeatureCard({
                 variant="outline"
                 className={cn('text-[10px] px-1.5 py-0', ROADMAP_PRIORITY_COLORS[feature.priority])}
               >
-                {ROADMAP_PRIORITY_LABELS[feature.priority]}
+                {t(ROADMAP_PRIORITY_LABELS[feature.priority])}
               </Badge>
               {phaseName && (
                 <Tooltip>

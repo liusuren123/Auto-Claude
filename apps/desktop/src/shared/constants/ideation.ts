@@ -11,21 +11,21 @@
 // Note: high_value_features removed - strategic features belong to Roadmap
 // low_hanging_fruit renamed to code_improvements to cover all code-revealed opportunities
 export const IDEATION_TYPE_LABELS: Record<string, string> = {
-  code_improvements: 'Code Improvements',
-  ui_ux_improvements: 'UI/UX Improvements',
-  documentation_gaps: 'Documentation',
-  security_hardening: 'Security',
-  performance_optimizations: 'Performance',
-  code_quality: 'Code Quality'
+  code_improvements: 'ideation.type.codeImprovements',
+  ui_ux_improvements: 'ideation.type.uiUxImprovements',
+  documentation_gaps: 'ideation.type.documentation',
+  security_hardening: 'ideation.type.security',
+  performance_optimizations: 'ideation.type.performance',
+  code_quality: 'ideation.type.codeQuality'
 };
 
 export const IDEATION_TYPE_DESCRIPTIONS: Record<string, string> = {
-  code_improvements: 'Code-revealed opportunities from patterns, architecture, and infrastructure analysis',
-  ui_ux_improvements: 'Visual and interaction improvements identified through app analysis',
-  documentation_gaps: 'Missing or outdated documentation that needs attention',
-  security_hardening: 'Security vulnerabilities and hardening opportunities',
-  performance_optimizations: 'Performance bottlenecks and optimization opportunities',
-  code_quality: 'Refactoring opportunities, large files, code smells, and best practice violations'
+  code_improvements: 'ideation.description.codeImprovements',
+  ui_ux_improvements: 'ideation.description.uiUxImprovements',
+  documentation_gaps: 'ideation.description.documentation',
+  security_hardening: 'ideation.description.security',
+  performance_optimizations: 'ideation.description.performance',
+  code_quality: 'ideation.description.codeQuality'
 };
 
 // Ideation type colors

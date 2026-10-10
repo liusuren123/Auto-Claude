@@ -353,5 +353,24 @@
   "referenceImages": {
     "title": "参考图片（可选）",
     "description": "添加截图或设计稿等视觉参考，帮助 AI 理解你的需求。"
+  },
+  "taskDetail": {
+    "executionPhase": {
+      "idle": "空闲",
+      "planning": "规划",
+      "coding": "编码",
+      "rateLimited": "限流中",
+      "authRequired": "需要登录",
+      "aiReview": "AI 评审",
+      "fixingIssues": "修复问题",
+      "complete": "已完成",
+      "failed": "失败"
+    },
+    "priority": {
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "urgent": "紧急"
+    }
   }
 }

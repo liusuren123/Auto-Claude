@@ -531,5 +531,43 @@
   },
   "terminal": {
     "dropToInsertPath": "Drop to insert path"
+  },
+  "roadmap": {
+    "priority": {
+      "must": "Must Have",
+      "should": "Should Have",
+      "could": "Could Have",
+      "wont": "Won't Have"
+    },
+    "status": {
+      "underReview": "Under Review",
+      "planned": "Planned",
+      "inProgress": "In Progress",
+      "done": "Done"
+    }
+  },
+  "ideation": {
+    "type": {
+      "codeImprovements": "Code Improvements",
+      "uiUxImprovements": "UI/UX Improvements",
+      "documentation": "Documentation",
+      "security": "Security",
+      "performance": "Performance",
+      "codeQuality": "Code Quality"
+    },
+    "description": {
+      "codeImprovements": "Code-revealed opportunities from patterns, architecture, and infrastructure analysis",
+      "uiUxImprovements": "Visual and interaction improvements identified through app analysis",
+      "documentation": "Missing or outdated documentation that needs attention",
+      "security": "Security vulnerabilities and hardening opportunities",
+      "performance": "Performance bottlenecks and optimization opportunities",
+      "codeQuality": "Refactoring opportunities, large files, code smells, and best practice violations"
+    }
+  },
+  "github": {
+    "issueState": {
+      "open": "Open",
+      "closed": "Closed"
+    }
   }
 }

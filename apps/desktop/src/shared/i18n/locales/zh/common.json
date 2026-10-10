@@ -974,5 +974,67 @@
       "blockedTooltip": "由于阻塞条件，此 PR 无法合并",
       "conflictTooltip": "此 PR 存在需要解决的合并冲突"
     }
+  },
+  "changelog": {
+    "format": {
+      "keepAChangelog": "Keep a Changelog",
+      "simpleList": "简洁列表",
+      "githubRelease": "GitHub Release"
+    },
+    "formatDescription": {
+      "keepAChangelog": "结构化格式，含 Added/Changed/Fixed/Removed 等段落",
+      "simpleList": "简洁的项目符号列表，带分类",
+      "githubRelease": "GitHub 风格的发布说明"
+    },
+    "audience": {
+      "technical": "技术",
+      "userFacing": "面向用户",
+      "marketing": "市场"
+    },
+    "audienceDescription": {
+      "technical": "面向开发者的详细技术变更",
+      "userFacing": "面向终端用户的清晰、非技术性描述",
+      "marketing": "侧重价值与收益的宣传文案"
+    },
+    "emojiLevel": {
+      "none": "不使用",
+      "headingsOnly": "仅标题",
+      "headingsAndHighlights": "标题 + 重点",
+      "everything": "所有内容"
+    },
+    "emojiLevelDescription": {
+      "none": "不使用 emoji",
+      "headingsOnly": "仅在段落标题上使用 emoji",
+      "headingsAndHighlights": "在标题和重点条目上使用 emoji",
+      "everything": "在标题和每行都使用 emoji"
+    },
+    "sourceMode": {
+      "completedTasks": "已完成的任务",
+      "gitHistory": "Git 历史",
+      "branchComparison": "分支对比"
+    },
+    "sourceModeDescription": {
+      "completedTasks": "从已完成 spec 任务生成",
+      "gitHistory": "从最近的提交或标签范围生成",
+      "branchComparison": "从两个分支之间的提交生成"
+    },
+    "gitHistoryType": {
+      "recent": "最近提交",
+      "sinceDate": "指定日期之后",
+      "betweenTags": "两个标签之间"
+    },
+    "gitHistoryTypeDescription": {
+      "recent": "从 HEAD 起最近 N 条提交",
+      "sinceDate": "自指定日期起所有提交",
+      "betweenTags": "两个标签之间的提交"
+    },
+    "stage": {
+      "loadingSpecs": "正在加载 spec 文件...",
+      "loadingCommits": "正在加载提交...",
+      "generating": "正在生成更新日志...",
+      "formatting": "正在格式化输出...",
+      "complete": "完成",
+      "error": "错误"
+    }
   }
 }

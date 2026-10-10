@@ -57,7 +57,7 @@ export function FeatureDetailPanel({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2 flex-wrap">
               <Badge variant="outline" className={ROADMAP_PRIORITY_COLORS[feature.priority]}>
-                {ROADMAP_PRIORITY_LABELS[feature.priority]}
+                {t(ROADMAP_PRIORITY_LABELS[feature.priority])}
               </Badge>
               <Badge
                 variant="outline"

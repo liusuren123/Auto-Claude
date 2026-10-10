@@ -8,10 +8,10 @@
 // ============================================
 
 export const ROADMAP_PRIORITY_LABELS: Record<string, string> = {
-  must: 'Must Have',
-  should: 'Should Have',
-  could: 'Could Have',
-  wont: "Won't Have"
+  must: 'roadmap.priority.must',
+  should: 'roadmap.priority.should',
+  could: 'roadmap.priority.could',
+  wont: "roadmap.priority.wont"
 };
 
 export const ROADMAP_PRIORITY_COLORS: Record<string, string> = {
@@ -60,10 +60,10 @@ export const ROADMAP_STATUS_COLUMNS: RoadmapStatusColumn[] = [
 ];
 
 export const ROADMAP_STATUS_LABELS: Record<string, string> = {
-  under_review: 'Under Review',
-  planned: 'Planned',
-  in_progress: 'In Progress',
-  done: 'Done'
+  under_review: 'roadmap.status.underReview',
+  planned: 'roadmap.status.planned',
+  in_progress: 'roadmap.status.inProgress',
+  done: 'roadmap.status.done'
 };
 
 export const ROADMAP_STATUS_COLORS: Record<string, string> = {

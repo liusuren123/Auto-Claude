@@ -58,7 +58,7 @@ export function IdeationEmptyState({
               >
                 <div className="flex items-center gap-2">
                   <TypeIcon type={type} />
-                  <span className="text-sm">{IDEATION_TYPE_LABELS[type]}</span>
+                  <span className="text-sm">{t(IDEATION_TYPE_LABELS[type])}</span>
                 </div>
                 <Switch
                   checked={config.enabledTypes.includes(type)}

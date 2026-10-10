@@ -25,7 +25,7 @@ export function IssueDetail({
   autoFixConfig,
   autoFixQueueItem,
 }: IssueDetailProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'components']);
   // Determine which task ID to use - either already linked or just created
   const taskId = linkedTaskId || (investigationResult?.success ? investigationResult.taskId : undefined);
   const hasLinkedTask = !!taskId;
@@ -47,7 +47,7 @@ export function IssueDetail({
                 variant="outline"
                 className={`${GITHUB_ISSUE_STATE_COLORS[issue.state]}`}
               >
-                {GITHUB_ISSUE_STATE_LABELS[issue.state]}
+                {t(GITHUB_ISSUE_STATE_LABELS[issue.state])}
               </Badge>
               <span className="text-sm text-muted-foreground">#{issue.number}</span>
             </div>

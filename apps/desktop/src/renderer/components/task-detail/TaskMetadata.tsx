@@ -59,7 +59,7 @@ interface TaskMetadataProps {
 const COLLAPSED_HEIGHT = 200;
 
 export function TaskMetadata({ task }: TaskMetadataProps) {
-  const { t } = useTranslation(['tasks', 'errors']);
+  const { t } = useTranslation(['tasks', 'errors', 'components']);
   const [isExpanded, setIsExpanded] = useState(false);
   const [hasOverflow, setHasOverflow] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -123,7 +123,7 @@ export function TaskMetadata({ task }: TaskMetadataProps) {
                 variant="outline"
                 className={cn('text-xs', TASK_PRIORITY_COLORS[task.metadata.priority])}
               >
-                {TASK_PRIORITY_LABELS[task.metadata.priority]}
+                {t(TASK_PRIORITY_LABELS[task.metadata.priority])}
               </Badge>
             )}
             {/* Complexity */}
@@ -158,7 +158,7 @@ export function TaskMetadata({ task }: TaskMetadataProps) {
             {task.metadata?.sourceType && (
               <Badge variant="secondary" className="text-xs">
                 {task.metadata.sourceType === 'ideation' && task.metadata.ideationType
-                  ? IDEATION_TYPE_LABELS[task.metadata.ideationType] || task.metadata.ideationType
+                  ? t(IDEATION_TYPE_LABELS[task.metadata.ideationType]) || task.metadata.ideationType
                   : task.metadata.sourceType}
               </Badge>
             )}

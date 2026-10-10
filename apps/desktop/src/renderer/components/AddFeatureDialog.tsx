@@ -281,9 +281,9 @@ export function AddFeatureDialog({
                   <SelectValue placeholder={t('addFeature.selectPriority')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(ROADMAP_PRIORITY_LABELS).map(([value, label]) => (
+                  {Object.entries(ROADMAP_PRIORITY_LABELS).map(([value, labelKey]) => (
                     <SelectItem key={value} value={value}>
-                      {label}
+                      {t(labelKey)}
                     </SelectItem>
                   ))}
                 </SelectContent>
