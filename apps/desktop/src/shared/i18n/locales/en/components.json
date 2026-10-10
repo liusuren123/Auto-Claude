@@ -247,5 +247,33 @@
       "authenticateFailed": "Failed to authenticate profile",
       "saveTokenFailed": "Failed to save token"
     }
+  },
+  "changelogHeader": {
+    "title": "Changelog Generator",
+    "step1": "Step 1: Select completed tasks to include",
+    "step2": "Step 2: Configure and generate changelog",
+    "step3": "Step 3: Release and archive tasks",
+    "selectStep": "Select",
+    "generateStep": "Generate",
+    "releaseStep": "Release",
+    "refresh": "Refresh"
+  },
+  "previewPanel": {
+    "cannotLoadLocalImage": "Cannot load local image: no project path",
+    "failedToLoadImage": "Failed to load image",
+    "loadingImage": "Loading image...",
+    "imageNotFound": "Image not found",
+    "preview": "Preview",
+    "markdown": "Markdown",
+    "copied": "Copied!",
+    "copy": "Copy",
+    "copyToClipboard": "Copy to clipboard",
+    "saved": "Saved!",
+    "saveToChangelog": "Save to CHANGELOG.md",
+    "prependHint": "Prepend to CHANGELOG.md in project root",
+    "dropImagesHere": "Drop images here to add to changelog",
+    "pasteImagesHint": "Paste images into the description to save them to the changelog",
+    "placeholder": "Generated changelog will appear here...",
+    "generateHint": "Click \"Generate Changelog\" to create release notes."
   }
 }
