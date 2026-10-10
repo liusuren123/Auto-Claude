@@ -1054,5 +1054,20 @@
   },
   "settings": {
     "selectProjectDirectory": "选择项目目录"
+  },
+  "placeholders": {
+    "searchIssues": "搜索 Issue...",
+    "searchMergeRequests": "搜索合并请求...",
+    "searchTasks": "搜索任务...",
+    "searchRepositories": "搜索仓库...",
+    "askAboutCodebase": "向 AI 询问关于代码库的问题...",
+    "accountName": "账号名称(例如 Work、Personal)",
+    "mergeRequestTitle": "合并请求标题",
+    "describeMergeRequestChanges": "描述此合并请求中的变更...",
+    "azureApiKey": "Azure API Key",
+    "autoDetected": "自动检测",
+    "autoCreated": "自动创建",
+    "selectProject": "选择项目...",
+    "addProject": "添加项目..."
   }
 }

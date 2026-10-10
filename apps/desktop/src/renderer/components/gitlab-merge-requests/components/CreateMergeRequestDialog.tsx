@@ -92,7 +92,7 @@ export function CreateMergeRequestDialog({
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
-              placeholder="Merge request title"
+              placeholder={t('placeholders.mergeRequestTitle')}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -123,7 +123,7 @@ export function CreateMergeRequestDialog({
             <Label htmlFor="description">Description (optional)</Label>
             <Textarea
               id="description"
-              placeholder="Describe the changes in this merge request..."
+              placeholder={t('placeholders.describeMergeRequestChanges')}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}

@@ -1054,5 +1054,20 @@
   },
   "settings": {
     "selectProjectDirectory": "Select Project Directory"
+  },
+  "placeholders": {
+    "searchIssues": "Search issues...",
+    "searchMergeRequests": "Search merge requests...",
+    "searchTasks": "Search tasks...",
+    "searchRepositories": "Search repositories...",
+    "askAboutCodebase": "Ask about your codebase...",
+    "accountName": "Account name (e.g., Work, Personal)",
+    "mergeRequestTitle": "Merge request title",
+    "describeMergeRequestChanges": "Describe the changes in this merge request...",
+    "azureApiKey": "Azure API Key",
+    "autoDetected": "Auto-detected",
+    "autoCreated": "Auto-created",
+    "selectProject": "Select a project...",
+    "addProject": "Add a project..."
   }
 }

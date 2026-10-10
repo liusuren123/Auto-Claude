@@ -56,7 +56,7 @@ interface MemoryConfigPanelProps {
  * Does NOT include: InfrastructureStatus, Agent Memory Access toggle, MCP Server URL.
  */
 export function MemoryConfigPanel({ config, onChange, disabled = false }: MemoryConfigPanelProps) {
-  const { t } = useTranslation('onboarding');
+  const { t } = useTranslation(['onboarding', 'common']);
 
   return (
     <div className="space-y-6">
@@ -241,7 +241,7 @@ export function MemoryConfigPanel({ config, onChange, disabled = false }: Memory
                 <PasswordInput
                   value={config.azureOpenaiApiKey}
                   onChange={(value) => onChange({ azureOpenaiApiKey: value })}
-                  placeholder="Azure API Key"
+                  placeholder={t('common:placeholders.azureApiKey')}
                 />
               </div>
               <div className="space-y-1">

@@ -536,7 +536,7 @@ function RepositoryDropdown({
             {/* Search filter */}
             <div className="p-2 border-b border-border">
               <Input
-                placeholder="Search repositories..."
+                placeholder={t('common:placeholders.searchRepositories')}
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
                 className="h-8 text-sm"

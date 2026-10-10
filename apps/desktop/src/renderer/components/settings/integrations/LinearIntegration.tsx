@@ -230,7 +230,7 @@ function TeamProjectIds({ teamId, projectId, onTeamIdChange, onProjectIdChange }
       <div className="space-y-2">
         <Label className="text-sm font-medium text-foreground">{t('integrationSettings.teamIdOptional')}</Label>
         <Input
-          placeholder="Auto-detected"
+          placeholder={t('placeholders.autoDetected')}
           value={teamId}
           onChange={(e) => onTeamIdChange(e.target.value)}
         />
@@ -238,7 +238,7 @@ function TeamProjectIds({ teamId, projectId, onTeamIdChange, onProjectIdChange }
       <div className="space-y-2">
         <Label className="text-sm font-medium text-foreground">{t('integrationSettings.projectIdOptional')}</Label>
         <Input
-          placeholder="Auto-created"
+          placeholder={t('placeholders.autoCreated')}
           value={projectId}
           onChange={(e) => onProjectIdChange(e.target.value)}
         />
