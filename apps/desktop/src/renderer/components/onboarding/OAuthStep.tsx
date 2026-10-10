@@ -91,7 +91,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
         await loadGlobalClaudeProfiles();
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load profiles');
+      setError(err instanceof Error ? err.message : t('components:oauthStep.errors.loadProfilesFailed'));
     } finally {
       setIsLoadingProfiles(false);
     }
@@ -119,7 +119,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
 
       // Validate that sanitized slug is not empty (e.g., "!!!" becomes "")
       if (!profileSlug) {
-        setError('Profile name must contain at least one letter or number');
+        setError(t('components:oauthStep.errors.profileNameInvalid'));
         setIsAddingProfile(false);
         return;
       }
@@ -157,7 +157,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
         }
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to add profile');
+      setError(err instanceof Error ? err.message : t('components:oauthStep.errors.addProfileFailed'));
       toast({
         variant: 'destructive',
         title: t('oauth.toast.addProfileFailed'),
@@ -177,7 +177,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
         await loadClaudeProfiles();
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete profile');
+      setError(err instanceof Error ? err.message : t('components:oauthStep.errors.deleteProfileFailed'));
     } finally {
       setDeletingProfileId(null);
     }
@@ -203,7 +203,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
         await loadClaudeProfiles();
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to rename profile');
+      setError(err instanceof Error ? err.message : t('components:oauthStep.errors.renameProfileFailed'));
     } finally {
       setEditingProfileId(null);
       setEditingProfileName('');
@@ -219,7 +219,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
         await loadGlobalClaudeProfiles();
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to set active profile');
+      setError(err instanceof Error ? err.message : t('components:oauthStep.errors.setActiveProfileFailed'));
     }
   };
 
@@ -250,7 +250,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
   const handleAuthenticateProfile = async (profileId: string) => {
     // Find the profile name for display
     const profile = claudeProfiles.find(p => p.id === profileId);
-    const profileName = profile?.name || 'Profile';
+    const profileName = profile?.name || t('components:oauthStep.profileLabel');
 
     setAuthenticatingProfileId(profileId);
     setError(null);
@@ -274,7 +274,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
 
       console.warn('[OAuthStep] Auth terminal ready:', result.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to authenticate profile');
+      setError(err instanceof Error ? err.message : t('components:oauthStep.errors.authenticateFailed'));
       alert(t('oauth.alerts.authStartFailedMessage'));
       setAuthenticatingProfileId(null);
     }
@@ -323,7 +323,7 @@ export function OAuthStep({ onNext, onBack, onSkip }: OAuthStepProps) {
         });
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save token');
+      setError(err instanceof Error ? err.message : t('components:oauthStep.errors.saveTokenFailed'));
       toast({
         variant: 'destructive',
         title: t('oauth.toast.tokenSaveFailed'),

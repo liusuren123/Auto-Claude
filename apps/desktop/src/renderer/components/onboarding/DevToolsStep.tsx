@@ -98,7 +98,7 @@ const CLI_NAMES: Partial<Record<SupportedCLI, string>> = {
  * their preferred tools for opening worktrees.
  */
 export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
-  const { t } = useTranslation('onboarding');
+  const { t } = useTranslation(['onboarding', 'components']);
   const { settings, updateSettings } = useSettingsStore();
   const [preferredIDE, setPreferredIDE] = useState<SupportedIDE>(settings.preferredIDE || 'vscode');
   const [preferredTerminal, setPreferredTerminal] = useState<SupportedTerminal>(settings.preferredTerminal || 'system');
@@ -163,10 +163,10 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
         updateSettings(settingsToSave);
         onNext();
       } else {
-        setError(result?.error || 'Failed to save settings');
+        setError(result?.error || t('components:devtoolsStep.saveFailed'));
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error occurred');
+      setError(err instanceof Error ? err.message : t('components:devtoolsStep.unknownError'));
     } finally {
       setIsSaving(false);
     }
@@ -199,7 +199,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
   }
 
   // Add custom option last
-  ideOptions.push({ value: 'custom', label: 'Custom...', detected: false });
+  ideOptions.push({ value: 'custom', label: t('components:devtoolsStep.custom'), detected: false });
 
   // Build Terminal options with detection status
   const terminalOptions: Array<{ value: SupportedTerminal; label: string; detected: boolean }> = [];
@@ -207,7 +207,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
   // Always add system terminal first
   terminalOptions.push({
     value: 'system',
-    label: TERMINAL_NAMES.system || 'System Terminal',
+    label: t('components:devtoolsStep.systemTerminal'),
     detected: true
   });
 
@@ -238,7 +238,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
   }
 
   // Add custom option last
-  terminalOptions.push({ value: 'custom', label: 'Custom...', detected: false });
+  terminalOptions.push({ value: 'custom', label: t('components:devtoolsStep.custom'), detected: false });
 
   // Build CLI options with detection status
   const cliOptions: Array<{ value: SupportedCLI; label: string; detected: boolean }> = [];
@@ -267,7 +267,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
   }
 
   // Add custom option last
-  cliOptions.push({ value: 'custom', label: 'Custom...', detected: false });
+  cliOptions.push({ value: 'custom', label: t('components:devtoolsStep.custom'), detected: false });
 
   return (
     <div className="flex h-full flex-col items-center justify-center px-8 py-6">
@@ -349,7 +349,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
                 disabled={isSaving}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select IDE..." />
+                  <SelectValue placeholder={t('components:devtoolsStep.selectIDE')} />
                 </SelectTrigger>
                 <SelectContent>
                   {ideOptions.map((option) => (
@@ -398,7 +398,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
                 disabled={isSaving}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select terminal..." />
+                  <SelectValue placeholder={t('components:devtoolsStep.selectTerminal')} />
                 </SelectTrigger>
                 <SelectContent>
                   {terminalOptions.map((option) => (
@@ -447,7 +447,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
                 disabled={isSaving}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select CLI..." />
+                  <SelectValue placeholder={t('components:devtoolsStep.selectCLI')} />
                 </SelectTrigger>
                 <SelectContent>
                   {cliOptions.map((option) => (
@@ -523,7 +523,7 @@ export function DevToolsStep({ onNext, onBack }: DevToolsStepProps) {
             {isSaving ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Saving...
+                {t('components:devtoolsStep.saving')}
               </>
             ) : (
               t('devtools.saveAndContinue')
