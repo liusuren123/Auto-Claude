@@ -50,7 +50,7 @@ const VERSION_RECHECK_DELAY_MS = 5000;
  * Shows installation status and provides quick access to install/update.
  */
 export function ClaudeCodeStatusBadge({ className }: ClaudeCodeStatusBadgeProps) {
-  const { t } = useTranslation(["common", "navigation"]);
+  const { t } = useTranslation(["common", "navigation", "components"]);
   const [status, setStatus] = useState<StatusType>("loading");
   const [versionInfo, setVersionInfo] = useState<ClaudeCodeVersionInfo | null>(null);
   const [isInstalling, setIsInstalling] = useState(false);
@@ -384,7 +384,7 @@ export function ClaudeCodeStatusBadge({ className }: ClaudeCodeStatusBadgeProps)
                   )}
                 />
               </div>
-              <span className="truncate">Claude Code</span>
+              <span className="truncate">{t('components:claudeCodeStatusBadge.name')}</span>
               {status === "outdated" && (
                 <span className="ml-auto text-[10px] bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 px-1.5 py-0.5 rounded">
                   {t("common:update", "Update")}
@@ -409,7 +409,7 @@ export function ClaudeCodeStatusBadge({ className }: ClaudeCodeStatusBadgeProps)
               <Terminal className="h-4 w-4 text-primary" />
             </div>
             <div>
-              <h4 className="text-sm font-medium">Claude Code CLI</h4>
+              <h4 className="text-sm font-medium">{t('components:claudeCodeStatusBadge.cliTitle')}</h4>
               <p className="text-xs text-muted-foreground flex items-center gap-1">
                 {getStatusIcon()}
                 {status === "installed" && t("navigation:claudeCode.installed", "Installed")}

@@ -24,7 +24,7 @@ function getSubtaskStatusIcon(status: string) {
 }
 
 export function TaskSubtasks({ task }: TaskSubtasksProps) {
-  const { t } = useTranslation(['tasks']);
+  const { t } = useTranslation(['tasks', 'components']);
   const progress = calculateProgress(task.subtasks);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
@@ -56,7 +56,7 @@ export function TaskSubtasks({ task }: TaskSubtasksProps) {
       {task.subtasks.length === 0 ? (
         <div className="text-center py-12">
           <ListChecks className="h-10 w-10 mx-auto mb-3 text-muted-foreground/30" />
-          <p className="text-sm font-medium text-muted-foreground mb-1">No subtasks defined</p>
+          <p className="text-sm font-medium text-muted-foreground mb-1">{t('components:taskSubtasks.noSubtasksDefined')}</p>
           <p className="text-xs text-muted-foreground/70">
             Implementation subtasks will appear here after planning
           </p>

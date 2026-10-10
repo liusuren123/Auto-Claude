@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Loader2, GitPullRequest } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
@@ -30,6 +31,7 @@ export function CreateMergeRequestDialog({
   defaultTargetBranch = 'main',
   onSuccess
 }: CreateMergeRequestDialogProps) {
+  const { t } = useTranslation('components');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [sourceBranch, setSourceBranch] = useState(defaultSourceBranch);
@@ -98,7 +100,7 @@ export function CreateMergeRequestDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="source">Source Branch</Label>
+              <Label htmlFor="source">{t('createMergeRequestDialog.sourceBranch')}</Label>
               <Input
                 id="source"
                 placeholder="feature/my-feature"
@@ -107,7 +109,7 @@ export function CreateMergeRequestDialog({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="target">Target Branch</Label>
+              <Label htmlFor="target">{t('createMergeRequestDialog.targetBranch')}</Label>
               <Input
                 id="target"
                 placeholder="main"

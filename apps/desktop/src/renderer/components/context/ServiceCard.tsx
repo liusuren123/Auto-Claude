@@ -1,4 +1,5 @@
 import { Database, CheckCircle, FileCode, Globe, Code, Package } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
@@ -20,6 +21,7 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ name, service }: ServiceCardProps) {
+  const { t } = useTranslation('components');
   const Icon = serviceTypeIcons[service.type || 'unknown'];
   const colorClass = serviceTypeColors[service.type || 'unknown'];
 
@@ -109,7 +111,7 @@ export function ServiceCard({ name, service }: ServiceCardProps) {
         {/* Apple Frameworks (iOS/Swift) */}
         {service.apple_frameworks && service.apple_frameworks.length > 0 && (
           <div className="pt-2 border-t border-border">
-            <p className="text-xs text-muted-foreground mb-1.5">Apple Frameworks</p>
+            <p className="text-xs text-muted-foreground mb-1.5">{t('serviceCard.appleFrameworks')}</p>
             <div className="flex flex-wrap gap-1">
               {service.apple_frameworks.map((fw) => (
                 <Badge key={fw} variant="secondary" className="text-xs">
@@ -123,7 +125,7 @@ export function ServiceCard({ name, service }: ServiceCardProps) {
         {/* SPM Dependencies (iOS/Swift) */}
         {service.spm_dependencies && service.spm_dependencies.length > 0 && (
           <div className="pt-2 border-t border-border">
-            <p className="text-xs text-muted-foreground mb-1.5">SPM Dependencies</p>
+            <p className="text-xs text-muted-foreground mb-1.5">{t('serviceCard.spmDependencies')}</p>
             <div className="flex flex-wrap gap-1">
               {service.spm_dependencies.map((dep) => (
                 <Badge key={dep} variant="outline" className="text-xs font-mono">
@@ -145,7 +147,7 @@ export function ServiceCard({ name, service }: ServiceCardProps) {
         {/* Key Directories */}
         {service.key_directories && Object.keys(service.key_directories).length > 0 && (
           <div className="pt-2 border-t border-border">
-            <p className="text-xs text-muted-foreground mb-1.5">Key Directories</p>
+            <p className="text-xs text-muted-foreground mb-1.5">{t('serviceCard.keyDirectories')}</p>
             <div className="flex flex-wrap gap-1">
               {Object.entries(service.key_directories).slice(0, 6).map(([dir, info]) => (
                 <Tooltip key={dir}>

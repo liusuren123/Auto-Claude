@@ -1,4 +1,5 @@
 import { Lightbulb, Settings2, AlertCircle, Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
 import { Switch } from '../ui/switch';
@@ -26,11 +27,12 @@ export function IdeationEmptyState({
   onOpenConfig,
   onToggleIdeationType
 }: IdeationEmptyStateProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="flex h-full items-center justify-center">
       <Card className="w-full max-w-lg p-8 text-center">
         <Lightbulb className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-        <h2 className="text-xl font-semibold mb-2">No Ideas Yet</h2>
+        <h2 className="text-xl font-semibold mb-2">{t('ideationEmptyState.noIdeasYet')}</h2>
         <p className="text-muted-foreground mb-6">
           Generate AI-powered feature ideas based on your project's context,
           existing patterns, and target audience.
@@ -39,7 +41,7 @@ export function IdeationEmptyState({
         {/* Configuration Preview */}
         <div className="mb-6 p-4 bg-muted/50 rounded-lg text-left">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium">Enabled Ideation Types</span>
+            <span className="text-sm font-medium">{t('ideationEmptyState.enabledIdeationTypes')}</span>
             <Button
               variant="ghost"
               size="sm"

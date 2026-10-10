@@ -1,4 +1,5 @@
 import { ArrowLeft, FileText, GitCommit, Sparkles, RefreshCw, AlertCircle, ChevronUp, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
@@ -77,6 +78,7 @@ export function ConfigurationPanel({
   onShowAdvancedChange,
   onGenerate
 }: ConfigurationPanelProps) {
+  const { t } = useTranslation('components');
   const versionBumpDescription = getVersionBumpDescription(versionReason);
 
   return (
@@ -86,7 +88,7 @@ export function ConfigurationPanel({
         <div className="space-y-4">
           <Button variant="ghost" size="sm" onClick={onBack} className="-ml-2">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Selection
+            {t('configurationPanel.backToSelection')}
           </Button>
           <div className="rounded-lg bg-muted/50 p-3">
             <div className="flex items-center gap-2 text-sm font-medium">
@@ -95,7 +97,11 @@ export function ConfigurationPanel({
               ) : (
                 <GitCommit className="h-4 w-4" />
               )}
-              Including {summaryInfo.count} {summaryInfo.label}{summaryInfo.count !== 1 ? 's' : ''}
+              {t('configurationPanel.includingItems', {
+                count: summaryInfo.count,
+                label: summaryInfo.label,
+                pluralSuffix: summaryInfo.count !== 1 ? 's' : '',
+              })}
             </div>
             <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
               {summaryInfo.details}
@@ -106,11 +112,11 @@ export function ConfigurationPanel({
         {/* Version & Date */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Release Info</CardTitle>
+            <CardTitle className="text-sm">{t('configurationPanel.releaseInfo')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="version">Version</Label>
+              <Label htmlFor="version">{t('configurationPanel.version')}</Label>
               <Input
                 id="version"
                 value={version}
@@ -119,7 +125,7 @@ export function ConfigurationPanel({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="date">Date</Label>
+              <Label htmlFor="date">{t('configurationPanel.date')}</Label>
               <Input
                 id="date"
                 type="date"
@@ -130,7 +136,7 @@ export function ConfigurationPanel({
             {(existingChangelog?.lastVersion || versionBumpDescription) && (
               <div className="text-xs text-muted-foreground space-y-1">
                 {existingChangelog?.lastVersion && (
-                  <p>Previous: {existingChangelog.lastVersion}</p>
+                  <p>{t('configurationPanel.previousVersion', { version: existingChangelog.lastVersion })}</p>
                 )}
                 {versionBumpDescription && (
                   <p className="text-primary/70">{versionBumpDescription}</p>
@@ -143,11 +149,11 @@ export function ConfigurationPanel({
         {/* Format & Audience */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Output Style</CardTitle>
+            <CardTitle className="text-sm">{t('configurationPanel.outputStyle')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label>Format</Label>
+              <Label>{t('configurationPanel.format')}</Label>
               <Select
                 value={format}
                 onValueChange={(value) => onFormatChange(value as ChangelogFormat)}
@@ -171,7 +177,7 @@ export function ConfigurationPanel({
             </div>
 
             <div className="space-y-2">
-              <Label>Audience</Label>
+              <Label>{t('configurationPanel.audience')}</Label>
               <Select
                 value={audience}
                 onValueChange={(value) => onAudienceChange(value as ChangelogAudience)}
@@ -195,7 +201,7 @@ export function ConfigurationPanel({
             </div>
 
             <div className="space-y-2">
-              <Label>Emojis</Label>
+              <Label>{t('configurationPanel.emojis')}</Label>
               <Select
                 value={emojiLevel}
                 onValueChange={(value) => onEmojiLevelChange(value as ChangelogEmojiLevel)}
@@ -224,7 +230,7 @@ export function ConfigurationPanel({
         <Collapsible open={showAdvanced} onOpenChange={onShowAdvancedChange}>
           <CollapsibleTrigger asChild>
             <Button variant="ghost" className="w-full justify-between">
-              Advanced Options
+              {t('configurationPanel.advancedOptions')}
               {showAdvanced ? (
                 <ChevronUp className="h-4 w-4" />
               ) : (
@@ -236,16 +242,16 @@ export function ConfigurationPanel({
             <Card>
               <CardContent className="pt-4">
                 <div className="space-y-2">
-                  <Label htmlFor="instructions">Custom Instructions</Label>
+                  <Label htmlFor="instructions">{t('configurationPanel.customInstructions')}</Label>
                   <Textarea
                     id="instructions"
                     value={customInstructions}
                     onChange={(e) => onCustomInstructionsChange(e.target.value)}
-                    placeholder="Add any special instructions for the AI..."
+                    placeholder={t('configurationPanel.customInstructionsPlaceholder')}
                     rows={3}
                   />
                   <p className="text-xs text-muted-foreground">
-                    Optional. Guide the AI on tone, specific details to include, etc.
+                    {t('configurationPanel.customInstructionsHint')}
                   </p>
                 </div>
               </CardContent>
@@ -263,12 +269,12 @@ export function ConfigurationPanel({
           {isGenerating ? (
             <>
               <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-              Generating...
+              {t('configurationPanel.generating')}
             </>
           ) : (
             <>
               <Sparkles className="mr-2 h-4 w-4" />
-              Generate Changelog
+              {t('configurationPanel.generateChangelog')}
             </>
           )}
         </Button>

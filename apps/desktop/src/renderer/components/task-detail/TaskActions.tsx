@@ -46,7 +46,7 @@ export function TaskActions({
   onDelete,
   onShowDeleteDialog
 }: TaskActionsProps) {
-  const { t } = useTranslation(['tasks']);
+  const { t } = useTranslation(['tasks', 'components']);
   return (
     <>
       <div className="p-4">
@@ -100,7 +100,7 @@ export function TaskActions({
         {task.status === 'done' && (
           <div className="completion-state text-sm">
             <CheckCircle2 className="h-5 w-5" />
-            <span className="font-medium">Task completed successfully</span>
+            <span className="font-medium">{t('components:taskActions.taskCompletedSuccessfully')}</span>
           </div>
         )}
 

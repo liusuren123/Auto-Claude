@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Sparkles, FileCode, Square } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -49,6 +50,7 @@ export function GenerationProgressScreen({
   onDismiss,
   onStop
 }: GenerationProgressScreenProps) {
+  const { t } = useTranslation('components');
   const logsEndRef = useRef<HTMLDivElement>(null);
   const [showLogs, setShowLogs] = useState(false);
   const [isStopping, setIsStopping] = useState(false);
@@ -95,7 +97,7 @@ export function GenerationProgressScreen({
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-              <h2 className="text-lg font-semibold">Generating Ideas</h2>
+              <h2 className="text-lg font-semibold">{t('generationProgressScreen.generatingIdeas')}</h2>
               <Badge variant="outline">
                 {completedCount}/{enabledTypes.length} complete
               </Badge>
@@ -123,7 +125,7 @@ export function GenerationProgressScreen({
                   {isStopping ? 'Stopping...' : 'Stop'}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Stop generation</TooltipContent>
+              <TooltipContent>{t('generationProgressScreen.stopGeneration')}</TooltipContent>
             </Tooltip>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { Button } from './button';
 import { Card, CardContent } from './card';
@@ -48,33 +49,42 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       if (this.props.fallback) {
         return this.props.fallback;
       }
-
-      return (
-        <Card className="border-destructive m-4">
-          <CardContent className="pt-6">
-            <div className="flex flex-col items-center gap-4 text-center">
-              <AlertTriangle className="h-10 w-10 text-destructive" />
-              <div className="space-y-2">
-                <h3 className="font-semibold text-lg">Something went wrong</h3>
-                <p className="text-sm text-muted-foreground">
-                  An error occurred while rendering this content.
-                </p>
-                {this.state.error && (
-                  <p className="text-xs text-muted-foreground font-mono bg-muted p-2 rounded max-w-md overflow-auto">
-                    {this.state.error.message}
-                  </p>
-                )}
-              </div>
-              <Button onClick={this.handleReset} variant="outline" size="sm">
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Try Again
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      );
+      return <ErrorBoundaryFallback error={this.state.error} onReset={this.handleReset} />;
     }
 
     return this.props.children;
   }
+}
+
+interface ErrorBoundaryFallbackProps {
+  error: Error | null;
+  onReset: () => void;
+}
+
+function ErrorBoundaryFallback({ error, onReset }: ErrorBoundaryFallbackProps) {
+  const { t } = useTranslation('components');
+  return (
+    <Card className="border-destructive m-4">
+      <CardContent className="pt-6">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <AlertTriangle className="h-10 w-10 text-destructive" />
+          <div className="space-y-2">
+            <h3 className="font-semibold text-lg">{t('errorBoundary.somethingWentWrong')}</h3>
+            <p className="text-sm text-muted-foreground">
+              {t('errorBoundary.errorMessage')}
+            </p>
+            {error && (
+              <p className="text-xs text-muted-foreground font-mono bg-muted p-2 rounded max-w-md overflow-auto">
+                {error.message}
+              </p>
+            )}
+          </div>
+          <Button onClick={onReset} variant="outline" size="sm">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            {t('errorBoundary.tryAgain')}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }

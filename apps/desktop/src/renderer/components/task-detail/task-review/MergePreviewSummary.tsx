@@ -21,7 +21,7 @@ export function MergePreviewSummary({
   mergePreview,
   onShowConflictDialog
 }: MergePreviewSummaryProps) {
-  const { t } = useTranslation(['taskReview']);
+  const { t } = useTranslation(['taskReview', 'components']);
   const hasGitConflicts = mergePreview.gitConflicts?.hasConflicts;
   const hasAIConflicts = mergePreview.conflicts.length > 0;
   const hasHighSeverity = mergePreview.conflicts.some(
@@ -72,7 +72,7 @@ export function MergePreviewSummary({
 
       {hasGitConflicts && mergePreview.gitConflicts && (
         <div className="mb-3 p-2 bg-warning/10 rounded text-xs border border-warning/30">
-          <p className="font-medium text-warning mb-1">Branch has diverged - AI will resolve</p>
+          <p className="font-medium text-warning mb-1">{t('components:mergePreviewSummary.branchDiverged')}</p>
           <p className="text-muted-foreground mb-2">
             {t('taskReview:merge.branchHasNewCommitsSinceWorktree', { branch: mergePreview.gitConflicts.baseBranch, count: mergePreview.gitConflicts.commitsBehind })}
             {' '}{t('taskReview:merge.filesNeedIntelligentMerging', { count: mergePreview.gitConflicts.conflictingFiles.length })}
@@ -91,7 +91,7 @@ export function MergePreviewSummary({
       <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
         <div>Files to merge: {mergePreview.summary.totalFiles}</div>
         {hasGitConflicts ? (
-          <div className="text-warning">AI will resolve conflicts</div>
+          <div className="text-warning">{t('components:mergePreviewSummary.aiResolveConflicts')}</div>
         ) : hasAIConflicts ? (
           <>
             <div>Auto-mergeable: {mergePreview.summary.autoMergeable}</div>
@@ -103,7 +103,7 @@ export function MergePreviewSummary({
             )}
           </>
         ) : (
-          <div className="text-success">Ready to merge</div>
+          <div className="text-success">{t('components:mergePreviewSummary.readyToMerge')}</div>
         )}
       </div>
     </div>

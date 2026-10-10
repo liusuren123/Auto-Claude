@@ -383,5 +383,74 @@
     "appearanceModeDescription": "Choose light, dark, or system preference",
     "colorTheme": "Color Theme",
     "colorThemeDescription": "Select a color palette for the interface"
+  },
+  "configurationPanel": {
+    "backToSelection": "Back to Selection",
+    "includingItems": "Including {{count}} {{label}}{{pluralSuffix}}",
+    "releaseInfo": "Release Info",
+    "version": "Version",
+    "date": "Date",
+    "previousVersion": "Previous: {{version}}",
+    "outputStyle": "Output Style",
+    "format": "Format",
+    "audience": "Audience",
+    "emojis": "Emojis",
+    "advancedOptions": "Advanced Options",
+    "customInstructions": "Custom Instructions",
+    "customInstructionsPlaceholder": "Add any special instructions for the AI...",
+    "customInstructionsHint": "Optional. Guide the AI on tone, specific details to include, etc.",
+    "generating": "Generating...",
+    "generateChangelog": "Generate Changelog"
+  },
+  "serviceCard": {
+    "appleFrameworks": "Apple Frameworks",
+    "spmDependencies": "SPM Dependencies",
+    "keyDirectories": "Key Directories"
+  },
+  "codeQualityDetails": {
+    "breakingChange": "Breaking Change",
+    "duplicateLines": "Duplicate Lines",
+    "testCoverage": "Test Coverage"
+  },
+  "claudeCodeStatusBadge": {
+    "name": "Claude Code",
+    "cliTitle": "Claude Code CLI"
+  },
+  "changelogList": {
+    "noCompletedTasks": "No Completed Tasks",
+    "noCommitsFound": "No Commits Found"
+  },
+  "mergePreviewSummary": {
+    "branchDiverged": "Branch has diverged - AI will resolve",
+    "aiResolveConflicts": "AI will resolve conflicts",
+    "readyToMerge": "Ready to merge"
+  },
+  "roadmapTabs": {
+    "allFeatures": "All Features",
+    "byPriority": "By Priority"
+  },
+  "ideationEmptyState": {
+    "noIdeasYet": "No Ideas Yet",
+    "enabledIdeationTypes": "Enabled Ideation Types"
+  },
+  "generationProgressScreen": {
+    "generatingIdeas": "Generating Ideas",
+    "stopGeneration": "Stop generation"
+  },
+  "createMergeRequestDialog": {
+    "sourceBranch": "Source Branch",
+    "targetBranch": "Target Branch"
+  },
+  "errorBoundary": {
+    "somethingWentWrong": "Something went wrong",
+    "errorMessage": "An error occurred while rendering this content.",
+    "tryAgain": "Try Again",
+    "unexpectedError": "Unexpected error"
+  },
+  "taskSubtasks": {
+    "noSubtasksDefined": "No subtasks defined"
+  },
+  "taskActions": {
+    "taskCompletedSuccessfully": "Task completed successfully"
   }
 }

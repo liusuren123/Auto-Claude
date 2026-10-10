@@ -383,5 +383,74 @@
     "appearanceModeDescription": "选择浅色、深色或跟随系统",
     "colorTheme": "颜色主题",
     "colorThemeDescription": "为界面选择一种颜色搭配"
+  },
+  "configurationPanel": {
+    "backToSelection": "返回选择",
+    "includingItems": "包含 {{count}} 个{{label}}{{pluralSuffix}}",
+    "releaseInfo": "发布信息",
+    "version": "版本",
+    "date": "日期",
+    "previousVersion": "上一版本: {{version}}",
+    "outputStyle": "输出风格",
+    "format": "格式",
+    "audience": "受众",
+    "emojis": "Emoji",
+    "advancedOptions": "高级选项",
+    "customInstructions": "自定义指令",
+    "customInstructionsPlaceholder": "为 AI 添加特殊指令...",
+    "customInstructionsHint": "可选。指导 AI 在语气、包含的细节等方面的取舍。",
+    "generating": "正在生成...",
+    "generateChangelog": "生成更新日志"
+  },
+  "serviceCard": {
+    "appleFrameworks": "Apple 框架",
+    "spmDependencies": "SPM 依赖",
+    "keyDirectories": "关键目录"
+  },
+  "codeQualityDetails": {
+    "breakingChange": "破坏性变更",
+    "duplicateLines": "重复行数",
+    "testCoverage": "测试覆盖率"
+  },
+  "claudeCodeStatusBadge": {
+    "name": "Claude Code",
+    "cliTitle": "Claude Code CLI"
+  },
+  "changelogList": {
+    "noCompletedTasks": "暂无已完成的任务",
+    "noCommitsFound": "未找到提交"
+  },
+  "mergePreviewSummary": {
+    "branchDiverged": "分支已偏离 - AI 将自动解决",
+    "aiResolveConflicts": "AI 将解决冲突",
+    "readyToMerge": "可以合并"
+  },
+  "roadmapTabs": {
+    "allFeatures": "全部功能",
+    "byPriority": "按优先级"
+  },
+  "ideationEmptyState": {
+    "noIdeasYet": "暂无创意",
+    "enabledIdeationTypes": "已启用的创意类型"
+  },
+  "generationProgressScreen": {
+    "generatingIdeas": "正在生成创意",
+    "stopGeneration": "停止生成"
+  },
+  "createMergeRequestDialog": {
+    "sourceBranch": "源分支",
+    "targetBranch": "目标分支"
+  },
+  "errorBoundary": {
+    "somethingWentWrong": "发生错误",
+    "errorMessage": "渲染此内容时发生错误。",
+    "tryAgain": "重试",
+    "unexpectedError": "意外错误"
+  },
+  "taskSubtasks": {
+    "noSubtasksDefined": "未定义子任务"
+  },
+  "taskActions": {
+    "taskCompletedSuccessfully": "任务已成功完成"
   }
 }

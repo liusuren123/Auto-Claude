@@ -1,4 +1,5 @@
 import { FileText, GitCommit, Loader2, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
@@ -33,6 +34,7 @@ export function ChangelogList({
   onContinue,
   canContinue
 }: ChangelogListProps) {
+  const { t } = useTranslation('components');
   // Get summary text for footer badge
   const getSummaryCount = () => {
     switch (sourceMode) {
@@ -96,7 +98,7 @@ export function ChangelogList({
               <div className="flex h-full items-center justify-center">
                 <div className="text-center py-12">
                   <FileText className="mx-auto h-12 w-12 text-muted-foreground/30" />
-                  <h3 className="mt-4 text-lg font-medium">No Completed Tasks</h3>
+                  <h3 className="mt-4 text-lg font-medium">{t('changelogList.noCompletedTasks')}</h3>
                   <p className="mt-2 text-sm text-muted-foreground max-w-md">
                     Complete tasks in the Kanban board and mark them as "Done" to include them in your changelog.
                   </p>
@@ -146,7 +148,7 @@ export function ChangelogList({
               <div className="flex h-full items-center justify-center">
                 <div className="text-center py-12">
                   <GitCommit className="mx-auto h-12 w-12 text-muted-foreground/30" />
-                  <h3 className="mt-4 text-lg font-medium">No Commits Found</h3>
+                  <h3 className="mt-4 text-lg font-medium">{t('changelogList.noCommitsFound')}</h3>
                   <p className="mt-2 text-sm text-muted-foreground max-w-md">
                     {sourceMode === 'git-history'
                       ? 'Configure the history options and click "Load Commits" to preview.'

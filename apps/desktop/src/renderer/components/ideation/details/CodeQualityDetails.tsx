@@ -7,6 +7,7 @@ import {
   BookOpen,
   Clock
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../../ui/badge';
 import { Card } from '../../ui/card';
 import {
@@ -21,6 +22,7 @@ interface CodeQualityDetailsProps {
 }
 
 export function CodeQualityDetails({ idea }: CodeQualityDetailsProps) {
+  const { t } = useTranslation('components');
   return (
     <>
       {/* Metrics */}
@@ -55,7 +57,7 @@ export function CodeQualityDetails({ idea }: CodeQualityDetailsProps) {
         <div className="rounded-lg bg-destructive/10 border border-destructive/30 p-3">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-4 w-4 text-destructive" />
-            <span className="text-sm font-medium text-destructive">Breaking Change</span>
+            <span className="text-sm font-medium text-destructive">{t('codeQualityDetails.breakingChange')}</span>
           </div>
           <p className="text-xs text-muted-foreground mt-1">
             This refactoring may break existing code or tests.
@@ -114,13 +116,13 @@ export function CodeQualityDetails({ idea }: CodeQualityDetailsProps) {
             {idea.metrics.duplicateLines && (
               <Card className="p-2 text-center">
                 <div className="text-sm font-semibold">{idea.metrics.duplicateLines}</div>
-                <div className="text-xs text-muted-foreground">Duplicate Lines</div>
+                <div className="text-xs text-muted-foreground">{t('codeQualityDetails.duplicateLines')}</div>
               </Card>
             )}
             {idea.metrics.testCoverage !== undefined && (
               <Card className="p-2 text-center">
                 <div className="text-sm font-semibold">{idea.metrics.testCoverage}%</div>
-                <div className="text-xs text-muted-foreground">Test Coverage</div>
+                <div className="text-xs text-muted-foreground">{t('codeQualityDetails.testCoverage')}</div>
               </Card>
             )}
           </div>

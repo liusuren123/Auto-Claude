@@ -32,7 +32,7 @@ interface NoWorkspaceMessageProps {
  * Displays message when no workspace is found for the task
  */
 export function NoWorkspaceMessage({ task, onClose }: NoWorkspaceMessageProps) {
-  const { t } = useTranslation(['tasks']);
+  const { t } = useTranslation(['tasks', 'components']);
   const [isMarkingDone, setIsMarkingDone] = useState(false);
   const [isProceeding, setIsProceeding] = useState(false);
   const [error, setError] = useState<string | null>(null);

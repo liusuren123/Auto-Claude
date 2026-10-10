@@ -28,14 +28,14 @@ export function RoadmapTabs({
   onArchive,
   onSave,
 }: RoadmapTabsProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'components']);
   return (
     <Tabs value={activeTab} onValueChange={onTabChange} className="h-full flex flex-col">
       <TabsList className="shrink-0 mx-4 mt-4">
         <TabsTrigger value="kanban">Kanban</TabsTrigger>
         <TabsTrigger value="phases">Phases</TabsTrigger>
-        <TabsTrigger value="features">All Features</TabsTrigger>
-        <TabsTrigger value="priorities">By Priority</TabsTrigger>
+        <TabsTrigger value="features">{t('components:roadmapTabs.allFeatures')}</TabsTrigger>
+        <TabsTrigger value="priorities">{t('components:roadmapTabs.byPriority')}</TabsTrigger>
       </TabsList>
 
       {/* Kanban View */}
