@@ -2,6 +2,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlink
 import path from 'path';
 import type { InsightsSession, InsightsSessionSummary, ImageAttachment } from '../../shared/types';
 import { InsightsPaths } from './paths';
+import { t } from '../app-language';
 
 /**
  * Session storage manager
@@ -190,7 +191,7 @@ export class SessionStorage {
           sessions.push({
             id: session.id,
             projectId: session.projectId,
-            title: title || 'New Conversation',
+            title: title || t('common:insights.newConversation'),
             messageCount: session.messages.length,
             modelConfig: session.modelConfig,
             createdAt: new Date(session.createdAt),

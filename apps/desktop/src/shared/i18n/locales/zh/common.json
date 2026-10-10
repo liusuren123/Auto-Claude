@@ -495,6 +495,7 @@
     "daysAgo": "{{count}} 天前",
     "messageCount": "{{count}} 条消息",
     "messageCount_other": "{{count}} 条消息",
+    "newConversation": "新对话",
     "images": {
       "pasteHint": "粘贴图片或截图",
       "dropHint": "将图片拖放到此处",
@@ -1036,5 +1037,22 @@
       "complete": "完成",
       "error": "错误"
     }
+  },
+  "notifications": {
+    "taskComplete": {
+      "title": "任务已完成",
+      "body": "「{{title}}」已完成,等待你审阅"
+    },
+    "taskFailed": {
+      "title": "任务失败",
+      "body": "「{{title}}」遇到错误"
+    },
+    "reviewNeeded": {
+      "title": "需要审阅",
+      "body": "「{{title}}」已准备好,等待你审阅"
+    }
+  },
+  "settings": {
+    "selectProjectDirectory": "选择项目目录"
   }
 }

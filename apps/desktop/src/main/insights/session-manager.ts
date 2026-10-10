@@ -1,6 +1,7 @@
 import type { InsightsSession, InsightsSessionSummary, InsightsModelConfig } from '../../shared/types';
 import { SessionStorage } from './session-storage';
 import { InsightsPaths } from './paths';
+import { t } from '../app-language';
 
 /**
  * Session manager
@@ -55,7 +56,7 @@ export class SessionManager {
     const session: InsightsSession = {
       id: sessionId,
       projectId,
-      title: 'New Conversation',
+      title: t('common:insights.newConversation'),
       messages: [],
       createdAt: new Date(),
       updatedAt: new Date()

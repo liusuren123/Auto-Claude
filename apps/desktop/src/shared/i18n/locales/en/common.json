@@ -495,6 +495,7 @@
     "daysAgo": "{{count}} days ago",
     "messageCount": "{{count}} message",
     "messageCount_other": "{{count}} messages",
+    "newConversation": "New Conversation",
     "images": {
       "pasteHint": "Paste an image or screenshot",
       "dropHint": "Drop image here",
@@ -1036,5 +1037,22 @@
       "complete": "Complete",
       "error": "Error"
     }
+  },
+  "notifications": {
+    "taskComplete": {
+      "title": "Task Complete",
+      "body": "\"{{title}}\" has completed and is ready for review"
+    },
+    "taskFailed": {
+      "title": "Task Failed",
+      "body": "\"{{title}}\" encountered an error"
+    },
+    "reviewNeeded": {
+      "title": "Review Needed",
+      "body": "\"{{title}}\" is ready for your review"
+    }
+  },
+  "settings": {
+    "selectProjectDirectory": "Select Project Directory"
   }
 }

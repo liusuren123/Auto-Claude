@@ -9,7 +9,7 @@ import { is } from '@electron-toolkit/utils';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import { IPC_CHANNELS, DEFAULT_APP_SETTINGS, DEFAULT_AGENT_PROFILES, SPELL_CHECK_LANGUAGE_MAP, DEFAULT_SPELL_CHECK_LANGUAGE, sanitizeThinkingLevel, VALID_THINKING_LEVELS } from '../../shared/constants';
-import { setAppLanguage } from '../app-language';
+import { setAppLanguage, t } from '../app-language';
 import type {
   AppSettings,
   IPCResult
@@ -597,7 +597,7 @@ export function registerSettingsHandlers(
 
       const result = await dialog.showOpenDialog(mainWindow, {
         properties: ['openDirectory'],
-        title: 'Select Project Directory'
+        title: t('common:settings.selectProjectDirectory')
       });
 
       if (result.canceled || result.filePaths.length === 0) {

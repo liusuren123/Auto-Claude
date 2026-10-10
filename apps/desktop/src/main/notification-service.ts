@@ -1,6 +1,7 @@
 import { Notification, shell } from 'electron';
 import type { BrowserWindow } from 'electron';
 import { projectStore } from './project-store';
+import { t } from './app-language';
 
 export type NotificationType = 'task-complete' | 'task-failed' | 'review-needed';
 
@@ -29,8 +30,8 @@ class NotificationService {
    */
   notifyTaskComplete(taskTitle: string, projectId: string, taskId: string): void {
     this.sendNotification('task-complete', {
-      title: 'Task Complete',
-      body: `"${taskTitle}" has completed and is ready for review`,
+      title: t('common:notifications.taskComplete.title'),
+      body: t('common:notifications.taskComplete.body', { title: taskTitle }),
       projectId,
       taskId
     });
@@ -41,8 +42,8 @@ class NotificationService {
    */
   notifyTaskFailed(taskTitle: string, projectId: string, taskId: string): void {
     this.sendNotification('task-failed', {
-      title: 'Task Failed',
-      body: `"${taskTitle}" encountered an error`,
+      title: t('common:notifications.taskFailed.title'),
+      body: t('common:notifications.taskFailed.body', { title: taskTitle }),
       projectId,
       taskId
     });
@@ -53,8 +54,8 @@ class NotificationService {
    */
   notifyReviewNeeded(taskTitle: string, projectId: string, taskId: string): void {
     this.sendNotification('review-needed', {
-      title: 'Review Needed',
-      body: `"${taskTitle}" is ready for your review`,
+      title: t('common:notifications.reviewNeeded.title'),
+      body: t('common:notifications.reviewNeeded.body', { title: taskTitle }),
       projectId,
       taskId
     });
