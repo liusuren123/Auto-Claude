@@ -144,6 +144,7 @@ function groupEntriesByAgent(entries: PRLogEntry[]): {
 }
 
 export function PRLogs({ prNumber, logs, isLoading, isStreaming = false }: PRLogsProps) {
+  const { t } = useTranslation('components');
   const [expandedPhases, setExpandedPhases] = useState<Set<PRLogPhase>>(new Set(['analysis']));
   const [expandedAgents, setExpandedAgents] = useState<Set<string>>(new Set());
 
@@ -215,14 +216,14 @@ export function PRLogs({ prNumber, logs, isLoading, isStreaming = false }: PRLog
         ) : isStreaming ? (
           <div className="text-center text-sm text-muted-foreground py-8">
             <Loader2 className="mx-auto mb-2 h-8 w-8 animate-spin text-blue-500" />
-            <p>Waiting for logs...</p>
-            <p className="text-xs mt-1">Review is starting</p>
+            <p>{t('prLogs.waitingForLogs')}</p>
+            <p className="text-xs mt-1">{t('prLogs.reviewIsStarting')}</p>
           </div>
         ) : (
           <div className="text-center text-sm text-muted-foreground py-8">
             <Terminal className="mx-auto mb-2 h-8 w-8 opacity-50" />
-            <p>No logs available</p>
-            <p className="text-xs mt-1">Run a review to generate logs</p>
+            <p>{t('prLogs.noLogsAvailable')}</p>
+            <p className="text-xs mt-1">{t('prLogs.runReviewToGenerateLogs')}</p>
           </div>
         )}
       </div>
@@ -242,6 +243,7 @@ interface PhaseLogSectionProps {
 }
 
 function PhaseLogSection({ phase, phaseLog, isExpanded, onToggle, isStreaming = false, expandedAgents, onToggleAgent }: PhaseLogSectionProps) {
+  const { t } = useTranslation('components');
   const Icon = PHASE_ICONS[phase];
   const status = phaseLog?.status || 'pending';
   const hasEntries = (phaseLog?.entries.length || 0) > 0;
@@ -326,7 +328,7 @@ function PhaseLogSection({ phase, phaseLog, isExpanded, onToggle, isStreaming = 
       <CollapsibleContent>
         <div className="mt-1 ml-6 border-l-2 border-border pl-4 py-2 space-y-2">
           {!hasEntries ? (
-            <p className="text-xs text-muted-foreground italic">No logs yet</p>
+            <p className="text-xs text-muted-foreground italic">{t('taskLogs.noLogsYet')}</p>
           ) : (
             <GroupedLogEntries
               entries={phaseLog?.entries || []}
@@ -509,7 +511,7 @@ function findSummaryEntry(entries: PRLogEntry[]): { summaryEntry: PRLogEntry | u
 }
 
 function AgentLogGroup({ group, isExpanded, onToggle }: AgentLogGroupProps) {
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(['common', 'components']);
   const { agentName, entries } = group;
 
   // Find a meaningful summary entry instead of just using the first one
@@ -583,6 +585,7 @@ interface LogEntryProps {
 }
 
 function LogEntry({ entry }: LogEntryProps) {
+  const { t } = useTranslation('components');
   const [isExpanded, setIsExpanded] = useState(false);
   const hasDetail = Boolean(entry.detail);
 
@@ -673,12 +676,12 @@ function LogEntry({ entry }: LogEntryProps) {
             {isExpanded ? (
               <>
                 <ChevronDown className="h-2.5 w-2.5" />
-                <span>Less</span>
+                <span>{t('taskLogs.less')}</span>
               </>
             ) : (
               <>
                 <ChevronRight className="h-2.5 w-2.5" />
-                <span>More</span>
+                <span>{t('taskLogs.more')}</span>
               </>
             )}
           </button>

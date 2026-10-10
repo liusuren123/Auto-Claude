@@ -1,4 +1,5 @@
 import { Radio, Import, Eye, EyeOff, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
@@ -29,13 +30,14 @@ export function LinearIntegration({
   isCheckingLinear,
   onOpenLinearImport
 }: LinearIntegrationProps) {
+  const { t } = useTranslation('components');
   if (!envConfig) return null;
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label className="font-normal text-foreground">Enable Linear Sync</Label>
+          <Label className="font-normal text-foreground">{t('integrationSettings.enableLinearSync')}</Label>
           <p className="text-xs text-muted-foreground">
             Create and update Linear issues automatically
           </p>
@@ -49,7 +51,7 @@ export function LinearIntegration({
       {envConfig.linearEnabled && (
         <>
           <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">API Key</Label>
+            <Label className="text-sm font-medium text-foreground">{t('integrationSettings.apiKey')}</Label>
             <p className="text-xs text-muted-foreground">
               Get your API key from{' '}
               <a
@@ -119,11 +121,12 @@ interface ConnectionStatusProps {
 }
 
 function ConnectionStatus({ isChecking, connectionStatus }: ConnectionStatusProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="rounded-lg border border-border bg-muted/30 p-3">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-foreground">Connection Status</p>
+          <p className="text-sm font-medium text-foreground">{t('integrationSettings.connectionStatus')}</p>
           <p className="text-xs text-muted-foreground">
             {isChecking ? 'Checking...' :
               connectionStatus?.connected
@@ -153,12 +156,13 @@ interface ImportTasksPromptProps {
 }
 
 function ImportTasksPrompt({ onOpenLinearImport }: ImportTasksPromptProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="rounded-lg border border-info/30 bg-info/5 p-3">
       <div className="flex items-start gap-3">
         <Import className="h-5 w-5 text-info mt-0.5" />
         <div className="flex-1">
-          <p className="text-sm font-medium text-foreground">Import Existing Tasks</p>
+          <p className="text-sm font-medium text-foreground">{t('integrationSettings.importExistingTasks')}</p>
           <p className="text-xs text-muted-foreground mt-1">
             Select which Linear issues to import into AutoBuild as tasks.
           </p>
@@ -183,12 +187,13 @@ interface RealtimeSyncToggleProps {
 }
 
 function RealtimeSyncToggle({ enabled, onToggle }: RealtimeSyncToggleProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="flex items-center justify-between">
       <div className="space-y-0.5">
         <div className="flex items-center gap-2">
           <Radio className="h-4 w-4 text-info" />
-          <Label className="font-normal text-foreground">Real-time Sync</Label>
+          <Label className="font-normal text-foreground">{t('integrationSettings.realtimeSync')}</Label>
         </div>
         <p className="text-xs text-muted-foreground pl-6">
           Automatically import new tasks created in Linear
@@ -200,6 +205,7 @@ function RealtimeSyncToggle({ enabled, onToggle }: RealtimeSyncToggleProps) {
 }
 
 function RealtimeSyncWarning() {
+  const { t } = useTranslation('components');
   return (
     <div className="rounded-lg border border-warning/30 bg-warning/5 p-3 ml-6">
       <p className="text-xs text-warning">
@@ -218,10 +224,11 @@ interface TeamProjectIdsProps {
 }
 
 function TeamProjectIds({ teamId, projectId, onTeamIdChange, onProjectIdChange }: TeamProjectIdsProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">Team ID (Optional)</Label>
+        <Label className="text-sm font-medium text-foreground">{t('integrationSettings.teamIdOptional')}</Label>
         <Input
           placeholder="Auto-detected"
           value={teamId}
@@ -229,7 +236,7 @@ function TeamProjectIds({ teamId, projectId, onTeamIdChange, onProjectIdChange }
         />
       </div>
       <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">Project ID (Optional)</Label>
+        <Label className="text-sm font-medium text-foreground">{t('integrationSettings.projectIdOptional')}</Label>
         <Input
           placeholder="Auto-created"
           value={projectId}

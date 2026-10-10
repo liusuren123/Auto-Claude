@@ -58,7 +58,7 @@ export function GitHubIntegration({
   settings,
   setSettings
 }: GitHubIntegrationProps) {
-  const { t } = useTranslation(['settings', 'common']);
+  const { t } = useTranslation(['settings', 'common', 'components']);
   const [authMode, setAuthMode] = useState<'manual' | 'oauth' | 'oauth-success'>('manual');
   const [oauthUsername, setOauthUsername] = useState<string | null>(null);
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
@@ -229,9 +229,9 @@ export function GitHubIntegration({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label className="font-normal text-foreground">Enable GitHub Issues</Label>
+          <Label className="font-normal text-foreground">{t('components:githubIntegrationSection.enableGithubIssues')}</Label>
           <p className="text-xs text-muted-foreground">
-            Sync issues from GitHub and create tasks automatically
+            {t('components:githubIntegrationSection.enableGithubIssuesDescription')}
           </p>
         </div>
         <Switch
@@ -250,11 +250,11 @@ export function GitHubIntegration({
                   <div className="flex items-center gap-3">
                     <CheckCircle2 className="h-5 w-5 text-success" />
                     <div>
-                      <p className="text-sm font-medium text-success">Connected via GitHub CLI</p>
+                      <p className="text-sm font-medium text-success">{t('components:githubIntegrationSection.connectedViaGithubCli')}</p>
                       {oauthUsername && (
                         <p className="text-xs text-success/80 flex items-center gap-1 mt-0.5">
                           <User className="h-3 w-3" />
-                          Authenticated as {oauthUsername}
+                          {t('components:githubIntegrationSection.authenticatedAs', { username: oauthUsername })}
                         </p>
                       )}
                     </div>
@@ -287,13 +287,13 @@ export function GitHubIntegration({
           {authMode === 'oauth' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-sm font-medium text-foreground">GitHub Authentication</Label>
+                <Label className="text-sm font-medium text-foreground">{t('components:githubIntegrationSection.githubAuthentication')}</Label>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handleSwitchToManual}
                 >
-                  Use Manual Token
+                  {t('components:githubIntegrationSection.useManualToken')}
                 </Button>
               </div>
               <GitHubOAuthFlow
@@ -308,7 +308,7 @@ export function GitHubIntegration({
             <>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label className="text-sm font-medium text-foreground">Personal Access Token</Label>
+                  <Label className="text-sm font-medium text-foreground">{t('components:githubIntegrationSection.personalAccessToken')}</Label>
                   <Button
                     variant="outline"
                     size="sm"
@@ -461,6 +461,7 @@ function RepositoryDropdown({
   onRefresh,
   onManualEntry
 }: RepositoryDropdownProps) {
+  const { t } = useTranslation('components');
   const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState('');
 
@@ -474,7 +475,7 @@ function RepositoryDropdown({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <Label className="text-sm font-medium text-foreground">Repository</Label>
+        <Label className="text-sm font-medium text-foreground">{t('components:githubIntegrationSection.repository')}</Label>
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
@@ -525,7 +526,7 @@ function RepositoryDropdown({
               {selectedRepo}
             </span>
           ) : (
-            <span className="text-muted-foreground">Select a repository...</span>
+            <span className="text-muted-foreground">{t('components:githubIntegrationSection.selectRepositoryPlaceholder')}</span>
           )}
           <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </button>
@@ -597,11 +598,12 @@ interface RepositoryInputProps {
 }
 
 function RepositoryInput({ value, onChange }: RepositoryInputProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="space-y-2">
-      <Label className="text-sm font-medium text-foreground">Repository</Label>
+      <Label className="text-sm font-medium text-foreground">{t('githubIntegrationSection.repository')}</Label>
       <p className="text-xs text-muted-foreground">
-        Format: <code className="px-1 bg-muted rounded">owner/repo</code> (e.g., facebook/react)
+        {t('githubIntegrationSection.repositoryFormatHint')} <code className="px-1 bg-muted rounded">owner/repo</code> {t('githubIntegrationSection.repositoryFormatExample')}
       </p>
       <Input
         placeholder="owner/repository"
@@ -618,16 +620,17 @@ interface ConnectionStatusProps {
 }
 
 function ConnectionStatus({ isChecking, connectionStatus }: ConnectionStatusProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="rounded-lg border border-border bg-muted/30 p-3">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-foreground">Connection Status</p>
+          <p className="text-sm font-medium text-foreground">{t('githubIntegrationSection.connectionStatus')}</p>
           <p className="text-xs text-muted-foreground">
-            {isChecking ? 'Checking...' :
+            {isChecking ? t('githubIntegrationSection.checkingStatus') :
               connectionStatus?.connected
-                ? `Connected to ${connectionStatus.repoFullName}`
-                : connectionStatus?.error || 'Not connected'}
+                ? t('githubIntegrationSection.connectedTo', { repo: connectionStatus.repoFullName })
+                : connectionStatus?.error || t('components:githubIntegrationSection.notConnected')}
           </p>
           {connectionStatus?.connected && connectionStatus.repoDescription && (
             <p className="text-xs text-muted-foreground mt-1 italic">
@@ -648,14 +651,15 @@ function ConnectionStatus({ isChecking, connectionStatus }: ConnectionStatusProp
 }
 
 function IssuesAvailableInfo() {
+  const { t } = useTranslation('components');
   return (
     <div className="rounded-lg border border-info/30 bg-info/5 p-3">
       <div className="flex items-start gap-3">
         <Github className="h-5 w-5 text-info mt-0.5" />
         <div className="flex-1">
-          <p className="text-sm font-medium text-foreground">Issues Available</p>
+          <p className="text-sm font-medium text-foreground">{t('githubIntegrationSection.issuesAvailable')}</p>
           <p className="text-xs text-muted-foreground mt-1">
-            Access GitHub Issues from the sidebar to view, investigate, and create tasks from issues.
+            {t('githubIntegrationSection.issuesAvailableDescription')}
           </p>
         </div>
       </div>
@@ -669,15 +673,16 @@ interface AutoSyncToggleProps {
 }
 
 function AutoSyncToggle({ enabled, onToggle }: AutoSyncToggleProps) {
+  const { t } = useTranslation('components');
   return (
     <div className="flex items-center justify-between">
       <div className="space-y-0.5">
         <div className="flex items-center gap-2">
           <RefreshCw className="h-4 w-4 text-info" />
-          <Label className="font-normal text-foreground">Auto-Sync on Load</Label>
+          <Label className="font-normal text-foreground">{t('githubIntegrationSection.autoSyncOnLoad')}</Label>
         </div>
         <p className="text-xs text-muted-foreground pl-6">
-          Automatically fetch issues when the project loads
+          {t('githubIntegrationSection.autoSyncOnLoadDescription')}
         </p>
       </div>
       <Switch checked={enabled} onCheckedChange={onToggle} />

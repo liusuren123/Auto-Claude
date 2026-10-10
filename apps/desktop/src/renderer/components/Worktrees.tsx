@@ -59,7 +59,7 @@ interface WorktreesProps {
 }
 
 export function Worktrees({ projectId }: WorktreesProps) {
-  const { t } = useTranslation(['common', 'dialogs']);
+  const { t } = useTranslation(['common', 'dialogs', 'components']);
   const { toast } = useToast();
   const projects = useProjectStore((state) => state.projects);
   const selectedProject = projects.find((p) => p.id === projectId);
@@ -465,7 +465,7 @@ export function Worktrees({ projectId }: WorktreesProps) {
   if (!selectedProject) {
     return (
       <div className="flex h-full items-center justify-center">
-        <p className="text-muted-foreground">Select a project to view worktrees</p>
+        <p className="text-muted-foreground">{t('worktrees.selectProjectPrompt')}</p>
       </div>
     );
   }
@@ -567,10 +567,9 @@ export function Worktrees({ projectId }: WorktreesProps) {
           <div className="rounded-full bg-muted p-4 mb-4">
             <GitBranch className="h-8 w-8 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground">No Worktrees</h3>
+          <h3 className="text-lg font-semibold text-foreground">{t('worktrees.empty')}</h3>
           <p className="text-sm text-muted-foreground mt-2 max-w-md">
-            Worktrees are created automatically when Aperant builds features.
-            You can also create terminal worktrees from the Agent Terminals tab.
+            {t('worktrees.emptyDescription')}
           </p>
         </div>
       )}
@@ -813,21 +812,21 @@ export function Worktrees({ projectId }: WorktreesProps) {
             <div className="py-4">
               <div className="rounded-lg bg-muted p-4 text-sm space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Source Branch</span>
+                  <span className="text-muted-foreground">{t('worktrees.sourceBranch')}</span>
                   <span className="font-mono text-info">{selectedWorktree.isOrphaned ? t('common:labels.orphaned') : selectedWorktree.branch}</span>
                 </div>
                 <div className="flex items-center justify-center">
                   <ChevronRight className="h-4 w-4 text-muted-foreground rotate-90" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Target Branch</span>
+                  <span className="text-muted-foreground">{t('worktrees.targetBranch')}</span>
                   <span className="font-mono">{selectedWorktree.baseBranch}</span>
                 </div>
                 <div className="border-t border-border pt-3 mt-3">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">Changes</span>
+                    <span className="text-muted-foreground">{t('worktrees.changes')}</span>
                     <span>
-                      {selectedWorktree.commitCount ?? 0} commits, {selectedWorktree.filesChanged ?? 0} files
+                      {selectedWorktree.commitCount ?? 0} {t('worktrees.commits')}, {selectedWorktree.filesChanged ?? 0} {t('worktrees.files')}
                     </span>
                   </div>
                 </div>

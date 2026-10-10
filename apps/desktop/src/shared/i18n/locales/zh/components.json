@@ -104,7 +104,24 @@
     "authenticatedViaOAuth": "已通过 GitHub OAuth（gh CLI）认证",
     "useOAuthInstead": "改用 OAuth",
     "projectSpecific": "项目专属配置",
-    "projectSpecificDescription": "此 GitHub 仓库仅为 {{projectName}} 配置。每个项目可以拥有自己的 GitHub 仓库。"
+    "projectSpecificDescription": "此 GitHub 仓库仅为 {{projectName}} 配置。每个项目可以拥有自己的 GitHub 仓库。",
+    "enableGithubIssues": "启用 GitHub Issues",
+    "enableGithubIssuesDescription": "从 GitHub 同步 Issues 并自动创建任务",
+    "connectedViaGithubCli": "已通过 GitHub CLI 连接",
+    "authenticatedAs": "已认证为 {{username}}",
+    "personalAccessToken": "个人访问令牌",
+    "repository": "仓库",
+    "selectRepositoryPlaceholder": "选择一个仓库...",
+    "connectionStatus": "连接状态",
+    "checkingStatus": "正在检查...",
+    "connectedTo": "已连接到 {{repo}}",
+    "notConnected": "未连接",
+    "repositoryFormatHint": "格式:",
+    "repositoryFormatExample": "(例如 facebook/react)",
+    "issuesAvailable": "可访问 Issues",
+    "issuesAvailableDescription": "从侧边栏访问 GitHub Issues,以查看、调查和基于 Issues 创建任务。",
+    "autoSyncOnLoad": "加载时自动同步",
+    "autoSyncOnLoadDescription": "项目加载时自动获取 Issues"
   },
   "changelogFilters": {
     "changelogSource": "更新日志来源",
@@ -275,5 +292,96 @@
     "pasteImagesHint": "将图片粘贴到描述中，即可保存到更新日志",
     "placeholder": "生成的更新日志将显示在此处...",
     "generateHint": "点击「生成更新日志」以创建发布说明。"
+  },
+  "ideationDialogs": {
+    "configTitle": "创意配置",
+    "configDescription": "配置要生成的创意类型",
+    "ideationTypes": "创意类型",
+    "contextSources": "上下文来源",
+    "includeRoadmapContext": "包含路线图上下文",
+    "includeKanbanContext": "包含看板上下文",
+    "close": "关闭",
+    "addMoreTitle": "添加更多创意",
+    "addMoreDescription": "选择要生成的额外创意类型。已有的创意将会保留。",
+    "allTypesGenerated": "你已生成全部创意类型！",
+    "regenerateHint": "使用「重新生成」以刷新现有创意。",
+    "selectedCount": "已选 {{count}} 项",
+    "cancel": "取消",
+    "generateTypes": "生成 {{count}} 种类型",
+    "generateIdeas": "生成创意"
+  },
+  "taskLogs": {
+    "noLogsYet": "暂无日志",
+    "logsWillAppear": "任务运行时,日志将显示在此处",
+    "done": "已完成",
+    "hideOutput": "隐藏输出",
+    "showOutput": "显示输出",
+    "less": "收起",
+    "more": "展开"
+  },
+  "prLogs": {
+    "waitingForLogs": "正在等待日志...",
+    "reviewIsStarting": "评审即将开始",
+    "noLogsAvailable": "暂无日志",
+    "runReviewToGenerateLogs": "运行评审以生成日志"
+  },
+  "projectIndexTab": {
+    "projectStructure": "项目结构",
+    "projectStructureDescription": "AI 发现的代码库知识",
+    "refresh": "刷新",
+    "refreshTooltip": "重新分析项目结构",
+    "failedToLoadIndex": "项目索引加载失败",
+    "noIndexFound": "未找到项目索引",
+    "noIndexHint": "点击刷新按钮以分析项目结构并创建索引。",
+    "analyzeProject": "分析项目",
+    "overview": "概览",
+    "serviceSingular": "服务",
+    "servicePlural": "服务",
+    "services": "服务",
+    "infrastructure": "基础设施",
+    "dockerCompose": "Docker Compose",
+    "ciCd": "CI/CD",
+    "deployment": "部署",
+    "dockerServices": "Docker 服务",
+    "conventions": "约定",
+    "pythonLinting": "Python Linting",
+    "jsLinting": "JS Linting",
+    "formatting": "格式化",
+    "gitHooks": "Git 钩子",
+    "typescript": "TypeScript",
+    "enabled": "已启用"
+  },
+  "prReviewCard": {
+    "prReviewBadge": "PR 评审",
+    "keyFindings": "关键发现",
+    "gotchasDiscovered": "发现的陷阱",
+    "patternsIdentified": "已识别模式"
+  },
+  "worktrees": {
+    "selectProjectPrompt": "请选择一个项目以查看工作树",
+    "sourceBranch": "源分支",
+    "targetBranch": "目标分支",
+    "changes": "变更",
+    "commits": "次提交",
+    "files": "个文件"
+  },
+  "roadmapHeader": {
+    "competitorAnalysis": "竞品分析",
+    "clickToViewAnalysis": "点击查看详细分析",
+    "analysisDescription": "已分析 {{competitorCount}} 个竞品,识别出 {{painPointCount}} 个痛点",
+    "addFeature": "添加功能",
+    "addFeatureTooltip": "向路线图添加新功能",
+    "regenerateTooltip": "重新生成路线图",
+    "targetLabel": "目标:",
+    "morePersonas": "个其他用户角色",
+    "secondaryPersonas": "次要用户角色:",
+    "features": "项功能",
+    "phases": "个阶段"
+  },
+  "themeSelector": {
+    "appearanceMode": "外观模式",
+    "appearanceModeDescription": "选择浅色、深色或跟随系统",
+    "colorTheme": "颜色主题",
+    "colorThemeDescription": "为界面选择一种颜色搭配"
   }
 }

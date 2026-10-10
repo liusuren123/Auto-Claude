@@ -104,7 +104,24 @@
     "authenticatedViaOAuth": "Authenticated via GitHub OAuth (gh CLI)",
     "useOAuthInstead": "Use OAuth Instead",
     "projectSpecific": "Project-Specific Configuration",
-    "projectSpecificDescription": "This GitHub repository is configured only for {{projectName}}. Each project can have its own GitHub repository."
+    "projectSpecificDescription": "This GitHub repository is configured only for {{projectName}}. Each project can have its own GitHub repository.",
+    "enableGithubIssues": "Enable GitHub Issues",
+    "enableGithubIssuesDescription": "Sync issues from GitHub and create tasks automatically",
+    "connectedViaGithubCli": "Connected via GitHub CLI",
+    "authenticatedAs": "Authenticated as {{username}}",
+    "personalAccessToken": "Personal Access Token",
+    "repository": "Repository",
+    "selectRepositoryPlaceholder": "Select a repository...",
+    "connectionStatus": "Connection Status",
+    "checkingStatus": "Checking...",
+    "connectedTo": "Connected to {{repo}}",
+    "notConnected": "Not connected",
+    "repositoryFormatHint": "Format:",
+    "repositoryFormatExample": "(e.g., facebook/react)",
+    "issuesAvailable": "Issues Available",
+    "issuesAvailableDescription": "Access GitHub Issues from the sidebar to view, investigate, and create tasks from issues.",
+    "autoSyncOnLoad": "Auto-Sync on Load",
+    "autoSyncOnLoadDescription": "Automatically fetch issues when the project loads"
   },
   "changelogFilters": {
     "changelogSource": "Changelog Source",
@@ -275,5 +292,96 @@
     "pasteImagesHint": "Paste images into the description to save them to the changelog",
     "placeholder": "Generated changelog will appear here...",
     "generateHint": "Click \"Generate Changelog\" to create release notes."
+  },
+  "ideationDialogs": {
+    "configTitle": "Ideation Configuration",
+    "configDescription": "Configure which types of ideas to generate",
+    "ideationTypes": "Ideation Types",
+    "contextSources": "Context Sources",
+    "includeRoadmapContext": "Include Roadmap Context",
+    "includeKanbanContext": "Include Kanban Context",
+    "close": "Close",
+    "addMoreTitle": "Add More Ideas",
+    "addMoreDescription": "Select additional ideation types to generate. Your existing ideas will be preserved.",
+    "allTypesGenerated": "You've already generated all ideation types!",
+    "regenerateHint": "Use \"Regenerate\" to refresh existing ideas.",
+    "selectedCount": "{{count}} selected",
+    "cancel": "Cancel",
+    "generateTypes": "Generate {{count}} Types",
+    "generateIdeas": "Generate Ideas"
+  },
+  "taskLogs": {
+    "noLogsYet": "No logs yet",
+    "logsWillAppear": "Logs will appear here when the task runs",
+    "done": "Done",
+    "hideOutput": "Hide output",
+    "showOutput": "Show output",
+    "less": "Less",
+    "more": "More"
+  },
+  "prLogs": {
+    "waitingForLogs": "Waiting for logs...",
+    "reviewIsStarting": "Review is starting",
+    "noLogsAvailable": "No logs available",
+    "runReviewToGenerateLogs": "Run a review to generate logs"
+  },
+  "projectIndexTab": {
+    "projectStructure": "Project Structure",
+    "projectStructureDescription": "AI-discovered knowledge about your codebase",
+    "refresh": "Refresh",
+    "refreshTooltip": "Re-analyze project structure",
+    "failedToLoadIndex": "Failed to load project index",
+    "noIndexFound": "No Project Index Found",
+    "noIndexHint": "Click the Refresh button to analyze your project structure and create an index.",
+    "analyzeProject": "Analyze Project",
+    "overview": "Overview",
+    "serviceSingular": "service",
+    "servicePlural": "services",
+    "services": "Services",
+    "infrastructure": "Infrastructure",
+    "dockerCompose": "Docker Compose",
+    "ciCd": "CI/CD",
+    "deployment": "Deployment",
+    "dockerServices": "Docker Services",
+    "conventions": "Conventions",
+    "pythonLinting": "Python Linting",
+    "jsLinting": "JS Linting",
+    "formatting": "Formatting",
+    "gitHooks": "Git Hooks",
+    "typescript": "TypeScript",
+    "enabled": "Enabled"
+  },
+  "prReviewCard": {
+    "prReviewBadge": "PR Review",
+    "keyFindings": "Key Findings",
+    "gotchasDiscovered": "Gotchas Discovered",
+    "patternsIdentified": "Patterns Identified"
+  },
+  "worktrees": {
+    "selectProjectPrompt": "Select a project to view worktrees",
+    "sourceBranch": "Source Branch",
+    "targetBranch": "Target Branch",
+    "changes": "Changes",
+    "commits": "commits",
+    "files": "files"
+  },
+  "roadmapHeader": {
+    "competitorAnalysis": "Competitor Analysis",
+    "clickToViewAnalysis": "Click to view detailed analysis",
+    "analysisDescription": "Analyzed {{competitorCount}} competitors with {{painPointCount}} pain points identified",
+    "addFeature": "Add Feature",
+    "addFeatureTooltip": "Add a new feature to the roadmap",
+    "regenerateTooltip": "Regenerate Roadmap",
+    "targetLabel": "Target:",
+    "morePersonas": "more personas",
+    "secondaryPersonas": "Secondary Personas:",
+    "features": "features",
+    "phases": "phases"
+  },
+  "themeSelector": {
+    "appearanceMode": "Appearance Mode",
+    "appearanceModeDescription": "Choose light, dark, or system preference",
+    "colorTheme": "Color Theme",
+    "colorThemeDescription": "Select a color palette for the interface"
   }
 }
