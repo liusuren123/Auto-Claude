@@ -41,7 +41,20 @@ export function checkGitStatus(projectPath: string): GitStatus {
       encoding: 'utf-8',
       stdio: ['pipe', 'pipe', 'pipe']
     });
-  } catch {
+  } catch (error) {
+    // `code` is a string for spawn/exec failures (ENOENT, EACCES, EBUSY, ...) and
+    // a number for a normal non-zero git exit. Only string codes mean git itself
+    // could not run — reporting those as "not a git repository" told users to run
+    // `git init` when the real problem was an unusable git executable.
+    const err = error as NodeJS.ErrnoException;
+    if (typeof err.code === 'string') {
+      return {
+        isGitRepo: false,
+        hasCommits: false,
+        currentBranch: null,
+        error: `Unable to run git (${err.code}). Make sure git is installed and available on PATH.`
+      };
+    }
     return {
       isGitRepo: false,
       hasCommits: false,

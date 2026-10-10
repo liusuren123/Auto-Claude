@@ -365,12 +365,14 @@ export function App() {
     };
   }, []);
 
-  // Reset init success flag when selected project changes
-  // This allows the init dialog to show for new/different projects
+  // Reset init success/error flags when the *selected project* changes.
+  // NOTE: must key on the project id — with `[]` this never ran again, and with
+  // the whole effect re-running on `isInitializing` it wiped the error that
+  // handleInitialize had just set (making failures look like "nothing happened").
   useEffect(() => {
     setInitSuccess(false);
     setInitError(null);
-  }, []);
+  }, [selectedProject?.id]);
 
   // Check if selected project needs initialization (e.g., .auto-claude folder was deleted)
   useEffect(() => {
@@ -382,10 +384,11 @@ export function App() {
     if (initSuccess) return;
 
     if (selectedProject && !selectedProject.autoBuildPath && skippedInitProjectId !== selectedProject.id) {
-      // Project exists but isn't initialized - show init dialog
+      // Project exists but isn't initialized - show init dialog.
+      // Do NOT clear initError here: this effect also re-runs when
+      // `isInitializing` flips back to false (right after a failed attempt),
+      // which would immediately erase the error we just set.
       setPendingProject(selectedProject);
-      setInitError(null); // Clear any previous errors
-      setInitSuccess(false); // Reset success flag
       setShowInitDialog(true);
     }
   }, [selectedProject, skippedInitProjectId, isInitializing, initSuccess]);

@@ -446,12 +446,18 @@ export async function initializeProject(
       }
       return result.data;
     }
-    console.log('[ProjectStore] IPC failed or no data, setting error');
-    store.setError(result.error || 'Failed to initialize project');
-    return null;
+    // Propagate the real reason (e.g. "Not a git repository. Please run git
+    // init") instead of returning null — callers render `result?.error`, so
+    // dropping it here left the UI showing a generic message (or nothing).
+    const failureMessage =
+      result.error || result.data?.error || 'Failed to initialize project';
+    console.log('[ProjectStore] IPC failed or no data, setting error:', failureMessage);
+    store.setError(failureMessage);
+    return { success: false, error: failureMessage };
   } catch (error) {
     console.error('[ProjectStore] Exception during initializeProject:', error);
-    store.setError(error instanceof Error ? error.message : 'Unknown error');
-    return null;
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    store.setError(message);
+    return { success: false, error: message };
   }
 }
