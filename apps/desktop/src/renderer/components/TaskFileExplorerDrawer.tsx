@@ -36,7 +36,7 @@ const contentVariants = {
 };
 
 export function TaskFileExplorerDrawer({ isOpen, onClose, projectPath }: TaskFileExplorerDrawerProps) {
-  const { t } = useTranslation('components');
+  const { t } = useTranslation(['components', 'common']);
   const { clearCache, loadDirectory } = useFileExplorerStore();
 
   const handleRefresh = () => {
@@ -83,7 +83,7 @@ export function TaskFileExplorerDrawer({ isOpen, onClose, projectPath }: TaskFil
                   size="icon"
                   className="h-6 w-6"
                   onClick={handleRefresh}
-                  title="Refresh"
+                  title={t('common:accessibility.refreshAriaLabel')}
                 >
                   <RefreshCw className="h-3.5 w-3.5" />
                 </Button>
@@ -92,7 +92,7 @@ export function TaskFileExplorerDrawer({ isOpen, onClose, projectPath }: TaskFil
                   size="icon"
                   className="h-6 w-6"
                   onClick={onClose}
-                  title="Close"
+                  title={t('common:accessibility.closePanelAriaLabel')}
                 >
                   <X className="h-3.5 w-3.5" />
                 </Button>

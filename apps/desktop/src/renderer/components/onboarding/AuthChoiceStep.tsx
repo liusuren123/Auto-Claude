@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LogIn, Key, Shield } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
@@ -62,6 +63,7 @@ function AuthOptionCard({ icon, title, description, onClick, variant = 'default'
  * - AC1: Displays first-run screen with two clear options
  */
 export function AuthChoiceStep({ onNext, onBack, onSkip, onAPIKeyPathComplete }: AuthChoiceStepProps) {
+  const { t } = useTranslation('common');
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
   const profiles = useSettingsStore((state) => state.profiles);
 
@@ -124,7 +126,7 @@ export function AuthChoiceStep({ onNext, onBack, onSkip, onAPIKeyPathComplete }:
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
             <AuthOptionCard
               icon={<LogIn className="h-6 w-6" />}
-              title="Sign in with Anthropic"
+              title={t('accessibility.signInWithAnthropicTitle')}
               description="Use your Anthropic account to authenticate. Simple and secure OAuth flow."
               onClick={handleOAuthChoice}
               variant="oauth"
@@ -132,7 +134,7 @@ export function AuthChoiceStep({ onNext, onBack, onSkip, onAPIKeyPathComplete }:
             />
             <AuthOptionCard
               icon={<Key className="h-6 w-6" />}
-              title="Use Custom API Key"
+              title={t('accessibility.useCustomApiKeyTitle')}
               description="Bring your own API key from Anthropic or a compatible API provider. ⚠️ Highly experimental — may incur significant costs."
               onClick={handleAPIKeyChoice}
               data-testid="auth-option-apikey"

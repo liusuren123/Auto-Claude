@@ -155,6 +155,7 @@ interface StagedInProjectMessageProps {
  * Displays message when changes have already been staged in the main project
  */
 export function StagedInProjectMessage({ task, projectPath, hasWorktree = false, onClose, onReviewAgain }: StagedInProjectMessageProps) {
+  const { t } = useTranslation('components');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isMarkingDone, setIsMarkingDone] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
@@ -247,11 +248,11 @@ export function StagedInProjectMessage({ task, projectPath, hasWorktree = false,
         This task's changes have been staged in your main project{task.stagedAt ? ` on ${new Date(task.stagedAt).toLocaleDateString()}` : ''}.
       </p>
       <div className="bg-background/50 rounded-lg p-3 mb-3">
-        <p className="text-xs text-muted-foreground mb-2">Next steps:</p>
+        <p className="text-xs text-muted-foreground mb-2">{t('workspaceMessages.nextSteps')}</p>
         <ol className="text-xs text-muted-foreground space-y-1 list-decimal list-inside">
-          <li>Review staged changes with <code className="bg-background px-1 rounded">git status</code> and <code className="bg-background px-1 rounded">git diff --staged</code></li>
-          <li>Commit when ready: <code className="bg-background px-1 rounded">git commit -m "your message"</code></li>
-          <li>Push to remote when satisfied</li>
+          <li>{t('workspaceMessages.reviewStagedChanges')}</li>
+          <li>{t('workspaceMessages.commitWhenReady')}</li>
+          <li>{t('workspaceMessages.pushToRemote')}</li>
         </ol>
       </div>
 

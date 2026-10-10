@@ -349,7 +349,7 @@ export function SDKRateLimitModal() {
                           <span className="truncate flex items-center gap-2">
                             {profile.name}
                             {profile.id === sdkRateLimitInfo.suggestedProfile?.id && (
-                              <Star className="h-3 w-3 text-yellow-500" aria-label="Recommended" />
+                              <Star className="h-3 w-3 text-yellow-500" aria-label={t('accessibility.recommendedAriaLabel')} />
                             )}
                           </span>
                           {selectedProfileId === profile.id && (

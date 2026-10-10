@@ -72,13 +72,13 @@ export function SectionRouter({
   handleInitialize,
   onOpenLinearImport
 }: SectionRouterProps) {
-  const { t } = useTranslation('settings');
+  const { t } = useTranslation(['settings', 'common']);
 
   switch (activeSection) {
     case 'general':
       return (
         <SettingsSection
-          title="General"
+          title={t('accessibility.generalTitle')}
           description={`Configure Auto-Build, agent model, and notifications for ${project.name}`}
         >
           <GeneralSettings

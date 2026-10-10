@@ -19,7 +19,7 @@ interface ThemeSelectorProps {
  * require saving to take effect.
  */
 export function ThemeSelector({ settings, onSettingsChange }: ThemeSelectorProps) {
-  const { t } = useTranslation('components');
+  const { t } = useTranslation(['components', 'common']);
   const updateStoreSettings = useSettingsStore((state) => state.updateSettings);
 
   const currentColorTheme = settings.colorTheme || 'default';
@@ -115,12 +115,12 @@ export function ThemeSelector({ settings, onSettingsChange }: ThemeSelectorProps
                     <div
                       className="w-6 h-6 rounded-full border-2 border-background shadow-sm"
                       style={{ backgroundColor: bgColor }}
-                      title="Background color"
+                      title={t('common:accessibility.backgroundColorTitle')}
                     />
                     <div
                       className="w-6 h-6 rounded-full border-2 border-background shadow-sm"
                       style={{ backgroundColor: accentColor }}
-                      title="Accent color"
+                      title={t('common:accessibility.accentColorTitle')}
                     />
                   </div>
                 </div>

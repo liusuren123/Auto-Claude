@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback, useState, useMemo, forwardRef, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDroppable, useDndContext } from '@dnd-kit/core';
 import '@xterm/xterm/css/xterm.css';
 import { FileDown } from 'lucide-react';
@@ -64,6 +65,7 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(function Termi
   isExpanded,
   onToggleExpand,
 }, ref) {
+  const { t } = useTranslation('components');
   const isMountedRef = useRef(true);
   const isCreatedRef = useRef(false);
   // Track deliberate terminal recreation (e.g., worktree switching)
@@ -791,7 +793,7 @@ Please confirm you're ready by saying: I'm ready to work on ${selectedTask.title
         <div className="absolute inset-0 bg-info/10 z-10 flex items-center justify-center pointer-events-none">
           <div className="flex items-center gap-2 bg-info/90 text-info-foreground px-3 py-2 rounded-md">
             <FileDown className="h-4 w-4" />
-            <span className="text-sm font-medium">Drop to insert path</span>
+            <span className="text-sm font-medium">{t('terminal.dropToInsertPath')}</span>
           </div>
         </div>
       )}

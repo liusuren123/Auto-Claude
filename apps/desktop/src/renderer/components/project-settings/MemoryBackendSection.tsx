@@ -28,7 +28,7 @@ export function MemoryBackendSection({
   onUpdateConfig,
   onUpdateSettings,
 }: MemoryBackendSectionProps) {
-  const { t } = useTranslation('components');
+  const { t } = useTranslation(['components', 'common']);
   const pc = envConfig.memoryProviderConfig;
 
   // Map ProjectEnvConfig → MemoryPanelConfig
@@ -110,7 +110,7 @@ export function MemoryBackendSection({
 
   return (
     <CollapsibleSection
-      title="Memory"
+      title={t('common:accessibility.memoryTitle')}
       icon={<Database className="h-4 w-4" />}
       isExpanded={isExpanded}
       onToggle={onToggle}

@@ -522,5 +522,14 @@
   },
   "agentProfiles": {
     "title": "Agent Profiles"
+  },
+  "workspaceMessages": {
+    "nextSteps": "Next steps:",
+    "reviewStagedChanges": "Review staged changes in your terminal, then proceed.",
+    "commitWhenReady": "Commit when ready with your git client.",
+    "pushToRemote": "Push to remote when satisfied"
+  },
+  "terminal": {
+    "dropToInsertPath": "Drop to insert path"
   }
 }
