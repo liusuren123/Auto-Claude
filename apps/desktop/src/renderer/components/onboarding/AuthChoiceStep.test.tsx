@@ -11,6 +11,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, } from '@testing-library/react';
 import '@testing-library/jest-dom';
+// Initialize the global i18n instance so translated text resolves to the
+// English baseline during unit tests (see src/shared/i18n/index.ts).
+import '../../../shared/i18n';
 import { AuthChoiceStep } from './AuthChoiceStep';
 import type { APIProfile } from '@shared/types/profile';
 
