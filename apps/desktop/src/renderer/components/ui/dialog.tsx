@@ -50,7 +50,7 @@ const DialogContent = React.forwardRef<
         'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         'data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]',
         'data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
-        'duration-200 overflow-hidden flex flex-col',
+        'duration-200 overflow-y-auto flex flex-col',
         className
       )}
       {...props}
