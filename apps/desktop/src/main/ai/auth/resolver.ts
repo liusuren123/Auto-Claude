@@ -40,6 +40,56 @@ const ZAI_GENERAL_API = 'https://api.z.ai/api/paas/v4';
 const ZAI_CODING_API = 'https://api.z.ai/api/coding/paas/v4';
 
 // ============================================
+// Environment Variable Reference Resolution
+// ============================================
+
+/**
+ * Matches an environment variable reference: either `${VAR}` or `$VAR`.
+ * Variable names follow POSIX convention: leading letter or underscore,
+ * followed by letters, digits, or underscores.
+ *
+ * Examples that match: `${MINIMAX_API_KEY}`, `$ANTHROPIC_API_KEY`
+ * Examples that do NOT match: `sk-ant-...`, `${1FOO}`, `$foo` (lowercase),
+ * `${VAR} suffix` (trailing characters).
+ */
+const ENV_REF_PATTERN = /^\$\{([A-Z_][A-Z0-9_]*)\}$|^\$([A-Z_][A-Z0-9_]*)$/;
+
+interface EnvRefResolution {
+  /** True when the input was a recognized env-var reference. */
+  isRef: true;
+  /** The variable name that was referenced. */
+  refName: string;
+  /** The resolved value from process.env, or null if the variable is unset. */
+  resolved: string | null;
+  /** True when the variable name was recognized but process.env has no value. */
+  missing: boolean;
+}
+
+interface EnvRefNotARef {
+  isRef: false;
+  resolved: null;
+}
+
+/**
+ * If `value` is a `${VAR}` / `$VAR` reference, return the resolved env value.
+ * Otherwise return a non-ref marker. Used so ProviderAccount.apiKey can hold
+ * a reference string (safe to persist) rather than the raw secret.
+ */
+export function resolveEnvVarReference(value: string): EnvRefResolution | EnvRefNotARef {
+  if (!value) return { isRef: false, resolved: null };
+  const match = value.match(ENV_REF_PATTERN);
+  if (!match) return { isRef: false, resolved: null };
+  const refName = match[1] ?? match[2];
+  const envValue = process.env[refName];
+  return {
+    isRef: true,
+    refName,
+    resolved: envValue ?? null,
+    missing: envValue === undefined,
+  };
+}
+
+// ============================================
 // Settings Accessor
 // ============================================
 
@@ -114,6 +164,22 @@ async function resolveFromProviderAccount(ctx: AuthResolverContext): Promise<Res
 
   // API key accounts
   if (account.authType === 'api-key' && account.apiKey) {
+    // Allow `${VAR}` / `$VAR` references so users can persist an env-var
+    // pointer instead of the raw secret. A reference whose env var is
+    // unset falls through (return null) so the resolver chain continues.
+    const envRef = resolveEnvVarReference(account.apiKey);
+    if (envRef.isRef) {
+      if (!envRef.resolved) return null;
+      const baseURL = account.provider === 'zai'
+        ? (account.baseUrl || (account.billingModel === 'subscription' ? ZAI_CODING_API : ZAI_GENERAL_API))
+        : account.baseUrl;
+      return {
+        apiKey: envRef.resolved,
+        source: 'profile-api-key',
+        baseURL,
+      };
+    }
+
     // Z.AI: route to correct endpoint based on billing model
     const baseURL = account.provider === 'zai'
       ? (account.baseUrl || (account.billingModel === 'subscription' ? ZAI_CODING_API : ZAI_GENERAL_API))
@@ -556,6 +622,22 @@ async function resolveCredentialsForAccount(
 
   // API key accounts
   if (account.authType === 'api-key' && account.apiKey) {
+    // Allow `${VAR}` / `$VAR` references so users can persist an env-var
+    // pointer instead of the raw secret. A reference whose env var is
+    // unset falls through (return null) so the resolver chain continues.
+    const envRef = resolveEnvVarReference(account.apiKey);
+    if (envRef.isRef) {
+      if (!envRef.resolved) return null;
+      const baseURL = account.provider === 'zai'
+        ? resolveZaiBaseUrl(account)
+        : account.baseUrl || undefined;
+      return {
+        apiKey: envRef.resolved,
+        source: 'profile-api-key',
+        baseURL,
+      };
+    }
+
     // Z.AI: route to correct endpoint based on billing model
     // Other providers: use the account base URL when set, otherwise let the
     // provider factory apply its own default (empty string must fall through).

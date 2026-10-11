@@ -807,6 +807,10 @@
         "modelId": "ID du modèle (ex. llama-3.1-70b)",
         "modelLabel": "Nom d'affichage"
       },
+      "apiKeyEnvHint": "Collez votre clé, ou saisissez ${ {{envVar}} } pour référencer une variable d'environnement. Laissez vide pour utiliser une variable détectée.",
+      "apiKeyEnvDetected": "Variable d'environnement {{envVar}} détectée — laissez vide pour l'utiliser.",
+      "apiKeyEnvPickerLabel": "Cliquez pour insérer :",
+      "apiKeyEnvPickerChipTitle": "Insérer ${ {{envVar}} } dans le champ clé API",
       "toast": {
         "added": "Compte ajouté",
         "updated": "Compte mis à jour",

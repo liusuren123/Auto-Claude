@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader2, CheckCircle2, AlertCircle, Terminal, Plus, X } from 'lucide-react';
 import {
@@ -15,6 +15,7 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { useSettingsStore } from '../../stores/settings-store';
 import { useToast } from '../../hooks/use-toast';
+import { PROVIDER_REGISTRY } from '@shared/constants/providers';
 import type { BillingModel, BuiltinProvider, CustomModel, ProviderAccount } from '@shared/types/provider-account';
 
 const AWS_REGIONS = [
@@ -22,6 +23,21 @@ const AWS_REGIONS = [
   'eu-west-1', 'eu-west-2', 'eu-central-1',
   'ap-southeast-1', 'ap-southeast-2', 'ap-northeast-1',
 ];
+
+/**
+ * Returns true when at least one env-var advertised by the provider
+ * (e.g. MINIMAX_API_KEY, ANTHROPIC_API_KEY) is currently detected as set
+ * in the shell. Drives both the canSave escape hatch (so a user can leave
+ * the field blank) and the inline hint.
+ */
+function isEnvVarAvailableForProvider(
+  provider: BuiltinProvider,
+  envCredentials: Record<string, boolean>,
+): boolean {
+  const info = PROVIDER_REGISTRY.find((p) => p.id === provider);
+  if (!info) return false;
+  return info.envVars.some((name) => envCredentials[name] === true);
+}
 
 type OAuthStatus = 'idle' | 'authenticating' | 'waiting' | 'success' | 'error';
 
@@ -44,7 +60,7 @@ export function AddAccountDialog({
   editAccount,
 }: AddAccountDialogProps) {
   const { t } = useTranslation('settings');
-  const { addProviderAccount, updateProviderAccount } = useSettingsStore();
+  const { addProviderAccount, updateProviderAccount, envCredentials, checkEnvCredentials } = useSettingsStore();
   const { toast } = useToast();
 
   const isEditing = !!editAccount;
@@ -109,8 +125,12 @@ export function AddAccountDialog({
       setShowFallbackTerminal(false);
       setFallbackTerminalId(null);
       setFallbackConfigDir(null);
+
+      // Refresh env-credential detection so the hint reflects the latest shell env.
+      // Non-fatal: store may already hold the latest snapshot from a parent list.
+      checkEnvCredentials().catch(() => { /* non-fatal */ });
     }
-  }, [open, editAccount, provider, billingModelOverride]);
+  }, [open, editAccount, provider, billingModelOverride, checkEnvCredentials]);
 
   // Parse DUPLICATE_EMAIL error from backend and show user-friendly toast
   const handleDuplicateEmailError = useCallback((error: string): boolean => {
@@ -220,10 +240,34 @@ export function AddAccountDialog({
   const canSave = () => {
     if (!name.trim()) return false;
     if (isOAuthOnly) return isEditing || oauthStatus === 'success';
-    if (needsApiKey && !apiKey.trim()) return false;
+    if (needsApiKey && !apiKey.trim()) {
+      // Allow saving when an env var for this provider is detected — the
+      // resolver will pick it up at request time, so the user does not have
+      // to paste the raw secret into the dialog.
+      if (!isEnvCredentialAvailable) return false;
+    }
     if (isBaseUrlRequired && !baseUrl.trim()) return false;
     return true;
   };
+
+  /**
+   * True when an environment variable matching PROVIDER_ENV_VARS[provider]
+   * is currently set in the shell. Used both for the canSave escape hatch
+   * (so a user can leave the field blank) and the inline hint.
+   */
+  const isEnvCredentialAvailable = needsApiKey && isEnvVarAvailableForProvider(provider, envCredentials);
+
+  /**
+   * Names of env vars for this provider that are currently detected as set
+   * in the shell. Drives the chip picker so the user can one-click insert
+   * a `${VAR}` reference rather than typing the variable name by hand.
+   */
+  const detectedEnvVars = useMemo(() => {
+    if (!needsApiKey) return [];
+    const info = PROVIDER_REGISTRY.find((p) => p.id === provider);
+    if (!info) return [];
+    return info.envVars.filter((name) => envCredentials[name] === true);
+  }, [needsApiKey, provider, envCredentials]);
 
   const oauthAuthLabel = isCodexOAuth
     ? isEditing
@@ -603,6 +647,30 @@ export function AddAccountDialog({
                   onChange={(e) => setApiKey(e.target.value)}
                   placeholder={t('providers.dialog.placeholders.apiKey')}
                 />
+                <p className="text-xs text-muted-foreground">
+                  {t('providers.dialog.apiKeyEnvHint', {
+                    envVar: PROVIDER_REGISTRY.find((p) => p.id === provider)?.envVars[0] ?? '',
+                  })}
+                </p>
+                {detectedEnvVars.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-xs text-muted-foreground">
+                      {t('providers.dialog.apiKeyEnvPickerLabel')}
+                    </span>
+                    {detectedEnvVars.map((varName) => (
+                      <button
+                        key={varName}
+                        type="button"
+                        onClick={() => setApiKey(`\${${varName}}`)}
+                        title={t('providers.dialog.apiKeyEnvPickerChipTitle', { envVar: varName })}
+                        className="inline-flex items-center gap-1 rounded-md border border-success/40 bg-success/5 px-2 py-0.5 text-xs font-mono text-success hover:bg-success/15 transition-colors"
+                      >
+                        <CheckCircle2 className="h-3 w-3" />
+                        ${varName}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 

@@ -807,6 +807,10 @@
         "modelId": "Model ID (e.g. llama-3.1-70b)",
         "modelLabel": "Display name"
       },
+      "apiKeyEnvHint": "Paste your key, or enter ${ {{envVar}} } to reference an environment variable. Leave blank to use a detected env var.",
+      "apiKeyEnvDetected": "Environment variable {{envVar}} detected — leave blank to use it.",
+      "apiKeyEnvPickerLabel": "Click to insert:",
+      "apiKeyEnvPickerChipTitle": "Insert ${ {{envVar}} } into the API key field",
       "toast": {
         "added": "Account added",
         "updated": "Account updated",

@@ -48,6 +48,7 @@ import {
   refreshOAuthTokenReactive,
   resolveAuthFromQueue,
   buildDefaultQueueConfig,
+  resolveEnvVarReference,
 } from '../resolver';
 
 const mockEnsureValidToken = vi.mocked(ensureValidToken);
@@ -578,5 +579,104 @@ describe('resolveAuthFromQueue — OpenAI-compatible providers', () => {
     const result = await resolveAuthFromQueue('claude-opus-4-6', [makeAccount()]);
 
     expect(result).toBeNull();
+  });
+});
+
+// =============================================================================
+// resolveEnvVarReference — `${VAR}` / `$VAR` API-key reference expansion
+// =============================================================================
+
+describe('resolveEnvVarReference', () => {
+  it('returns non-ref for plain text', () => {
+    const result = resolveEnvVarReference('sk-ant-abc123');
+    expect(result.isRef).toBe(false);
+    expect(result.resolved).toBeNull();
+  });
+
+  it('returns non-ref for empty string', () => {
+    expect(resolveEnvVarReference('').isRef).toBe(false);
+  });
+
+  it('returns non-ref for malformed references', () => {
+    expect(resolveEnvVarReference('$foo').isRef).toBe(false);         // lowercase
+    expect(resolveEnvVarReference('${1FOO}').isRef).toBe(false);      // leading digit
+    expect(resolveEnvVarReference('${VAR} suffix').isRef).toBe(false); // trailing chars
+    expect(resolveEnvVarReference('sk-${VAR}').isRef).toBe(false);   // mixed
+  });
+
+  it('resolves ${VAR} when the env var is set', () => {
+    process.env.MINI_TEST_KEY = 'secret-value';
+    const result = resolveEnvVarReference('${MINI_TEST_KEY}');
+    expect(result.isRef).toBe(true);
+    if (result.isRef) {
+      expect(result.refName).toBe('MINI_TEST_KEY');
+      expect(result.resolved).toBe('secret-value');
+      expect(result.missing).toBe(false);
+    }
+    delete process.env.MINI_TEST_KEY;
+  });
+
+  it('resolves $VAR when the env var is set', () => {
+    process.env.MINI_TEST_KEY = 'secret-value';
+    const result = resolveEnvVarReference('$MINI_TEST_KEY');
+    expect(result.isRef).toBe(true);
+    if (result.isRef) {
+      expect(result.refName).toBe('MINI_TEST_KEY');
+      expect(result.resolved).toBe('secret-value');
+    }
+    delete process.env.MINI_TEST_KEY;
+  });
+
+  it('flags missing=true when the referenced env var is unset', () => {
+    delete process.env.MINI_TEST_KEY;
+    const result = resolveEnvVarReference('${MINI_TEST_KEY}');
+    expect(result.isRef).toBe(true);
+    if (result.isRef) {
+      expect(result.refName).toBe('MINI_TEST_KEY');
+      expect(result.resolved).toBeNull();
+      expect(result.missing).toBe(true);
+    }
+  });
+});
+
+describe('resolveAuth with env-var API-key references', () => {
+  it('expands a ${VAR} reference stored on a ProviderAccount', async () => {
+    process.env.MINIMAX_API_KEY = 'secret-from-env';
+    const accounts = [
+      {
+        provider: 'minimax',
+        isActive: true,
+        authType: 'api-key',
+        apiKey: '${MINIMAX_API_KEY}',
+        baseUrl: 'https://api.minimaxi.com/v1',
+      },
+    ];
+
+    registerSettingsAccessor((key) => (key === 'providerAccounts' ? JSON.stringify(accounts) : undefined));
+
+    const auth = await resolveAuth({ provider: 'minimax' });
+    expect(auth?.apiKey).toBe('secret-from-env');
+    expect(auth?.source).toBe('profile-api-key');
+    expect(auth?.baseURL).toBe('https://api.minimaxi.com/v1');
+
+    delete process.env.MINIMAX_API_KEY;
+  });
+
+  it('falls through when a ${VAR} reference points to an unset env var', async () => {
+    delete process.env.MINIMAX_API_KEY;
+    const accounts = [
+      {
+        provider: 'minimax',
+        isActive: true,
+        authType: 'api-key',
+        apiKey: '${MINIMAX_API_KEY}',
+        baseUrl: 'https://api.minimaxi.com/v1',
+      },
+    ];
+
+    registerSettingsAccessor((key) => (key === 'providerAccounts' ? JSON.stringify(accounts) : undefined));
+
+    const auth = await resolveAuth({ provider: 'minimax' });
+    expect(auth).toBeNull();
   });
 });
