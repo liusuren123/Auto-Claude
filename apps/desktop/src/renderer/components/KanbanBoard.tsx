@@ -678,10 +678,15 @@ export function KanbanBoard({ tasks, onTaskClick, onNewTaskClick, onRefresh, isR
     return () => observer.disconnect();
   }, []);
   // gap-4 = 16px; account for inner p-6 padding (48px horizontal total)
+  // 6 status columns wrap onto 2 rows of 3 each (via flex-wrap) — sizing
+  // for "3 per row" keeps every column readable on a 1450px window
+  // (~370px each) instead of squeezing 6 into a single row at 180px
+  // where titles get clipped.
+  const COLUMNS_PER_ROW = 3;
   const autoColumnWidth = useMemo(
     () =>
       computeAutoColumnWidth(kanbanContainerWidth, {
-        columnCount: TASK_STATUS_COLUMNS.length,
+        columnCount: COLUMNS_PER_ROW,
       }),
     [kanbanContainerWidth],
   );
@@ -1501,7 +1506,7 @@ export function KanbanBoard({ tasks, onTaskClick, onNewTaskClick, onRefresh, isR
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div ref={kanbanContainerRef} className="flex flex-1 gap-4 overflow-x-auto p-6">
+        <div ref={kanbanContainerRef} className="flex flex-1 flex-wrap gap-4 overflow-x-auto p-6 content-start">
           {TASK_STATUS_COLUMNS.map((status) => (
             <DroppableColumn
               key={status}
