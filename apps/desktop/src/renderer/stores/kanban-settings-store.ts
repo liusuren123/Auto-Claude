@@ -308,16 +308,18 @@ export const useKanbanSettingsStore = create<KanbanSettingsState>((set, get) => 
 
   toggleColumnLocked: (column) => {
     set((state) => {
-      if (!state.columnPreferences) return state;
-
+      // Auto-initialise on first use so the lock toggle is always
+      // responsive even before loadPreferences() has resolved (e.g. when
+      // the board is empty and projectId is briefly undefined).
+      const base = state.columnPreferences ?? createDefaultPreferences();
       return {
         columnPreferences: {
-          ...state.columnPreferences,
+          ...base,
           [column]: {
-            ...state.columnPreferences[column],
-            isLocked: !state.columnPreferences[column].isLocked
-          }
-        }
+            ...base[column],
+            isLocked: !base[column].isLocked,
+          },
+        },
       };
     });
   },

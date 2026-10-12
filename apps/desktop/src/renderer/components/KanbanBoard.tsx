@@ -686,8 +686,14 @@ export function KanbanBoard({ tasks, onTaskClick, onNewTaskClick, onRefresh, isR
     [kanbanContainerWidth],
   );
 
-  // Get projectId from first task
-  const projectId = tasks[0]?.projectId;
+  // Project identification — pulled from the project store rather than the
+  // first task. When the board is empty (no tasks loaded yet, or a freshly
+  // created project) `tasks[0]` is undefined and we'd lose the projectId
+  // for both the `loadKanbanPreferences` bootstrap and the maxParallelTasks
+  // lookup. selectedProjectId is the single source of truth set by App.tsx
+  // when the user activates a project tab.
+  const selectedProjectId = useProjectStore((state) => state.selectedProjectId);
+  const projectId = selectedProjectId ?? tasks[0]?.projectId;
   const project = projectId ? projects.find((p) => p.id === projectId) : undefined;
   const maxParallelTasks = project?.settings?.maxParallelTasks ?? DEFAULT_MAX_PARALLEL_TASKS;
 

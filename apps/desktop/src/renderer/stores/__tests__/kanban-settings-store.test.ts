@@ -3,12 +3,13 @@
  * kanban container width across the status columns.
  */
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeEach } from 'vitest';
 import {
   computeAutoColumnWidth,
   DEFAULT_COLUMN_WIDTH,
   MIN_COLUMN_WIDTH,
   MAX_COLUMN_WIDTH,
+  useKanbanSettingsStore,
 } from '../kanban-settings-store';
 
 describe('computeAutoColumnWidth', () => {
@@ -54,5 +55,43 @@ describe('computeAutoColumnWidth', () => {
   it('returns DEFAULT_COLUMN_WIDTH when columnCount is 0 or negative', () => {
     expect(computeAutoColumnWidth(1200, { columnCount: 0 })).toBe(DEFAULT_COLUMN_WIDTH);
     expect(computeAutoColumnWidth(1200, { columnCount: -2 })).toBe(DEFAULT_COLUMN_WIDTH);
+  });
+});
+
+describe('kanban-settings-store — toggleColumnLocked', () => {
+  beforeEach(() => {
+    // Reset to a clean default state between tests so actions from one
+    // case don't leak into the next.
+    useKanbanSettingsStore.getState().resetPreferences('test-project');
+  });
+
+  it('initialises preferences on first read so toggleColumnLocked works without an explicit load', () => {
+    // After resetPreferences the store holds the default preferences —
+    // toggleColumnLocked should now be a no-op-free mutation.
+    const state = useKanbanSettingsStore.getState();
+    expect(state.columnPreferences).not.toBeNull();
+    state.toggleColumnLocked('backlog');
+    expect(useKanbanSettingsStore.getState().columnPreferences?.backlog.isLocked).toBe(true);
+  });
+
+  it('toggles isLocked back to false on a second click', () => {
+    const state = useKanbanSettingsStore.getState();
+    state.toggleColumnLocked('queue');
+    state.toggleColumnLocked('queue');
+    expect(useKanbanSettingsStore.getState().columnPreferences?.queue.isLocked).toBe(false);
+  });
+
+  it('initialisePreferences populates the columnPreferences map for all status columns', () => {
+    useKanbanSettingsStore.setState({ columnPreferences: null });
+    useKanbanSettingsStore.getState().initializePreferences();
+    const prefs = useKanbanSettingsStore.getState().columnPreferences;
+    expect(prefs).not.toBeNull();
+    // Each status column has a default preference object with both fields.
+    for (const status of ['backlog', 'queue', 'in_progress', 'ai_review', 'human_review', 'done']) {
+      expect(prefs?.[status as keyof typeof prefs]).toMatchObject({
+        isCollapsed: false,
+        isLocked: false,
+      });
+    }
   });
 });
