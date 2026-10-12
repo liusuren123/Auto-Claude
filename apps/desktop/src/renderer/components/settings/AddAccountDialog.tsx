@@ -72,6 +72,14 @@ export function AddAccountDialog({
   const [region, setRegion] = useState('us-east-1');
   const [isSaving, setIsSaving] = useState(false);
 
+  // Inline "Test connection" probe state — backs the button next to the API
+  // key field. We don't store it persistently; it's just feedback for the
+  // current dialog session.
+  const [isTestingConnection, setIsTestingConnection] = useState(false);
+  const [testResult, setTestResult] = useState<
+    { ok: true; modelCount?: number } | { ok: false; error: string } | null
+  >(null);
+
   // Custom models for openai-compatible endpoints
   const [customModels, setCustomModels] = useState<CustomModel[]>([]);
   const [newModelId, setNewModelId] = useState('');
@@ -445,6 +453,32 @@ export function AddAccountDialog({
     setShowFallbackTerminal(false);
   }, []);
 
+  const handleTestConnection = useCallback(async () => {
+    if (!needsApiKey && !isBaseUrlRequired) return;
+    setIsTestingConnection(true);
+    setTestResult(null);
+    try {
+      const result = await window.electronAPI.testProviderConnection(provider, {
+        apiKey: needsApiKey ? apiKey.trim() : undefined,
+        baseUrl: needsBaseUrl && baseUrl.trim() ? baseUrl.trim() : undefined,
+        region: needsRegion ? region : undefined,
+      });
+      if (result?.success && result.data) {
+        if (result.data.success) {
+          setTestResult({ ok: true, modelCount: result.data.modelCount });
+        } else {
+          setTestResult({ ok: false, error: result.data.error ?? 'Connection failed' });
+        }
+      } else {
+        setTestResult({ ok: false, error: result?.error ?? 'Unknown error' });
+      }
+    } catch (err) {
+      setTestResult({ ok: false, error: err instanceof Error ? err.message : 'Unexpected error' });
+    } finally {
+      setIsTestingConnection(false);
+    }
+  }, [provider, apiKey, baseUrl, needsApiKey, needsBaseUrl, needsRegion, isBaseUrlRequired]);
+
   const handleSave = async () => {
     if (!canSave()) return;
 
@@ -670,6 +704,43 @@ export function AddAccountDialog({
                       </button>
                     ))}
                   </div>
+                )}
+              </div>
+            )}
+
+            {/* Test connection button — uses listModels as a 200 probe */}
+            {(needsApiKey || needsBaseUrl) && (
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleTestConnection}
+                  disabled={isTestingConnection || (!apiKey.trim() && !detectedEnvVars.length)}
+                  className="h-7 text-xs"
+                >
+                  {isTestingConnection && <Loader2 className="h-3 w-3 mr-1.5 animate-spin" />}
+                  {t('providers.dialog.testConnection', { defaultValue: 'Test connection' })}
+                </Button>
+                {testResult && testResult.ok && (
+                  <span className="flex items-center gap-1 text-xs text-success">
+                    <CheckCircle2 className="h-3 w-3" />
+                    {typeof testResult.modelCount === 'number'
+                      ? t('providers.dialog.testConnectionSuccess', {
+                          count: testResult.modelCount,
+                          defaultValue: `OK · ${testResult.modelCount} models`,
+                        })
+                      : t('providers.dialog.testConnectionOk', { defaultValue: 'Connection OK' })}
+                  </span>
+                )}
+                {testResult && !testResult.ok && (
+                  <span
+                    className="flex items-center gap-1 text-xs text-destructive min-w-0 truncate"
+                    title={testResult.error}
+                  >
+                    <AlertCircle className="h-3 w-3 shrink-0" />
+                    <span className="truncate">{testResult.error}</span>
+                  </span>
                 )}
               </div>
             )}
