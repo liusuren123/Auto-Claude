@@ -31,7 +31,7 @@ import { TASK_STATUS_COLUMNS, TASK_STATUS_LABELS } from '../../shared/constants'
 import { cn } from '../lib/utils';
 import { persistTaskStatus, forceCompleteTask, archiveTasks, deleteTasks, useTaskStore, isQueueAtCapacity, DEFAULT_MAX_PARALLEL_TASKS } from '../stores/task-store';
 import { updateProjectSettings, useProjectStore } from '../stores/project-store';
-import { useKanbanSettingsStore, DEFAULT_COLUMN_WIDTH, MIN_COLUMN_WIDTH, MAX_COLUMN_WIDTH, COLLAPSED_COLUMN_WIDTH_REM, MIN_COLUMN_WIDTH_REM, MAX_COLUMN_WIDTH_REM, BASE_FONT_SIZE, pxToRem } from '../stores/kanban-settings-store';
+import { useKanbanSettingsStore, DEFAULT_COLUMN_WIDTH, MIN_COLUMN_WIDTH, MAX_COLUMN_WIDTH, COLLAPSED_COLUMN_WIDTH_REM, MIN_COLUMN_WIDTH_REM, MAX_COLUMN_WIDTH_REM, BASE_FONT_SIZE, pxToRem, computeAutoColumnWidth } from '../stores/kanban-settings-store';
 import { useToast } from '../hooks/use-toast';
 import { WorktreeCleanupDialog } from './WorktreeCleanupDialog';
 import { BulkPRDialog } from './BulkPRDialog';
@@ -659,6 +659,32 @@ export function KanbanBoard({ tasks, onTaskClick, onNewTaskClick, onRefresh, isR
   const resizeStartWidth = useRef<number>(0);
   // Capture projectId at resize start to avoid stale closure if project changes during resize
   const resizeProjectIdRef = useRef<string | null>(null);
+
+  // Responsive column layout: observe the kanban container's width and
+  // auto-distribute it across TASK_STATUS_COLUMNS, clamped to MIN/MAX. Used
+  // as the default column width when the user has not dragged the resize
+  // handle to set a preference. This keeps all four columns visible on
+  // smaller windows instead of clipping the last one.
+  const kanbanContainerRef = useRef<HTMLDivElement>(null);
+  const [kanbanContainerWidth, setKanbanContainerWidth] = useState<number>(0);
+  useEffect(() => {
+    const el = kanbanContainerRef.current;
+    if (!el) return;
+    const update = () => setKanbanContainerWidth(el.clientWidth);
+    update();
+    // ResizeObserver catches window resize, sidebar collapse, devtools toggle
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  // gap-4 = 16px; account for inner p-6 padding (48px horizontal total)
+  const autoColumnWidth = useMemo(
+    () =>
+      computeAutoColumnWidth(kanbanContainerWidth, {
+        columnCount: TASK_STATUS_COLUMNS.length,
+      }),
+    [kanbanContainerWidth],
+  );
 
   // Get projectId from first task
   const projectId = tasks[0]?.projectId;
@@ -1469,7 +1495,7 @@ export function KanbanBoard({ tasks, onTaskClick, onNewTaskClick, onRefresh, isR
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex flex-1 gap-4 overflow-x-auto p-6">
+        <div ref={kanbanContainerRef} className="flex flex-1 gap-4 overflow-x-auto p-6">
           {TASK_STATUS_COLUMNS.map((status) => (
             <DroppableColumn
               key={status}
@@ -1497,7 +1523,7 @@ export function KanbanBoard({ tasks, onTaskClick, onNewTaskClick, onRefresh, isR
               onToggleSelect={toggleTaskSelection}
               isCollapsed={columnPreferences?.[status]?.isCollapsed}
               onToggleCollapsed={() => handleToggleColumnCollapsed(status)}
-              columnWidth={columnPreferences?.[status]?.width}
+              columnWidth={columnPreferences?.[status]?.width ?? autoColumnWidth}
               isResizing={resizingColumn === status}
               onResizeStart={(startX) => handleResizeStart(status, startX)}
               onResizeEnd={handleResizeEnd}

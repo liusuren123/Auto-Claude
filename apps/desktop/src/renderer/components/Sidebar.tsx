@@ -128,6 +128,20 @@ export function Sidebar({
     saveSettings({ sidebarCollapsed: !isCollapsed });
   };
 
+  /**
+   * Auto-collapse on small windows. We only do this once at mount so the
+   * user's explicit toggle isn't silently overridden on every resize — if
+   * they prefer the expanded sidebar at this width, that's their call. The
+   * next launch picks up the current window size again.
+   */
+  useEffect(() => {
+    const AUTO_COLLAPSE_THRESHOLD_PX = 1024;
+    if (typeof window !== 'undefined' && window.innerWidth < AUTO_COLLAPSE_THRESHOLD_PX && !isCollapsed) {
+      saveSettings({ sidebarCollapsed: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Subscribe to project-env-store for reactive GitHub/GitLab tab visibility
   const githubEnabled = useProjectEnvStore((state) => state.envConfig?.githubEnabled ?? false);
   const gitlabEnabled = useProjectEnvStore((state) => state.envConfig?.gitlabEnabled ?? false);

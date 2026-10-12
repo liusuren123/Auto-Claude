@@ -82,6 +82,42 @@ export function pxToRem(px: number): string {
   return `${px / BASE_FONT_SIZE}rem`;
 }
 
+/**
+ * Distribute a kanban container's available width across its columns,
+ * clamped to the min/max range. Returns DEFAULT_COLUMN_WIDTH when the
+ * container hasn't been measured yet (width <= 0).
+ *
+ * Pure function — extracted so the responsive logic can be unit-tested
+ * without rendering the whole KanbanBoard.
+ */
+export interface AutoColumnWidthOptions {
+  /** Horizontal padding inside the kanban container (e.g. p-6 = 48px). */
+  paddingPx?: number;
+  /** Gap between columns (e.g. gap-4 = 16px). */
+  gapPx?: number;
+  /** Hard floor for any single column. */
+  min?: number;
+  /** Hard ceiling for any single column. */
+  max?: number;
+  /** How many columns are being laid out. */
+  columnCount?: number;
+}
+
+export function computeAutoColumnWidth(
+  containerWidth: number,
+  options: AutoColumnWidthOptions = {},
+): number {
+  const min = options.min ?? MIN_COLUMN_WIDTH;
+  const max = options.max ?? MAX_COLUMN_WIDTH;
+  const columnCount = options.columnCount ?? 1;
+  if (containerWidth <= 0 || columnCount <= 0) return DEFAULT_COLUMN_WIDTH;
+  const paddingPx = options.paddingPx ?? 48;
+  const gapPx = options.gapPx ?? 16;
+  const usable = Math.max(0, containerWidth - paddingPx - (columnCount - 1) * gapPx);
+  const perColumn = Math.floor(usable / columnCount);
+  return Math.max(min, Math.min(max, perColumn));
+}
+
 /** Default column width in rem (scales with UI) */
 export const DEFAULT_COLUMN_WIDTH_REM = pxToRem(DEFAULT_COLUMN_WIDTH);
 
