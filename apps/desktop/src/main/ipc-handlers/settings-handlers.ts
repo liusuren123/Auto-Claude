@@ -25,6 +25,8 @@ import type { APIProfile } from '../../shared/types/profile';
 import type { ClaudeProfile } from '../../shared/types/agent';
 import { loadProfilesFile } from '../utils/profile-manager';
 import { loadProfileStore } from '../claude-profile/profile-storage';
+import { listModelsForProvider } from '../ai/providers/list-models';
+import type { BuiltinProvider } from '../../shared/types/provider-account';
 
 const settingsPath = getSettingsPath();
 
@@ -1096,12 +1098,25 @@ export function registerSettingsHandlers(
     }
   );
 
-  // TEST CONNECTION for a provider account
+  // TEST CONNECTION for a provider account — uses listModels as the probe.
+  // A 200 from /v1/models means the key authenticates, the base URL resolves,
+  // and the network path works. Any 4xx/5xx/network failure surfaces a clear
+  // error string the renderer can show inline.
   ipcMain.handle(
     IPC_CHANNELS.PROVIDER_ACCOUNTS_TEST_CONNECTION,
-    async (_event, _provider: string, _config: { apiKey?: string; baseUrl?: string; region?: string }): Promise<IPCResult<{ success: boolean; error?: string }>> => {
-      // Basic stub - connection testing can be enhanced later per-provider
-      return { success: true, data: { success: true } };
+    async (
+      _event,
+      provider: BuiltinProvider,
+      config: { apiKey?: string; baseUrl?: string; region?: string },
+    ): Promise<IPCResult<{ success: boolean; modelCount?: number; error?: string }>> => {
+      const result = await listModelsForProvider(provider, {
+        apiKey: config.apiKey,
+        baseURL: config.baseUrl,
+      });
+      if (!result.ok) {
+        return { success: true, data: { success: false, error: result.error } };
+      }
+      return { success: true, data: { success: true, modelCount: result.models.length } };
     }
   );
 
@@ -1130,6 +1145,33 @@ export function registerSettingsHandlers(
       } catch (error) {
         console.error('[PROVIDER_ACCOUNTS_CHECK_ENV] Error:', error);
         return { success: false, error: error instanceof Error ? error.message : 'Failed to check env credentials' };
+      }
+    }
+  );
+
+  // LIST MODELS for a provider via its public /models endpoint (or equivalent).
+  // The renderer merges the result with the static ALL_AVAILABLE_MODELS catalog
+  // so capabilities (contextWindow, capabilities flags) stay correct even when
+  // the live endpoint omits them (e.g. OpenAI, Anthropic, MiniMax /v1/models).
+  ipcMain.handle(
+    IPC_CHANNELS.PROVIDER_LIST_MODELS,
+    async (
+      _event,
+      provider: BuiltinProvider,
+      config: { apiKey?: string; baseUrl?: string },
+    ): Promise<IPCResult<{ models: { id: string; label?: string; contextWindow?: number; supportsVision?: boolean; supportsTools?: boolean; supportsThinking?: boolean }[] }>> => {
+      try {
+        const result = await listModelsForProvider(provider, {
+          apiKey: config.apiKey,
+          baseURL: config.baseUrl,
+        });
+        if (!result.ok) {
+          return { success: false, error: result.error };
+        }
+        return { success: true, data: { models: result.models } };
+      } catch (error) {
+        console.error('[PROVIDER_LIST_MODELS] Error:', error);
+        return { success: false, error: error instanceof Error ? error.message : 'Failed to list models' };
       }
     }
   );

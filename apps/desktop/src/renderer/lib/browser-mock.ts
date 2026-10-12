@@ -53,6 +53,9 @@ const browserMockAPI: ElectronAPI = {
     data: null
   }),
 
+  // Provider list-models stub for browser test environment
+  listModels: async () => ({ success: true, data: { models: [] } }),
+
   getRoadmapStatus: async () => ({
     success: true,
     data: { isRunning: false }

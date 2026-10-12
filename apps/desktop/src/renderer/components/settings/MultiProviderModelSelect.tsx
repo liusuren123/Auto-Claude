@@ -1,10 +1,11 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, Search, Check, Brain, Eye, Wrench, ExternalLink, Loader2 } from 'lucide-react';
+import { ChevronDown, Search, Check, Brain, Eye, Wrench, ExternalLink, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { ALL_AVAILABLE_MODELS, resolveModelEquivalent, type ModelOption } from '@shared/constants/models';
 import { PROVIDER_REGISTRY } from '@shared/constants/providers';
 import type { BuiltinProvider } from '@shared/types/provider-account';
 import { useSettingsStore } from '@/stores/settings-store';
+import { useToast } from '../../hooks/use-toast';
 import { cn } from '../../lib/utils';
 import { Input } from '../ui/input';
 
@@ -30,10 +31,22 @@ export function MultiProviderModelSelect({ value, onChange, className, filterPro
 
   const settings = useSettingsStore(s => s.settings);
   const providerAccounts = settings.providerAccounts ?? [];
+  const { toast } = useToast();
 
   // Dynamic Ollama model fetching
   const [ollamaModels, setOllamaModels] = useState<ModelOption[]>([]);
   const [ollamaLoading, setOllamaLoading] = useState(false);
+
+  /**
+   * Live model list fetched from the provider's public /models endpoint when
+   * the dropdown opens. Catalog stays as the source of capabilities
+   * (contextWindow, vision/tools/thinking flags); live is the source of
+   * truth for which IDs the provider currently exposes. See list-models.ts
+   * in the main process for the per-provider adapters.
+   */
+  const [liveModels, setLiveModels] = useState<ModelOption[]>([]);
+  const [liveLoading, setLiveLoading] = useState(false);
+  const [liveError, setLiveError] = useState<string | null>(null);
 
   useEffect(() => {
     if (filterProvider && filterProvider !== 'ollama') return;
@@ -86,16 +99,46 @@ export function MultiProviderModelSelect({ value, onChange, className, filterPro
     return hasOAuth && hasApiKey;
   }, [providerAccounts]);
 
-  // Group models by provider, including custom models from openai-compatible accounts
+  // Group models by provider, including custom models from openai-compatible accounts.
+  //
+  // Merge order:
+  //   1. Live list (fetched from provider's /models endpoint). Live is the source
+  //      of truth for which model IDs the provider exposes — it can surface models
+  //      added since the static catalog was last updated.
+  //   2. Static catalog (ALL_AVAILABLE_MODELS) fills in capability metadata
+  //      (contextWindow, thinking/vision/tools flags) the API didn't expose.
+  //      If the same id appears in both, catalog capabilities win, with the live
+  //      contextWindow (when present) preferred over the catalog one.
   const groupedModels = useMemo(() => {
     const groups = new Map<BuiltinProvider, ModelOption[]>();
+
+    if (filterProvider && liveModels.length > 0) {
+      if (!groups.has(filterProvider)) groups.set(filterProvider, []);
+      for (const live of liveModels) {
+        groups.get(filterProvider)!.push({ ...live, source: 'live' });
+      }
+    }
+
     for (const model of ALL_AVAILABLE_MODELS) {
       // When filterProvider is set, only include models for that provider
       if (filterProvider && model.provider !== filterProvider) continue;
       // Hide apiKeyOnly OpenAI models when all OpenAI accounts are OAuth (Codex subscription)
       if (model.apiKeyOnly && model.provider === 'openai' && openaiIsOAuthOnly) continue;
       if (!groups.has(model.provider)) groups.set(model.provider, []);
-      groups.get(model.provider)!.push(model);
+      const existing = groups.get(model.provider)!;
+      const dup = existing.find(m => m.value === model.value);
+      if (dup) {
+        if (!dup.capabilities?.contextWindow && model.capabilities?.contextWindow) {
+          dup.capabilities = model.capabilities;
+        } else if (model.capabilities && dup.capabilities) {
+          dup.capabilities = {
+            ...model.capabilities,
+            contextWindow: dup.capabilities.contextWindow || model.capabilities.contextWindow,
+          };
+        }
+      } else {
+        existing.push({ ...model, source: 'catalog' });
+      }
     }
 
     // Merge user-configured custom models from openai-compatible accounts
@@ -127,7 +170,7 @@ export function MultiProviderModelSelect({ value, onChange, className, filterPro
     }
 
     return groups;
-  }, [filterProvider, providerAccounts, ollamaModels, openaiIsOAuthOnly]);
+  }, [filterProvider, providerAccounts, ollamaModels, openaiIsOAuthOnly, liveModels]);
 
   // Check if provider has credentials
   const hasCredentials = (provider: BuiltinProvider): boolean => {
@@ -194,10 +237,73 @@ export function MultiProviderModelSelect({ value, onChange, className, filterPro
   }, [resolvedValue, groupedModels]);
   const displayLabel = selectedModel?.label ?? value;
 
+  /**
+   * Fetch the live model list for the currently filtered provider. Triggered
+   * from handleOpen() so the dropdown shows live data the moment it appears.
+   * Catalog stays visible immediately because it's already in state.
+   */
+  const fetchLive = () => {
+    if (!filterProvider) return;
+    // Skip fetch when there's no API key available for the provider — Ollama
+    // uses baseUrl only, but listModels() needs at least one credential path.
+    const account = providerAccounts.find(a => a.provider === filterProvider);
+    if (filterProvider !== 'ollama' && filterProvider !== 'anthropic' && !account) return;
+
+    const controller = new AbortController();
+    setLiveLoading(true);
+    setLiveError(null);
+
+    (async () => {
+      try {
+        const result = await window.electronAPI.listModels(filterProvider, {
+          apiKey: account?.apiKey,
+          baseUrl: account?.baseUrl,
+        });
+        if (controller.signal.aborted) return;
+        if (result?.success && result.data?.models) {
+          const merged: ModelOption[] = result.data.models.map(m => ({
+            value: m.id,
+            label: m.label ?? m.id,
+            provider: filterProvider,
+            description: m.ownedBy && m.ownedBy !== filterProvider ? m.ownedBy : undefined,
+            capabilities: m.contextWindow
+              ? { thinking: true, tools: true, vision: false, contextWindow: m.contextWindow }
+              : undefined,
+          }));
+          setLiveModels(merged);
+        } else if (result && !result.success) {
+          setLiveError(result.error ?? 'Failed to load live model list');
+          toast({
+            variant: 'destructive',
+            title: t('settings:modelSelect.liveLoadErrorTitle', { defaultValue: 'Could not load live models' }),
+            description: result.error ?? '',
+          });
+          setLiveModels([]);
+        }
+      } catch (err) {
+        if (!controller.signal.aborted) {
+          const message = err instanceof Error ? err.message : 'Network error';
+          setLiveError(message);
+          toast({
+            variant: 'destructive',
+            title: t('settings:modelSelect.liveLoadErrorTitle', { defaultValue: 'Could not load live models' }),
+            description: message,
+          });
+          setLiveModels([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) setLiveLoading(false);
+      }
+    })();
+
+    return () => controller.abort();
+  };
+
   const handleOpen = () => {
     setOpen(true);
     setSearch('');
     setTimeout(() => searchRef.current?.focus(), 50);
+    fetchLive();
   };
 
   const handleClose = () => {
@@ -297,6 +403,29 @@ export function MultiProviderModelSelect({ value, onChange, className, filterPro
                 </p>
               </div>
             )}
+            {/* Live model fetch status — only for providers that support /models */}
+            {liveLoading && filterProvider && filterProvider !== 'ollama' && (
+              <div className="p-2 flex items-center gap-2 text-xs text-muted-foreground border-b border-border/40">
+                <Loader2 className="h-3 w-3 animate-spin" />
+                {t('settings:modelSelect.liveLoading', { defaultValue: 'Fetching live models from provider…' })}
+              </div>
+            )}
+            {!liveLoading && liveError && filterProvider && filterProvider !== 'ollama' && (
+              <div className="p-2 flex items-center justify-between gap-2 text-xs text-amber-600 dark:text-amber-400 border-b border-border/40">
+                <span className="flex items-center gap-1.5 min-w-0">
+                  <AlertCircle className="h-3 w-3 shrink-0" />
+                  <span className="truncate">{liveError}</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={fetchLive}
+                  className="shrink-0 inline-flex items-center gap-1 hover:text-foreground transition-colors"
+                >
+                  <RefreshCw className="h-3 w-3" />
+                  {t('settings:modelSelect.retry', { defaultValue: 'Retry' })}
+                </button>
+              </div>
+            )}
             {filteredGroups.size === 0 && !ollamaLoading ? (
               <div className="p-3 text-center text-sm text-muted-foreground">
                 {t('settings:modelSelect.noResults', { defaultValue: 'No models match your search' })}
@@ -357,6 +486,14 @@ export function MultiProviderModelSelect({ value, onChange, className, filterPro
                               {model.apiKeyOnly && openaiHasMixedAuth && (
                                 <span className="text-[9px] font-medium px-1 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 shrink-0">
                                   {t('settings:modelSelect.apiKeyOnly', { defaultValue: 'API key' })}
+                                </span>
+                              )}
+                              {model.source === 'live' && (
+                                <span
+                                  title={t('settings:modelSelect.liveBadgeTooltip', { defaultValue: 'Sourced from the provider\'s live /models endpoint' })}
+                                  className="text-[9px] font-medium px-1 py-0.5 rounded bg-sky-500/15 text-sky-600 dark:text-sky-400 shrink-0"
+                                >
+                                  {t('settings:modelSelect.liveBadge', { defaultValue: 'Live' })}
                                 </span>
                               )}
                             </div>

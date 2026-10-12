@@ -44,6 +44,7 @@ export interface SettingsAPI {
   saveModelOverrides: (overrides: Record<string, unknown>) => Promise<IPCResult>;
   testProviderConnection: (provider: string, config: any) => Promise<IPCResult<{ success: boolean; error?: string }>>;
   checkEnvCredentials: () => Promise<IPCResult<Record<string, boolean>>>;
+  listModels: (provider: string, config: { apiKey?: string; baseUrl?: string }) => Promise<IPCResult<{ models: { id: string; label?: string; contextWindow?: number; supportsVision?: boolean; supportsTools?: boolean; supportsThinking?: boolean }[] }>>;
 
   // Codex OAuth authentication
   codexAuthLogin: () => Promise<{ success: boolean; data?: { accessToken: string; refreshToken: string; expiresAt: number; email?: string }; error?: string }>;
@@ -111,6 +112,8 @@ export const createSettingsAPI = (): SettingsAPI => ({
     ipcRenderer.invoke(IPC_CHANNELS.PROVIDER_ACCOUNTS_TEST_CONNECTION, provider, config),
   checkEnvCredentials: (): Promise<IPCResult<Record<string, boolean>>> =>
     ipcRenderer.invoke(IPC_CHANNELS.PROVIDER_ACCOUNTS_CHECK_ENV),
+  listModels: (provider: string, config: { apiKey?: string; baseUrl?: string }): Promise<IPCResult<{ models: { id: string; label?: string; contextWindow?: number; supportsVision?: boolean; supportsTools?: boolean; supportsThinking?: boolean }[] }>> =>
+    ipcRenderer.invoke(IPC_CHANNELS.PROVIDER_LIST_MODELS, provider, config),
 
   // Codex OAuth authentication
   codexAuthLogin: () =>

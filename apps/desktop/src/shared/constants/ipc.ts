@@ -173,6 +173,7 @@ export const IPC_CHANNELS = {
   PROVIDER_ACCOUNTS_SET_CROSS_PROVIDER_QUEUE_ORDER: 'provider-accounts:set-cross-provider-queue-order',
   PROVIDER_ACCOUNTS_TEST_CONNECTION: 'provider-accounts:test-connection',
   PROVIDER_ACCOUNTS_CHECK_ENV: 'provider-accounts:check-env',
+  PROVIDER_LIST_MODELS: 'provider:listModels',
   MODEL_OVERRIDES_SAVE: 'model-overrides:save',
 
   // Dialogs

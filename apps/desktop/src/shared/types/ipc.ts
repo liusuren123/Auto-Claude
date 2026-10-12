@@ -409,8 +409,9 @@ export interface ElectronAPI {
   setProviderAccountQueueOrder: (order: string[]) => Promise<IPCResult>;
   setCrossProviderQueueOrder: (order: string[]) => Promise<IPCResult>;
   saveModelOverrides: (overrides: Record<string, unknown>) => Promise<IPCResult>;
-  testProviderConnection: (provider: string, config: { apiKey?: string; baseUrl?: string; region?: string }) => Promise<IPCResult<{ success: boolean; error?: string }>>;
+  testProviderConnection: (provider: string, config: { apiKey?: string; baseUrl?: string; region?: string }) => Promise<IPCResult<{ success: boolean; modelCount?: number; error?: string }>>;
   checkEnvCredentials: () => Promise<IPCResult<Record<string, boolean>>>;
+  listModels: (provider: string, config: { apiKey?: string; baseUrl?: string }) => Promise<IPCResult<{ models: { id: string; label?: string; contextWindow?: number; supportsVision?: boolean; supportsTools?: boolean; supportsThinking?: boolean; ownedBy?: string }[] }>>;
 
   // Codex OAuth authentication
   codexAuthLogin: () => Promise<{ success: boolean; data?: { accessToken: string; refreshToken: string; expiresAt: number; email?: string }; error?: string }>;
