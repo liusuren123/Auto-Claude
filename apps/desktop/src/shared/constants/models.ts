@@ -28,6 +28,12 @@ export interface ModelOption {
   provider: BuiltinProvider;
   description?: string;
   apiKeyOnly?: boolean;
+  /**
+   * Where this entry came from. `catalog` is the built-in offline list;
+   * `live` was fetched from the provider's /models endpoint at runtime.
+   * Both can coexist — live + catalog merging is done by the model picker.
+   */
+  source?: 'catalog' | 'live';
   capabilities?: {
     thinking: boolean;
     tools: boolean;
@@ -74,9 +80,14 @@ export const ALL_AVAILABLE_MODELS: ModelOption[] = [
   // DeepSeek
   { value: 'deepseek-v4-pro', label: 'DeepSeek V4 Pro', provider: 'deepseek', description: 'Flagship reasoning', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 128000 } },
   { value: 'deepseek-v4-flash', label: 'DeepSeek V4 Flash', provider: 'deepseek', description: 'Fast', capabilities: { thinking: false, tools: true, vision: false, contextWindow: 128000 } },
-  // MiniMax
-  { value: 'MiniMax-M2.7', label: 'MiniMax M2.7', provider: 'minimax', description: 'Flagship', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 1000000 } },
-  { value: 'MiniMax-M2.7-highspeed', label: 'MiniMax M2.7 Highspeed', provider: 'minimax', description: 'Faster output', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 1000000 } },
+  // MiniMax (source: platform.minimaxi.io / docs/api-reference/api-overview, 2026-10)
+//   M2.7 / M2.7-highspeed: 204,800-token context, text + tool calls only
+//   M3 / M3.1-Flash-Preview: 1,000,000-token context, text/image/video, native thinking
+//   M3.1-Flash-Preview is subscription-only (M Plan / MiniMax Code); M3 is pay-as-you-go.
+{ value: 'MiniMax-M3', label: 'MiniMax M3', provider: 'minimax', description: 'Flagship · 1M ctx · multimodal', capabilities: { thinking: true, tools: true, vision: true, contextWindow: 1000000 } },
+  { value: 'MiniMax-M3.1-Flash-Preview', label: 'MiniMax M3.1 Flash Preview', provider: 'minimax', description: '1M ctx · multimodal · M Plan only · always thinking', capabilities: { thinking: true, tools: true, vision: true, contextWindow: 1000000 } },
+  { value: 'MiniMax-M2.7', label: 'MiniMax M2.7', provider: 'minimax', description: '200K ctx · text + tools', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 204800 } },
+  { value: 'MiniMax-M2.7-highspeed', label: 'MiniMax M2.7 Highspeed', provider: 'minimax', description: '200K ctx · text + tools · faster', capabilities: { thinking: true, tools: true, vision: false, contextWindow: 204800 } },
 ];
 
 // Maps model shorthand to actual Claude model IDs
@@ -329,9 +340,9 @@ export const PROVIDER_PRESET_DEFINITIONS: Partial<Record<BuiltinProvider, Record
     quick:    { primaryModel: 'deepseek-v4-flash', primaryThinking: 'low', phaseModels: { spec: 'deepseek-v4-flash', planning: 'deepseek-v4-flash', coding: 'deepseek-v4-flash', qa: 'deepseek-v4-flash' },     phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
   },
   minimax: {
-    auto:     { primaryModel: 'MiniMax-M2.7',            primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7', planning: 'MiniMax-M2.7', coding: 'MiniMax-M2.7', qa: 'MiniMax-M2.7' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
-    complex:  { primaryModel: 'MiniMax-M2.7',            primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7', planning: 'MiniMax-M2.7', coding: 'MiniMax-M2.7', qa: 'MiniMax-M2.7' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
-    balanced: { primaryModel: 'MiniMax-M2.7',            primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7', planning: 'MiniMax-M2.7', coding: 'MiniMax-M2.7', qa: 'MiniMax-M2.7' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    auto:     { primaryModel: 'MiniMax-M3',              primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M3', planning: 'MiniMax-M3', coding: 'MiniMax-M3', qa: 'MiniMax-M3' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    complex:  { primaryModel: 'MiniMax-M3',              primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M3', planning: 'MiniMax-M3', coding: 'MiniMax-M3', qa: 'MiniMax-M3' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
+    balanced: { primaryModel: 'MiniMax-M3',              primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M3', planning: 'MiniMax-M3', coding: 'MiniMax-M3', qa: 'MiniMax-M3' },                                 phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
     quick:    { primaryModel: 'MiniMax-M2.7-highspeed',  primaryThinking: 'low', phaseModels: { spec: 'MiniMax-M2.7-highspeed', planning: 'MiniMax-M2.7-highspeed', coding: 'MiniMax-M2.7-highspeed', qa: 'MiniMax-M2.7-highspeed' }, phaseThinking: { spec: 'low', planning: 'low', coding: 'low', qa: 'low' } },
   },
   ollama: {
@@ -433,7 +444,7 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
     groq: { modelId: 'meta-llama/llama-4-maverick', reasoning: { type: 'none' } },
     zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
     deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
-    minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
+    minimax: { modelId: 'MiniMax-M3', reasoning: { type: 'thinking_toggle' } },
   },
   'glm-5': {
     zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
@@ -445,7 +456,7 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
     anthropic: { modelId: 'claude-sonnet-4-6', reasoning: { type: 'thinking_tokens', level: 'medium' } },
     openai: { modelId: 'gpt-5.2', reasoning: { type: 'reasoning_effort', level: 'medium' } },
     deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
-    minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
+    minimax: { modelId: 'MiniMax-M3', reasoning: { type: 'thinking_toggle' } },
   },
   'deepseek-v4-pro': {
     deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
@@ -455,6 +466,20 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
   },
   'MiniMax-M2.7': {
     minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
+    anthropic: { modelId: 'claude-opus-4-6', reasoning: { type: 'adaptive_effort', level: 'high' } },
+    openai: { modelId: 'gpt-5.3-codex', reasoning: { type: 'reasoning_effort', level: 'high' } },
+    zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
+  },
+  // M3 is the 1M-context flagship. thinking is opt-out (can be disabled), so thinking_toggle.
+  'MiniMax-M3': {
+    minimax: { modelId: 'MiniMax-M3', reasoning: { type: 'thinking_toggle' } },
+    anthropic: { modelId: 'claude-opus-4-6', reasoning: { type: 'adaptive_effort', level: 'high' } },
+    openai: { modelId: 'gpt-5.3-codex', reasoning: { type: 'reasoning_effort', level: 'high' } },
+    zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
+  },
+  // M3.1-Flash-Preview is M-Plan-only and always thinks. Effort level controls depth.
+  'MiniMax-M3.1-Flash-Preview': {
+    minimax: { modelId: 'MiniMax-M3.1-Flash-Preview', reasoning: { type: 'adaptive_effort', level: 'medium' } },
     anthropic: { modelId: 'claude-opus-4-6', reasoning: { type: 'adaptive_effort', level: 'high' } },
     openai: { modelId: 'gpt-5.3-codex', reasoning: { type: 'reasoning_effort', level: 'high' } },
     zai: { modelId: 'glm-5', reasoning: { type: 'none' } },
@@ -478,7 +503,7 @@ export const DEFAULT_MODEL_EQUIVALENCES: Record<string, Partial<Record<BuiltinPr
     xai: { modelId: 'grok-3-mini', reasoning: { type: 'reasoning_effort', level: 'medium' } },
     zai: { modelId: 'glm-4.7', reasoning: { type: 'none' } },
     deepseek: { modelId: 'deepseek-v4-pro', reasoning: { type: 'none' } },
-    minimax: { modelId: 'MiniMax-M2.7', reasoning: { type: 'none' } },
+    minimax: { modelId: 'MiniMax-M3', reasoning: { type: 'thinking_toggle' } },
   },
   'haiku': {
     anthropic: { modelId: 'claude-haiku-4-5-20251001', reasoning: { type: 'none' } },

@@ -44,6 +44,20 @@ describe('buildThinkingProviderOptions', () => {
     expect(result).toBeUndefined();
   });
 
+  it('should return OpenAI-compatible thinking options for MiniMax models', () => {
+    // MiniMax M3 / M3.1 share the same { thinking: { type: 'enabled' } } shape that
+    // Z.AI and DeepSeek use on their OpenAI-compatible endpoints. The provider options
+    // are merged into the request body by @ai-sdk/openai-compatible.
+    const result = buildThinkingProviderOptions('MiniMax-M3', 'medium');
+    expect(result).toEqual({ openaiCompatible: { thinking: { type: 'enabled' } } });
+
+    const result31 = buildThinkingProviderOptions('MiniMax-M3.1-Flash-Preview', 'high');
+    expect(result31).toEqual({ openaiCompatible: { thinking: { type: 'enabled' } } });
+
+    const resultM27 = buildThinkingProviderOptions('MiniMax-M2.7', 'low');
+    expect(resultM27).toEqual({ openaiCompatible: { thinking: { type: 'enabled' } } });
+  });
+
   it('should return undefined for providers without thinking support', () => {
     expect(buildThinkingProviderOptions('mistral-large', 'high')).toBeUndefined();
     expect(buildThinkingProviderOptions('llama-3.1-70b', 'high')).toBeUndefined();

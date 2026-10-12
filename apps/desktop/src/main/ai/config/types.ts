@@ -250,6 +250,15 @@ export function buildThinkingProviderOptions(
       return { openaiCompatible: { thinking: { type: 'enabled' } } };
     }
 
+    case 'minimax': {
+      // MiniMax M3 / M3.1 use the same OpenAI-compatible thinking header shape as Z.AI.
+      // M3 lets the caller disable thinking; M3.1 always thinks. We send 'enabled' here;
+      // the resolver should pick 'thinking_toggle' or 'adaptive_effort' reasoning type per model.
+      // The actual effort/depth tuning for M3.1 is sent via output_config.effort by
+      // the runner — buildThinkingProviderOptions only controls the on/off switch.
+      return { openaiCompatible: { thinking: { type: 'enabled' } } };
+    }
+
     default:
       return undefined;
   }
