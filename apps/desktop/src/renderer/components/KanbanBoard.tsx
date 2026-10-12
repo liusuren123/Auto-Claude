@@ -1533,7 +1533,14 @@ export function KanbanBoard({ tasks, onTaskClick, onNewTaskClick, onRefresh, isR
               onToggleSelect={toggleTaskSelection}
               isCollapsed={columnPreferences?.[status]?.isCollapsed}
               onToggleCollapsed={() => handleToggleColumnCollapsed(status)}
-              columnWidth={columnPreferences?.[status]?.width ?? autoColumnWidth}
+              // Always size by autoColumnWidth. Per-column width preferences stored
+// under columnPreferences[status].width are intentionally ignored here
+// because they were captured at whatever window size was active when
+// the user dragged the resize handle, and applying them as a hard
+// pixel value breaks the responsive layout when the window is resized.
+// Future: store the width as a fraction (0..1) of the container so it
+// can be scaled; for now autoColumnWidth wins unconditionally.
+columnWidth={autoColumnWidth}
               isResizing={resizingColumn === status}
               onResizeStart={(startX) => handleResizeStart(status, startX)}
               onResizeEnd={handleResizeEnd}
