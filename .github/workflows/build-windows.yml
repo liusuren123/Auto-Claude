@@ -1,0 +1,96 @@
+name: build-windows
+
+# Triggers:
+#  - push to main / develop: every commit gets a fresh build
+#  - pull_request to main / develop: gate merges on a green build
+#  - workflow_dispatch: run on demand from the Actions tab
+#
+# Build artefact: NSIS installer + zip, both uploaded as a GitHub
+# Actions artifact named Aperant-windows-{short-sha} so they can be
+# downloaded from the run's summary page without creating a release.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # Cancel any in-flight build for the same ref so a force-push doesn't
+  # queue up stale runners.
+  group: build-windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Package NSIS installer (x64)
+    runs-on: windows-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            apps/desktop/package-lock.json
+
+      - name: Install dependencies (workspace)
+        run: npm ci --workspaces --include-workspace-root --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: false
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Build renderer + main + preload
+        run: npm run build
+
+      - name: Package NSIS installer
+        env:
+          # Skip electron-builder's auto-update channel publishing; we only
+          # want the local artefacts for CI download.
+          GH_TOKEN: ''
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npm run package:win -- --publish never
+
+      - name: List packaged artefacts
+        # Surface the produced installer names so the runner log shows
+        # exactly which artefact the next step will upload.
+        shell: bash
+        run: |
+          ls -la apps/desktop/dist/*.exe apps/desktop/dist/*.zip 2>/dev/null || \
+            (echo "::error::No packaged artefacts found under apps/desktop/dist"; exit 1)
+
+      - name: Upload NSIS installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Aperant-windows-installer-${{ github.event.pull_request.head.sha || github.sha }}
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            apps/desktop/dist/*.exe
+            apps/desktop/dist/*.exe.blockmap
+            apps/desktop/dist/*.zip
+
+      - name: Upload unpacked binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: Aperant-windows-unpacked-${{ github.event.pull_request.head.sha || github.sha }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: apps/desktop/dist/win-unpacked
