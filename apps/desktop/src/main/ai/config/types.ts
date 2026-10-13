@@ -263,3 +263,26 @@ export function buildThinkingProviderOptions(
       return undefined;
   }
 }
+
+/**
+ * Build provider options that ask the upstream LLM to cache the system
+ * prompt and conversation prefix. Returned object is intended to be
+ * spread into the top-level `providerOptions` of a Vercel AI SDK
+ * `streamText` call.
+ *
+ * Only Anthropic models get a cache marker today: the AI SDK's
+ * @ai-sdk/openai-compatible surface doesn't expose cache_control, and
+ * @ai-sdk/openai's 5.x prompt-caching support isn't yet wired in. For
+ * everything else we return `undefined` and the runner skips the
+ * providerOptions merge entirely so the request shape is unchanged.
+ */
+export function buildPromptCacheOptions(
+  modelId: string,
+): Record<string, Record<string, unknown>> | undefined {
+  if (!modelId?.startsWith('claude-')) return undefined;
+  return {
+    anthropic: {
+      cacheControl: { type: 'ephemeral' },
+    },
+  };
+}

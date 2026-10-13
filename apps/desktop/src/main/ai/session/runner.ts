@@ -23,7 +23,7 @@ import type { WorkerObserverProxy } from '../memory/ipc/worker-observer-proxy';
 import { StepMemoryState } from '../memory/injection/step-memory-state';
 import { buildMemoryAwareStopCondition } from '../memory/injection/memory-stop-condition';
 
-import { buildThinkingProviderOptions } from '../config/types';
+import { buildThinkingProviderOptions, buildPromptCacheOptions } from '../config/types';
 import { createStreamHandler } from './stream-handler';
 import type { FullStreamPart } from './stream-handler';
 import { classifyError, isAuthenticationError, isRateLimitError } from './error-classifier';
@@ -346,6 +346,15 @@ async function executeStream(
     ? buildThinkingProviderOptions(modelId, config.thinkingLevel)
     : undefined;
 
+  // Prompt caching: Anthropic natively supports ephemeral cache breakpoints
+  // in the AI SDK via `providerOptions.anthropic.cacheControl`. Adding it
+  // makes the system prompt + tools + the prefix of the message history
+  // reusable across calls (and across the 500-step task loop), which is
+  // the single biggest cost reduction we can make without changing the
+  // model. OpenAI-compatible (MiniMax/DeepSeek/GLM) doesn't expose the
+  // same control via @ai-sdk/openai-compatible, so we skip those.
+  const promptCacheOptions = buildPromptCacheOptions(modelId);
+
   // Execute streamText — prepareStep is only added when memory context exists
   //
   // IMPORTANT: Output.object() must NOT be combined with tools in the same streamText()
@@ -369,9 +378,10 @@ async function executeStream(
     ...(useOutputSchema ? { output: Output.object({ schema: config.outputSchema! }) } : {}),
     stopWhen: stopCondition,
     abortSignal: mergedAbortSignal,
-    ...((thinkingOptions || isCodex || (useOutputSchema && isAnthropicModel)) ? {
+    ...((thinkingOptions || isCodex || (useOutputSchema && isAnthropicModel) || promptCacheOptions) ? {
       providerOptions: {
         ...(thinkingOptions ?? {}),
+        ...(promptCacheOptions ?? {}),
         ...(isCodex ? {
           openai: {
             ...(thinkingOptions?.openai ?? {}),

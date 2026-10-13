@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildThinkingProviderOptions } from '../types';
+import { buildThinkingProviderOptions, buildPromptCacheOptions } from '../types';
 import type { ThinkingLevel } from '../types';
 
 describe('buildThinkingProviderOptions', () => {
@@ -75,5 +75,28 @@ describe('buildThinkingProviderOptions', () => {
       const result = buildThinkingProviderOptions('claude-sonnet-4-6', levels[i]);
       expect((result?.anthropic?.thinking as { budgetTokens: number })?.budgetTokens).toBe(budgets[i]);
     }
+  });
+});
+
+describe('buildPromptCacheOptions', () => {
+  it('returns undefined for non-Anthropic models', () => {
+    expect(buildPromptCacheOptions('gpt-5.3-codex')).toBeUndefined();
+    expect(buildPromptCacheOptions('o3-mini')).toBeUndefined();
+    expect(buildPromptCacheOptions('gemini-2.5-pro')).toBeUndefined();
+    expect(buildPromptCacheOptions('MiniMax-M3')).toBeUndefined();
+    expect(buildPromptCacheOptions('deepseek-v4-pro')).toBeUndefined();
+    expect(buildPromptCacheOptions('llama-3.1-70b')).toBeUndefined();
+  });
+
+  it('returns an Anthropic ephemeral cacheControl for claude- models', () => {
+    expect(buildPromptCacheOptions('claude-opus-4-6')).toEqual({
+      anthropic: { cacheControl: { type: 'ephemeral' } },
+    });
+    expect(buildPromptCacheOptions('claude-sonnet-4-6')).toEqual({
+      anthropic: { cacheControl: { type: 'ephemeral' } },
+    });
+    expect(buildPromptCacheOptions('claude-haiku-4-5-20251001')).toEqual({
+      anthropic: { cacheControl: { type: 'ephemeral' } },
+    });
   });
 });
